@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { RoomCard } from "@/components/rooms/RoomCard";
 import { type Room } from "@/types";
 import { Filter, Search } from "lucide-react";
@@ -67,6 +68,8 @@ const ALL_ROOMS: Room[] = [
 ];
 
 export default function RoomsPage() {
+  const router = useRouter();
+
   return (
     <div className="section">
       <div className="container flex flex-col gap-8">
@@ -132,9 +135,8 @@ export default function RoomsPage() {
             <RoomCard
               key={room.id}
               {...room}
-              onBook={(id) => {
-                // TODO: navigate to booking form in Milestone 3
-                console.log("Book room", id);
+              onBook={() => {
+                router.push("/book");
               }}
             />
           ))}
