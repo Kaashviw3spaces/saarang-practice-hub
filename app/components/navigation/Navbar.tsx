@@ -7,6 +7,8 @@ import { Menu, X, Music2 } from "lucide-react";
 
 const NAV_LINKS = [
   { href: "/rooms", label: "Rooms" },
+  { href: "/book", label: "Book Slot" },
+  { href: "/compatibility", label: "Acoustic AI" },
   { href: "/bookings", label: "Bookings" },
   { href: "/dashboard", label: "Dashboard" },
 ];

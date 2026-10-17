@@ -24,3 +24,4 @@ export function findConflictingBookings<T extends { startsAt: Date; endsAt: Date
     return hasTimeOverlap(targetStart, targetEnd, booking.startsAt, booking.endsAt);
   });
 }
+

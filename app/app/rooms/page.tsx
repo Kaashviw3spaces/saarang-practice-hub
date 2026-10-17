@@ -9,20 +9,20 @@ import { Filter, Search } from "lucide-react";
 const ALL_ROOMS: Room[] = [
   {
     id: "r1",
-    name: "Studio A",
+    name: "Session A",
     description: "Fully soundproofed rehearsal room with professional mixing desk, drum kit, and PA system.",
     capacity: 6,
     status: "available",
-    equipment: ["Drum Kit", "PA System", "Bass Amp", "Guitar Amp", "Mixing Desk", "Vocal Mics"],
+    equipment: ["Drum Kit", "PA System", "Bass Amp", "Guitar Amp", "Vocal Mics"],
     acousticProperties: "Fully isolated — suitable for loud instruments and full-band rehearsals.",
   },
   {
     id: "r2",
-    name: "Studio B",
-    description: "Intimate practice room ideal for solo practice, duets, and acoustic or electronic sessions.",
+    name: "Session B",
+    description: "Intimate practice room ideal for solo practice, duets, and acoustic or keyboard sessions.",
     capacity: 3,
     status: "occupied",
-    equipment: ["Upright Piano", "Headphone Amp", "Music Stands", "Audio Interface"],
+    equipment: ["Piano", "Headphone Amp", "Music Stands", "Audio Interface"],
     acousticProperties: "Semi-isolated — moderate noise reduction.",
     currentBooking: {
       memberName: "Aryan K.",
@@ -33,7 +33,7 @@ const ALL_ROOMS: Room[] = [
   },
   {
     id: "r3",
-    name: "Jam Room",
+    name: "Jam Session",
     description: "Open jam space for collaborative sessions and small band rehearsals.",
     capacity: 8,
     status: "reserved",
@@ -43,11 +43,11 @@ const ALL_ROOMS: Room[] = [
   },
   {
     id: "r4",
-    name: "Recording Booth",
+    name: "Recording Session",
     description: "Professional recording and monitoring space for vocals and acoustic instruments.",
     capacity: 2,
     status: "departure_pending",
-    equipment: ["Condenser Mic", "Studio Monitors", "Audio Interface", "Pop Filter"],
+    equipment: ["Bring your own equipments"],
     acousticProperties: "Broadcast-grade isolation — near silent.",
     currentBooking: {
       memberName: "Priya S.",
@@ -59,10 +59,10 @@ const ALL_ROOMS: Room[] = [
   {
     id: "r5",
     name: "Electronics Corner",
-    description: "Dedicated space for electronic producers, synth players, and home-recording setups.",
+    description: "Dedicated space for keyboard players, synth players, and home-recording setups.",
     capacity: 2,
     status: "occupancy_uncertain",
-    equipment: ["Synth (Arturia)", "MIDI Keyboard", "DAW Workstation", "Studio Headphones"],
+    equipment: ["Synthesizer", "MIDI Keyboard", "Studio Headphones"],
     acousticProperties: "Open layout — suitable for headphone-only practice.",
   },
 ];

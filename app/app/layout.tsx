@@ -19,12 +19,12 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Saarang Practice Hub — Make Room for Music",
   description:
-    "AI-powered music club management. Book practice rooms, coordinate rehearsals, and discover compatible musicians.",
+    "AI-powered music club management. Book practice rooms and coordinate rehearsals with ease.",
   keywords: ["music", "practice room", "booking", "rehearsal", "music club"],
   openGraph: {
     title: "Saarang Practice Hub",
     description:
-      "Book practice rooms, coordinate rehearsals, and discover compatible musicians.",
+      "Book practice rooms and coordinate rehearsals with ease.",
     type: "website",
   },
 };

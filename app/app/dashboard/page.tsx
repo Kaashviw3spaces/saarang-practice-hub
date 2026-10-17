@@ -17,7 +17,7 @@ const UPCOMING_BOOKINGS: Booking[] = [
   {
     id: "b1",
     roomId: "r1",
-    roomName: "Studio A",
+    roomName: "Session A",
     userId: "u1",
     memberName: "You",
     instrument: "Electric Guitar",
@@ -31,7 +31,7 @@ const UPCOMING_BOOKINGS: Booking[] = [
   {
     id: "b2",
     roomId: "r3",
-    roomName: "Jam Room",
+    roomName: "Jam Session",
     userId: "u1",
     memberName: "You",
     instrument: "Bass Guitar",
@@ -46,7 +46,7 @@ const RECENT_BOOKINGS: Booking[] = [
   {
     id: "b3",
     roomId: "r2",
-    roomName: "Studio B",
+    roomName: "Session B",
     userId: "u1",
     memberName: "You",
     instrument: "Electric Guitar",
@@ -58,10 +58,10 @@ const RECENT_BOOKINGS: Booking[] = [
 ];
 
 const ROOM_STATUS_SUMMARY: Array<{ room: string; status: Room["status"]; note: string }> = [
-  { room: "Studio A",         status: "available",          note: "Free now" },
-  { room: "Studio B",         status: "occupied",           note: "Ends in 22 min" },
-  { room: "Jam Room",         status: "reserved",           note: "Next slot in 45 min" },
-  { room: "Recording Booth",  status: "departure_pending",  note: "Finishing up" },
+  { room: "Session A",         status: "available",          note: "Free now" },
+  { room: "Session B",         status: "occupied",           note: "Ends in 22 min" },
+  { room: "Jam Session",         status: "reserved",           note: "Next slot in 45 min" },
+  { room: "Recording Session",  status: "departure_pending",  note: "Finishing up" },
   { room: "Electronics Corner", status: "occupancy_uncertain", note: "Status unclear" },
 ];
 
