@@ -20,8 +20,8 @@ import { type Room } from "@/types";
 const PLACEHOLDER_ROOMS: Room[] = [
   {
     id: "r1",
-    name: "Studio A",
-    description: "Fully soundproofed rehearsal room with professional mixing desk and drum kit.",
+    name: "Session A",
+    description: "Fully soundproofed rehearsal session area with professional mixing desk and drum kit.",
     capacity: 6,
     status: "available",
     equipment: ["Drum Kit", "PA System", "Bass Amp", "Guitar Amp", "Mixing Desk"],
@@ -29,8 +29,8 @@ const PLACEHOLDER_ROOMS: Room[] = [
   },
   {
     id: "r2",
-    name: "Studio B",
-    description: "Intimate practice room ideal for solo practice, duets, and acoustic sessions.",
+    name: "Session B",
+    description: "Intimate practice session area ideal for solo practice, duets, and acoustic sessions.",
     capacity: 3,
     status: "occupied",
     equipment: ["Upright Piano", "Headphone Amp", "Music Stands"],
@@ -44,8 +44,8 @@ const PLACEHOLDER_ROOMS: Room[] = [
   },
   {
     id: "r3",
-    name: "Jam Room",
-    description: "Open jam space for collaborative sessions and small band rehearsals.",
+    name: "Jam Session",
+    description: "Open jam space for collaborative sessions and ensemble rehearsals.",
     capacity: 8,
     status: "reserved",
     equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard"],
@@ -59,13 +59,13 @@ const FEATURES = [
     icon: Zap,
     title: "AI Compatibility",
     description:
-      "Smart acoustic analysis tells you whether your setup is compatible with other musicians in the room — before you even arrive.",
+      "Smart acoustic analysis tells you whether your setup is compatible with other musicians in the session — before you even arrive.",
   },
   {
     icon: Calendar,
     title: "Live Availability",
     description:
-      "Check real-time room occupancy, book your slot in seconds, and receive smart alternative suggestions when your preferred time is taken.",
+      "Check real-time session occupancy, book your slot in seconds, and receive smart alternative suggestions when your preferred time is taken.",
   },
   {
     icon: Users,
@@ -83,7 +83,7 @@ const FEATURES = [
     icon: Shield,
     title: "Fair Booking",
     description:
-      "Automatic conflict prevention and fairness rules ensure everyone gets equal access to the practice rooms.",
+      "Automatic conflict prevention and fairness rules ensure everyone gets equal access to practice sessions.",
   },
   {
     icon: Music2,
@@ -94,7 +94,7 @@ const FEATURES = [
 ];
 
 const STATS = [
-  { value: "3", label: "Practice Rooms" },
+  { value: "5", label: "Active Sessions" },
   { value: "50+", label: "Club Members" },
   { value: "< 60s", label: "To Book a Slot" },
   { value: "0", label: "Double Bookings" },
@@ -146,7 +146,7 @@ export default function HomePage() {
 
           {/* Headline */}
           <h1 className="font-[var(--font-display)] text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight text-[var(--color-text)]">
-            Make Room{" "}
+            Make Space{" "}
             <br />
             <span className="text-[var(--color-accent)] relative inline-block">
               for Music
@@ -172,7 +172,7 @@ export default function HomePage() {
 
           {/* Subheading */}
           <p className="max-w-2xl text-lg md:text-xl text-[var(--color-text-muted)] leading-relaxed">
-            AI-powered practice room management for the Saarang music club. Book
+            AI-powered practice session management for the Saarang music club. Book
             your slot, find compatible bandmates, and make every minute count.
           </p>
 
@@ -226,7 +226,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── LIVE ROOMS PREVIEW ───────────────────────────────────────────── */}
+      {/* ── LIVE SESSIONS PREVIEW ────────────────────────────────────────── */}
       <section className="section">
         <div className="container flex flex-col gap-10">
           <div className="flex items-end justify-between gap-4">
@@ -235,21 +235,21 @@ export default function HomePage() {
                 Right Now
               </p>
               <h2 className="font-[var(--font-display)] text-3xl md:text-4xl font-bold text-[var(--color-text)]">
-                Practice Rooms
+                Practice Sessions
               </h2>
               <p className="mt-2 text-[var(--color-text-muted)]">
-                Live status — check availability before you head over.
+                Live status — check session availability before you head over.
               </p>
             </div>
             <Link
               href="/rooms"
               className="hidden md:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:underline shrink-0"
             >
-              See all rooms <ArrowRight size={14} />
+              See all sessions <ArrowRight size={14} />
             </Link>
           </div>
 
-          {/* Room cards */}
+          {/* Session cards */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {PLACEHOLDER_ROOMS.map((room) => (
               <RoomCard key={room.id} {...room} />
@@ -260,7 +260,7 @@ export default function HomePage() {
             href="/rooms"
             className="md:hidden inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:underline self-start"
           >
-            See all rooms <ArrowRight size={14} />
+            See all sessions <ArrowRight size={14} />
           </Link>
         </div>
       </section>

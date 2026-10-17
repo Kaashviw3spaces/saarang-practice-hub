@@ -91,17 +91,17 @@ export default function DashboardPage() {
             </h1>
           </div>
           <Link
-            href="/rooms"
+            href="/book"
             className="inline-flex items-center gap-2 h-10 rounded-[var(--radius-full)] bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors"
           >
-            <Plus size={15} /> Book a Room
+            <Plus size={15} /> Book a Session
           </Link>
         </div>
 
         {/* Quick-action cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { icon: Calendar, label: "Book Slot",   href: "/rooms",    planned: false },
+            { icon: Calendar, label: "Book Slot",   href: "/book",    planned: false },
             { icon: CheckCircle2, label: "Check In",  href: "#",        planned: true },
             { icon: Clock,     label: "Extend",     href: "#",         planned: true },
             { icon: Bell,      label: "Reminders",  href: "#",         planned: true },
@@ -146,7 +146,7 @@ export default function DashboardPage() {
               </div>
               {UPCOMING_BOOKINGS.length === 0 ? (
                 <div className="card text-center py-10 text-[var(--color-text-muted)] text-sm">
-                  No upcoming bookings. <Link href="/rooms" className="text-[var(--color-accent)] hover:underline">Book a slot →</Link>
+                  No upcoming bookings. <Link href="/book" className="text-[var(--color-accent)] hover:underline">Book a slot →</Link>
                 </div>
               ) : (
                 <div className="flex flex-col gap-3">
@@ -171,14 +171,14 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* ─ Right: Room status + notifications ─ */}
+          {/* ─ Right: Session status + notifications ─ */}
           <div className="flex flex-col gap-6">
 
-            {/* Room status */}
+            {/* Session status */}
             <div className="card flex flex-col gap-4">
               <h2 className="font-semibold text-[var(--color-text)] flex items-center gap-2">
                 <Music2 size={16} className="text-[var(--color-accent)]" />
-                Room Status
+                Session Status
               </h2>
               <div className="flex flex-col gap-3">
                 {ROOM_STATUS_SUMMARY.map(({ room, status, note }) => (
@@ -201,7 +201,7 @@ export default function DashboardPage() {
                 href="/rooms"
                 className="text-xs text-[var(--color-accent)] hover:underline flex items-center gap-0.5 mt-1"
               >
-                Full room view <ArrowRight size={11} />
+                Full session view <ArrowRight size={11} />
               </Link>
             </div>
 
@@ -213,11 +213,11 @@ export default function DashboardPage() {
               </h2>
               <div className="flex flex-col gap-2">
                 <div className="rounded-[var(--radius-md)] bg-[var(--color-surface-2)] border border-[var(--color-border)] px-3 py-2.5 flex flex-col gap-0.5">
-                  <p className="text-sm text-[var(--color-text)]">Studio A booking confirmed</p>
+                  <p className="text-sm text-[var(--color-text)]">Session A booking confirmed</p>
                   <p className="text-xs text-[var(--color-text-muted)]">Starts in 1 hour</p>
                 </div>
                 <div className="rounded-[var(--radius-md)] bg-[var(--color-surface-2)] border border-[var(--color-border)] px-3 py-2.5 flex flex-col gap-0.5 opacity-60">
-                  <p className="text-sm text-[var(--color-text)]">Jam Room slot released</p>
+                  <p className="text-sm text-[var(--color-text)]">Jam Session slot released</p>
                   <p className="text-xs text-[var(--color-text-muted)]">Yesterday · 4:30 PM</p>
                 </div>
               </div>

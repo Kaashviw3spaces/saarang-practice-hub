@@ -108,3 +108,4 @@ export function analyzeCompatibility(
     recommendations: recommendations.length > 0 ? recommendations : ["Standard room arrangement is sufficient."],
   };
 }
+

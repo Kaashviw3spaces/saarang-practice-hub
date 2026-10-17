@@ -216,7 +216,7 @@ BEGIN
   INSERT INTO public.profiles (id, full_name, email, role)
   VALUES (
     NEW.id,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', 'Club Musician'),
+    COALESCE(NEW.raw_user_meta_data->>'full_name', 'Club Member'),
     NEW.email,
     'member'
   );
@@ -228,4 +228,3 @@ DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
-

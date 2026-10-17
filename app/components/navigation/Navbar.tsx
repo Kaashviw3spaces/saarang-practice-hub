@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Menu, X, Music2 } from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "/rooms", label: "Rooms" },
+  { href: "/rooms", label: "Sessions" },
   { href: "/book", label: "Book Slot" },
   { href: "/compatibility", label: "Acoustic AI" },
   { href: "/bookings", label: "Bookings" },

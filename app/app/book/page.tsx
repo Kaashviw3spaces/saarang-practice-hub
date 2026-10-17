@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { Calendar, Clock, Music2, Users, AlertCircle, CheckCircle2 } from "lucide-react";
 
 const ROOM_OPTIONS = [
-  { id: "11111111-1111-1111-1111-111111111111", name: "Studio A (Soundproof Rehearsal)" },
-  { id: "22222222-2222-2222-2222-222222222222", name: "Studio B (Intimate Practice Room)" },
-  { id: "33333333-3333-3333-3333-333333333333", name: "Jam Room (Ensemble Space)" },
-  { id: "44444444-4444-4444-4444-444444444444", name: "Recording Booth (Vocals & Acoustic)" },
-  { id: "55555555-5555-5555-5555-555555555555", name: "Electronics Corner (Synth & DAW)" },
+  { id: "11111111-1111-1111-1111-111111111111", name: "Session A (Soundproof Rehearsal Space)" },
+  { id: "22222222-2222-2222-2222-222222222222", name: "Session B (Intimate Practice Space)" },
+  { id: "33333333-3333-3333-3333-333333333333", name: "Jam Session Area (Ensemble Space)" },
+  { id: "44444444-4444-4444-4444-444444444444", name: "Recording Session (Vocals & Acoustic)" },
+  { id: "55555555-5555-5555-5555-555555555555", name: "Electronics Session (Synth & DAW)" },
 ];
 
 export default function BookingPage() {
@@ -72,10 +72,10 @@ export default function BookingPage() {
             Reserve Time
           </p>
           <h1 className="font-[var(--font-display)] text-3xl font-bold text-[var(--color-text)]">
-            Book Practice Room
+            Book Practice Session
           </h1>
           <p className="text-sm text-[var(--color-text-muted)]">
-            Choose your setup, room, and session duration. Real-time conflict checks will validate availability.
+            Choose your setup, session area, and duration. Real-time conflict checks will validate availability.
           </p>
         </div>
 
@@ -94,10 +94,10 @@ export default function BookingPage() {
         )}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          {/* Room selection */}
+          {/* Session space selection */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-[var(--color-text-muted)]">
-              Practice Room
+              Practice Session Space
             </label>
             <select
               value={roomId}

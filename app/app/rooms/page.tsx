@@ -79,10 +79,10 @@ export default function RoomsPage() {
             Live Status
           </p>
           <h1 className="font-[var(--font-display)] text-3xl md:text-4xl font-bold text-[var(--color-text)]">
-            Practice Rooms
+            Practice Sessions
           </h1>
           <p className="text-[var(--color-text-muted)] max-w-xl">
-            All rooms updated in real time. Pick a room, check the current session and
+            All practice sessions updated in real time. Pick an area, check the current session and
             equipment, and book your slot instantly.
           </p>
         </div>
@@ -96,7 +96,7 @@ export default function RoomsPage() {
             />
             <input
               type="text"
-              placeholder="Search rooms or equipment…"
+              placeholder="Search sessions or equipment…"
               disabled
               className="w-full h-10 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] pl-9 pr-4 text-sm text-[var(--color-text-muted)] placeholder:text-[var(--color-text-dim)] cursor-not-allowed opacity-60"
             />
@@ -129,7 +129,7 @@ export default function RoomsPage() {
           ))}
         </div>
 
-        {/* Room grid */}
+        {/* Session grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {ALL_ROOMS.map((room) => (
             <RoomCard
@@ -143,7 +143,7 @@ export default function RoomsPage() {
         </div>
 
         <p className="text-xs text-[var(--color-text-dim)] text-center">
-          ⚠️ Room data is placeholder until Supabase integration (Milestone 3). Booking buttons are non-functional.
+          ⚠️ Session data is placeholder until Supabase integration. Booking buttons navigate to reservation form.
         </p>
       </div>
     </div>
