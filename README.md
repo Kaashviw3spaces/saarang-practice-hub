@@ -2,7 +2,7 @@
 
 > AI-powered music-club management, practice coordination & rehearsal system.
 
-Saarang Practice Hub is a responsive web application for the **Saarang** college music club.  
+Saarang Practice Hub is a responsive web application for the **Saarang** college music club.
 Members can coordinate individual practice, collaborative practice, and band rehearsals while sharing rooms, instruments, and equipment intelligently.
 
 ---
@@ -52,7 +52,7 @@ npm run dev
 
 ## Environment variables
 
-Copy `.env.example` to `.env.local` and supply your own values.  
+Copy `.env.example` to `.env.local` and supply your own values.
 **Never commit `.env.local` or any file containing real secrets.**
 
 | Variable | Description |
@@ -60,7 +60,7 @@ Copy `.env.example` to `.env.local` and supply your own values.
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL (safe to expose to the browser) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous/public key (safe to expose to the browser) |
 
-The service-role key must **never** appear in client-side code.  
+The service-role key must **never** appear in client-side code.
 Server-side API routes that require elevated privileges should read it from a server-only environment variable (`SUPABASE_SERVICE_ROLE_KEY`) and must never send it to the browser.
 
 ---
@@ -118,8 +118,8 @@ saarang-practice-hub/
 supabase db push
 ```
 
-Migrations live in `supabase/migrations/` as timestamped `.sql` files.  
-Row-Level Security is enabled on every exposed table.  
+Migrations live in `supabase/migrations/` as timestamped `.sql` files.
+Row-Level Security is enabled on every exposed table.
 See `supabase/README.md` (to be created) for dashboard configuration that cannot be automated.
 
 ---
@@ -240,7 +240,7 @@ npm run test:e2e # Run Playwright end-to-end tests
 
 ## Contributing
 
-1. Create a feature branch: `git checkout -b feature/your-feature`
+1. Create ₹a feature branch: `git checkout -b feature/your-feature`
 2. Make focused, well-described commits.
 3. Open a pull request against `main`.
 4. Ensure `npm run lint`, `npm run type-check`, and `npm run test` pass before merging.
@@ -248,3 +248,4 @@ npm run test:e2e # Run Playwright end-to-end tests
 ---
 
 *Saarang Practice Hub — Make room for music.*
+
