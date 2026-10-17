@@ -1,4 +1,5 @@
 import { BookingCard } from "@/components/bookings/BookingCard";
+import { SessionReminderTimer } from "@/components/reminders/SessionReminderTimer";
 import { type Booking, type Room } from "@/types";
 import Link from "next/link";
 import {
@@ -102,7 +103,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { icon: Calendar, label: "Book Slot",   href: "/book",    planned: false },
-            { icon: CheckCircle2, label: "Check In",  href: "#",        planned: true },
+            { icon: CheckCircle2, label: "Check In",  href: "/checkin", planned: false },
             { icon: Clock,     label: "Extend",     href: "#",         planned: true },
             { icon: Bell,      label: "Reminders",  href: "#",         planned: true },
           ].map(({ icon: Icon, label, href, planned }) => (
@@ -123,6 +124,9 @@ export default function DashboardPage() {
             </Link>
           ))}
         </div>
+
+        {/* Live Active Session Timer & Reminders */}
+        <SessionReminderTimer initialMinutes={45} sessionName="Session A (Electric Guitar)" />
 
         {/* Main two-column grid */}
         <div className="grid lg:grid-cols-3 gap-8">

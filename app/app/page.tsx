@@ -317,7 +317,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-4 gap-5">
             {[
               { step: "01", title: "Pick your setup", body: "Choose your instrument, equipment, and preferred noise level." },
-              { step: "02", title: "Browse availability", body: "See which rooms are free, occupied, or compatible with other sessions." },
+              { step: "02", title: "Browse availability", body: "See which session spaces are free, occupied, or compatible with other sessions." },
               { step: "03", title: "Confirm your slot", body: "Book instantly. The system prevents double bookings automatically." },
               { step: "04", title: "QR check-in", body: "Scan the QR code at the door to confirm your arrival and start your session." },
             ].map(({ step, title, body }) => (

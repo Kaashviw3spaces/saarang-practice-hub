@@ -7,9 +7,9 @@
 
 ## 1. Project Overview
 
-**Saraang AI** is a smart management system for the Saraang college music club. It is designed to solve the everyday problems members face when sharing music practice rooms.
+**Saraang AI** is a smart management system for the Saraang college music club. It is designed to solve the everyday problems members face when sharing music practice spaces.
 
-Currently, members may travel to the music room only to discover that somebody else is already practising. Drums, amplified electric guitars, speakers, vocals, and other instruments can interfere with one another, making individual practice difficult. Scheduling is often decided informally in the room, which means students who have not arrived have no reliable way of knowing whether the space is available.
+Currently, members may travel to a practice space only to discover that somebody else is already practising. Drums, amplified electric guitars, speakers, vocals, and other instruments can interfere with one another, making individual practice difficult. Scheduling is often decided informally in the session space, which means students who have not arrived have no reliable way of knowing whether it is available.
 
 Saraang AI will centralise this entire process. Members will be able to check availability before arriving, reserve practice time, identify compatible musicians, receive AI-generated practice-slot recommendations, and manage their sessions through an intelligent reminder and occupancy-tracking system.
 
@@ -17,29 +17,29 @@ The platform functions as both:
 1. **A music club management system.**
 2. **An AI-powered practice and rehearsal coordination assistant.**
 
-The main goal is to maximise productive practice time, reduce unnecessary trips, prevent booking conflicts, improve room utilisation, and make sharing practice spaces fair and convenient.
+The main goal is to maximise productive practice time, reduce unnecessary trips, prevent booking conflicts, improve session-space utilisation, and make sharing practice spaces fair and convenient.
 
 ---
 
 ## 2. Core Problems to Solve
 
-1. Members do not know whether the practice room is occupied before arriving.
+1. Members do not know whether a practice session space is occupied before arriving.
 2. Instruments and audio equipment create different levels of acoustic interference.
 3. Students learning individually may be unable to concentrate while louder instruments are being played.
 4. Members cannot easily identify other musicians with whom they could practise simultaneously.
 5. Manual booking and informal scheduling lead to overlapping sessions and misunderstandings.
-6. Members may forget to check out, leaving the room incorrectly marked as occupied.
+6. Members may forget to check out, leaving the session space incorrectly marked as occupied.
 7. Members may forget their session's end time or struggle to finish practising within their allocated slot.
 8. There is no systematic way to suggest compatible sessions, alternative times, or opportunities to extend a booking.
-9. Members may monopolise rooms unless the system enforces fair booking and extension policies.
-10. Club administrators need a central place to manage room schedules, instruments, equipment, and official rehearsals.
+9. Members may monopolise session spaces unless the system enforces fair booking and extension policies.
+10. Club administrators need a central place to manage session schedules, instruments, equipment, and official rehearsals.
 
 ---
 
 ## 3. User Types and Permissions
 
 ### A. Club Members
-- View current room occupancy and future availability.
+- View current session-space occupancy and future availability.
 - Book, cancel, and modify eligible sessions.
 - Choose individual practice, collaborative practice, or band rehearsal.
 - Specify their instrument, equipment, and audio-output setup.
@@ -51,12 +51,12 @@ The main goal is to maximise productive practice time, reduce unnecessary trips,
 
 ### B. Club Administrators
 - Manage member access and permissions.
-- Create and manage practice rooms and available equipment.
+- Create and manage practice spaces and available equipment.
 - Configure opening hours, booking durations, and advance-booking limits.
 - Schedule official band rehearsals, auditions, events, and performances.
 - Define priority and extension policies.
 - Monitor occupancy and resolve incorrect status reports.
-- Review booking history, room utilisation, and equipment maintenance reports.
+- Review booking history, session-space utilisation, and equipment maintenance reports.
 - Configure notifications and occupancy-sensor integrations.
 
 *Official rehearsals and other authorised reservations must be protected from conflicting individual bookings.*
@@ -67,7 +67,7 @@ The main goal is to maximise productive practice time, reduce unnecessary trips,
 
 ### 4.1 Home Dashboard
 The dashboard displays:
-- Current status of every practice room (states: **Available**, **Reserved**, **Occupied**, **Departure Pending**, **Occupancy Uncertain**).
+- Current status of every practice session space (states: **Available**, **Reserved**, **Occupied**, **Departure Pending**, **Occupancy Uncertain**).
 - Who is practising, where appropriate under club privacy rules.
 - Instruments currently in use and the type of session.
 - Expected session end times.
@@ -81,7 +81,7 @@ The dashboard displays:
 Members can select:
 - Date and preferred time.
 - Session duration (15, 30, 45, 60, 90 minutes).
-- Room or practice area.
+- Session space or practice area.
 - Instrument(s) being used.
 - Equipment and audio-output setup (e.g., headphones vs. amp).
 - Practice purpose.
@@ -104,7 +104,7 @@ The system analyses the complete practice setup rather than treating an instrume
 - Monitoring & output: headphones vs. open speakers/amps.
 - Peripheral equipment: audio interfaces, microphones, cables, pedals.
 - Physical sound bleed (e.g., drum kit strikes or vocals remain loud even with headphones).
-- Concentration requirements & room acoustic properties.
+- Concentration requirements & session-space acoustic properties.
 
 ### 5.2 Compatibility Categories
 - **Compatible**: Interference is negligible.
@@ -139,7 +139,7 @@ The system analyses the complete practice setup rather than treating an instrume
 - `rooms`: Practice spaces, capacity, operating hours, acoustic properties.
 - `instruments`: Available instruments and acoustic characteristics.
 - `equipment`: Amps, cables, mics, audio interfaces, headphones.
-- `room_equipment`: M2M relation of equipment in rooms.
+- `room_equipment`: M2M relation of equipment in session spaces.
 - `bookings`: Reservations, mode (individual/collab/band), time ranges, status.
 - `booking_members`: Participants in a booking.
 - `booking_instruments`: Instruments utilized in a booking.
@@ -162,4 +162,4 @@ Inspired by vintage rock posters, concert prints, and contemporary music editori
   - `--color-accent: #d9bd43` (Warm vintage gold/amber)
   - `--color-secondary: #397d98` (Muted teal/electric blue)
   - `--color-text: #f7f0df` (Cream text)
-- **Typography & Hero**: Bold display headlines ("Make Room for Music"), crisp condensed labels, high-contrast badges, tactile borders.
+- **Typography & Hero**: Bold display headlines ("Make Space for Music"), crisp condensed labels, high-contrast badges, tactile borders.

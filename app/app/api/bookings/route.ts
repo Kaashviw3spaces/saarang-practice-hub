@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     const startsAt = new Date(`${date}T${startTime}:00Z`);
     const endsAt = new Date(startsAt.getTime() + durationMinutes * 60_000);
 
-    // Look for conflicts in the selected room
+    // Look for conflicts in the selected session
     const roomBookings = bookingsStore.filter((b) => b.roomId === roomId);
     const conflicts = findConflictingBookings(startsAt, endsAt, roomBookings);
 
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: "Time slot conflict",
-          message: "The requested time slot overlaps with an existing reservation in this room.",
+          message: "The requested time slot overlaps with an existing reservation in this session.",
         },
         { status: 409 }
       );
@@ -81,4 +81,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

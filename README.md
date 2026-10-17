@@ -3,7 +3,7 @@
 > AI-powered music-club management, practice coordination & rehearsal system.
 
 Saarang Practice Hub is a responsive web application for the **Saarang** college music club.
-Members can coordinate individual practice, collaborative practice, and band rehearsals while sharing rooms, instruments, and equipment intelligently.
+Members can coordinate individual practice, collaborative practice, and band rehearsals while sharing session spaces, instruments, and equipment intelligently.
 
 ---
 
@@ -75,13 +75,13 @@ saarang-practice-hub/
 │   │   ├── (auth)/             # Auth-guarded routes
 │   │   ├── dashboard/          # Member dashboard
 │   │   ├── bookings/           # Booking creation & history
-│   │   ├── rooms/              # Room listings & details
+│   │   ├── rooms/              # Session listings & details
 │   │   └── admin/              # Admin-only interface
 │   ├── components/
 │   │   ├── ui/                 # shadcn/ui primitives
 │   │   ├── navigation/         # Header, sidebar, mobile nav
 │   │   ├── bookings/           # Booking-specific components
-│   │   └── rooms/              # Room cards & details
+│   │   └── rooms/              # Session cards & details
 │   ├── features/
 │   │   ├── authentication/
 │   │   ├── booking/
@@ -153,10 +153,10 @@ npm run test:e2e # Run Playwright end-to-end tests
 - [ ] Design tokens (CSS variables: background, surface, paper, accent, secondary, text)
 - [ ] Global font setup (display + body typefaces)
 - [ ] Shared layout component with responsive navigation
-- [ ] Landing page hero ("Make Room for Music.")
-- [ ] Room listing page with placeholder cards
-- [ ] Dashboard skeleton (upcoming sessions, room status, quick actions)
-- [ ] Booking form skeleton (date, time, room, instrument, mode)
+- [ ] Landing page hero ("Make Space for Music.")
+- [ ] Session listing page with placeholder cards
+- [ ] Dashboard skeleton (upcoming sessions, session status, quick actions)
+- [ ] Booking form skeleton (date, time, session, instrument, mode)
 - [ ] Responsive mobile navigation
 - [ ] All visible controls functional or clearly labelled "planned"
 
@@ -199,7 +199,7 @@ npm run test:e2e # Run Playwright end-to-end tests
 - [ ] Pre-expiry reminder (10–7 min before end)
 - [ ] Final reminder (2 min before end)
 - [ ] `occupancy_events` table with confidence state
-- [ ] Room states: `available`, `reserved`, `occupied`, `departure_pending`, `occupancy_uncertain`
+- [ ] Session-space states: `available`, `reserved`, `occupied`, `departure_pending`, `occupancy_uncertain`
 - [ ] Stale-session detection background job
 - [ ] Automatic checkout recovery with grace period
 - [ ] Admin override for occupancy state
@@ -247,5 +247,4 @@ npm run test:e2e # Run Playwright end-to-end tests
 
 ---
 
-*Saarang Practice Hub — Make room for music.*
-
+*Saarang Practice Hub — Make space for music.*

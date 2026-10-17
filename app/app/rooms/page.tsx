@@ -10,7 +10,7 @@ const ALL_ROOMS: Room[] = [
   {
     id: "r1",
     name: "Session A",
-    description: "Fully soundproofed rehearsal room with professional mixing desk, drum kit, and PA system.",
+    description: "Fully soundproofed rehearsal space with professional mixing desk, drum kit, and PA system.",
     capacity: 6,
     status: "available",
     equipment: ["Drum Kit", "PA System", "Bass Amp", "Guitar Amp", "Vocal Mics"],
@@ -19,7 +19,7 @@ const ALL_ROOMS: Room[] = [
   {
     id: "r2",
     name: "Session B",
-    description: "Intimate practice room ideal for solo practice, duets, and acoustic or keyboard sessions.",
+    description: "Intimate practice space ideal for solo practice, duets, and acoustic or keyboard sessions.",
     capacity: 3,
     status: "occupied",
     equipment: ["Piano", "Headphone Amp", "Music Stands", "Audio Interface"],
@@ -62,7 +62,7 @@ const ALL_ROOMS: Room[] = [
     description: "Dedicated space for keyboard players, synth players, and home-recording setups.",
     capacity: 2,
     status: "occupancy_uncertain",
-    equipment: ["Synthesizer", "MIDI Keyboard", "Studio Headphones"],
+    equipment: ["Synthesizer", "MIDI Keyboard", "Session Headphones"],
     acousticProperties: "Open layout — suitable for headphone-only practice.",
   },
 ];
@@ -149,4 +149,3 @@ export default function RoomsPage() {
     </div>
   );
 }
-

@@ -7,7 +7,7 @@ const ALL_BOOKINGS: Booking[] = [
   {
     id: "b1",
     roomId: "r1",
-    roomName: "Studio A",
+    roomName: "Session A",
     userId: "u1",
     memberName: "You",
     instrument: "Electric Guitar",
@@ -21,7 +21,7 @@ const ALL_BOOKINGS: Booking[] = [
   {
     id: "b2",
     roomId: "r3",
-    roomName: "Jam Room",
+    roomName: "Jam Session",
     userId: "u1",
     memberName: "You",
     instrument: "Bass Guitar",
@@ -33,7 +33,7 @@ const ALL_BOOKINGS: Booking[] = [
   {
     id: "b3",
     roomId: "r2",
-    roomName: "Studio B",
+    roomName: "Session B",
     userId: "u1",
     memberName: "You",
     instrument: "Electric Guitar",
@@ -45,7 +45,7 @@ const ALL_BOOKINGS: Booking[] = [
   {
     id: "b4",
     roomId: "r4",
-    roomName: "Recording Booth",
+    roomName: "Recording Session",
     userId: "u1",
     memberName: "You",
     instrument: "Vocals",
@@ -121,4 +121,3 @@ export default function BookingsPage() {
     </div>
   );
 }
-

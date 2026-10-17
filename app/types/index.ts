@@ -1,4 +1,4 @@
-/* ─── Room types ──────────────────────────────────────────────────────────── */
+/* ─── Session-space types ─────────────────────────────────────────────────── */
 
 export type RoomStatus =
   | "available"
@@ -109,4 +109,3 @@ export interface AppNotification {
   createdAt: Date;
   read: boolean;
 }
-

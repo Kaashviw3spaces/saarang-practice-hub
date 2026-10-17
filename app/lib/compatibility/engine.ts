@@ -45,7 +45,7 @@ export function analyzeCompatibility(
     reasons.push(
       `${sessionA.instrumentName} generates physical acoustic volume that conflicts with focused, concentration-heavy practice.`
     );
-    recommendations.push("Consider reserving a fully soundproofed room (e.g. Studio A) or practicing during quiet hours.");
+    recommendations.push("Consider reserving a fully soundproofed session space (e.g. Session A) or practicing during quiet hours.");
   }
 
   if (bIsLoud && sessionA.practiceObjective === "focus") {
@@ -65,7 +65,7 @@ export function analyzeCompatibility(
     } else {
       score -= 20;
       reasons.push("Headphones minimize monitored audio, but residual mechanical/physical instrument vibration remains audible.");
-      recommendations.push("Position stations on opposite sides of the room.");
+      recommendations.push("Position stations on opposite sides of the session space.");
     }
   }
 
@@ -74,10 +74,10 @@ export function analyzeCompatibility(
   if ((isVocal(sessionA.instrumentName) && bIsLoud) || (isVocal(sessionB.instrumentName) && aIsLoud)) {
     score -= 40;
     reasons.push("Microphone pickup risks bleed and feedback loop from nearby amplified speakers.");
-    recommendations.push("Aim directional microphones away from amplifiers or practice in separate rooms.");
+    recommendations.push("Aim directional microphones away from amplifiers or book separate sessions.");
   }
 
-  // Rule 4: Drums in shared room
+  // Rule 4: Drums in a shared session space
   const isDrums = (s: SessionSetup) => s.instrumentName.toLowerCase().includes("drum") && s.category === "acoustic";
   if (isDrums(sessionA) || isDrums(sessionB)) {
     score -= 50;
@@ -105,7 +105,6 @@ export function analyzeCompatibility(
     score: Math.max(0, score),
     summary,
     reasons: reasons.length > 0 ? reasons : ["No significant acoustic conflicts detected."],
-    recommendations: recommendations.length > 0 ? recommendations : ["Standard room arrangement is sufficient."],
+    recommendations: recommendations.length > 0 ? recommendations : ["Standard session-space arrangement is sufficient."],
   };
 }
-

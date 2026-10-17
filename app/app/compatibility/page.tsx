@@ -107,7 +107,7 @@ export default function CompatibilityPage() {
           {/* Setup B */}
           <div className="card flex flex-col gap-4">
             <h2 className="font-semibold text-[var(--color-text)] flex items-center gap-2">
-              <Volume2 size={18} className="text-[var(--color-secondary)]" /> Room Occupant Setup (Musician B)
+              <Volume2 size={18} className="text-[var(--color-secondary)]" /> Session Occupant Setup (Musician B)
             </h2>
 
             <div className="flex flex-col gap-1.5">
@@ -229,4 +229,3 @@ export default function CompatibilityPage() {
     </div>
   );
 }
-

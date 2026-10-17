@@ -28,13 +28,13 @@ saarang-practice-hub/
     ├── app/                      # App router
     │   ├── layout.tsx            # Global layout with serif/sans typography & Navbar
     │   ├── globals.css           # Design tokens, color variables, texture overlays
-    │   ├── page.tsx              # Hero landing page ("Make Room for Music")
-    │   ├── rooms/page.tsx        # Room listings with status indicators
+    │   ├── page.tsx              # Hero landing page ("Make Space for Music")
+    │   ├── rooms/page.tsx        # Session listings with status indicators
     │   ├── dashboard/page.tsx    # Member dashboard skeleton
     │   └── bookings/page.tsx     # Bookings history and upcoming list
     ├── components/
     │   ├── navigation/Navbar.tsx # Responsive top navbar
-    │   ├── rooms/RoomCard.tsx    # Room card with status pills & equipment chips
+    │   ├── rooms/RoomCard.tsx    # Session card with status pills & equipment chips
     │   └── bookings/BookingCard.tsx # Booking status card component
     ├── lib/
     │   └── utils/index.ts        # Helper utilities (`cn`, date/time formatters)
@@ -51,10 +51,10 @@ saarang-practice-hub/
 - **Project Foundation:** Git repository, Next.js 16 App Router setup, TypeScript configuration, package dependency management.
 - **Design System & Layout:** Editorial dark aesthetic (`#151311`), warm paper accents (`#f2e8cc`, `#d9bd43`), custom status colors, subtle grain overlay.
 - **Responsive Navigation:** Desktop nav links and collapsible mobile menu.
-- **Landing Page:** Hero with custom display typography, club stats, dynamic room overview, feature breakdowns, and CTA banner.
+- **Landing Page:** Hero with custom display typography, club stats, dynamic session overview, feature breakdowns, and CTA banner.
 - **UI Skeletons:**
-  - `Rooms`: Filter/search controls (labeled `[planned]`) and 5 room status states (`available`, `reserved`, `occupied`, `departure_pending`, `occupancy_uncertain`).
-  - `Dashboard`: Quick-action buttons, upcoming and recent booking lists, room status summary sidebar.
+  - `Sessions`: Filter/search controls (labeled `[planned]`) and 5 session-space status states (`available`, `reserved`, `occupied`, `departure_pending`, `occupancy_uncertain`).
+  - `Dashboard`: Quick-action buttons, upcoming and recent booking lists, session status summary sidebar.
   - `Bookings`: Segregated view for upcoming vs. past sessions.
 
 ### ❌ Missing (Not Yet Implemented)
@@ -105,4 +105,3 @@ saarang-practice-hub/
 - `app/components/bookings/BookingCard.tsx`: Missing `"use client"` pragma, causing `npm run build` to fail when prerendering `/dashboard` with click handlers.
 - Search/filter bars on `app/app/rooms/page.tsx` and quick actions on `app/app/dashboard/page.tsx`: Currently disabled and marked with `[planned]` badges.
 - Supabase client integration files in `app/lib/supabase/`: Not yet scaffolded.
-

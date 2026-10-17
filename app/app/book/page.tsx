@@ -97,7 +97,7 @@ export default function BookingPage() {
           {/* Session space selection */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold text-[var(--color-text-muted)]">
-              Practice Session Space
+              Practice Session
             </label>
             <select
               value={roomId}
@@ -202,4 +202,3 @@ export default function BookingPage() {
     </div>
   );
 }
-

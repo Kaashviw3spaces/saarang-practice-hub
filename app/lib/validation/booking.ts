@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const bookingFormSchema = z.object({
-  roomId: z.string().uuid("Invalid room selected"),
+  roomId: z.string().uuid("Invalid session selected"),
   instrument: z.string().min(1, "Please choose your instrument"),
   mode: z.enum(["individual", "collaborative", "band_rehearsal"]),
   date: z.string().min(1, "Please select a date"),
