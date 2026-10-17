@@ -1,3 +1,5 @@
+"use client";
+
 import { type Booking } from "@/types";
 import { cn } from "@/lib/utils";
 import { Clock, Music2, ChevronRight, X } from "lucide-react";

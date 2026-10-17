@@ -39,7 +39,7 @@ const PLACEHOLDER_ROOMS: Room[] = [
       memberName: "Aryan K.",
       instrument: "Electric Guitar",
       mode: "individual",
-      endsAt: new Date(Date.now() + 22 * 60_000),
+      endsAt: new Date("2026-10-17T19:00:00Z"),
     },
   },
   {
@@ -50,7 +50,7 @@ const PLACEHOLDER_ROOMS: Room[] = [
     status: "reserved",
     equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard"],
     acousticProperties: "Acoustic panels",
-    nextAvailableAt: new Date(Date.now() + 45 * 60_000),
+    nextAvailableAt: new Date("2026-10-17T19:30:00Z"),
   },
 ];
 

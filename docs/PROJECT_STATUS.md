@@ -105,3 +105,4 @@ saarang-practice-hub/
 - `app/components/bookings/BookingCard.tsx`: Missing `"use client"` pragma, causing `npm run build` to fail when prerendering `/dashboard` with click handlers.
 - Search/filter bars on `app/app/rooms/page.tsx` and quick actions on `app/app/dashboard/page.tsx`: Currently disabled and marked with `[planned]` badges.
 - Supabase client integration files in `app/lib/supabase/`: Not yet scaffolded.
+

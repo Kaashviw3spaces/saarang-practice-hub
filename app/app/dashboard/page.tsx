@@ -13,8 +13,6 @@ import {
 
 /* ─── Placeholder data — replaced in Milestone 3 ─────────────────────────── */
 
-const NOW = new Date();
-
 const UPCOMING_BOOKINGS: Booking[] = [
   {
     id: "b1",
@@ -24,8 +22,8 @@ const UPCOMING_BOOKINGS: Booking[] = [
     memberName: "You",
     instrument: "Electric Guitar",
     mode: "collaborative",
-    startsAt: new Date(NOW.getTime() + 60 * 60_000),
-    endsAt:   new Date(NOW.getTime() + 120 * 60_000),
+    startsAt: new Date("2026-10-17T19:30:00Z"),
+    endsAt:   new Date("2026-10-17T20:30:00Z"),
     status: "confirmed",
     compatibilityLevel: "compatible",
     compatibilityNote: "Compatible with the acoustic drum session already booked.",
@@ -38,8 +36,8 @@ const UPCOMING_BOOKINGS: Booking[] = [
     memberName: "You",
     instrument: "Bass Guitar",
     mode: "band_rehearsal",
-    startsAt: new Date(NOW.getTime() + 2 * 24 * 60 * 60_000),
-    endsAt:   new Date(NOW.getTime() + 2 * 24 * 60 * 60_000 + 90 * 60_000),
+    startsAt: new Date("2026-10-19T18:00:00Z"),
+    endsAt:   new Date("2026-10-19T19:30:00Z"),
     status: "confirmed",
   },
 ];
@@ -53,8 +51,8 @@ const RECENT_BOOKINGS: Booking[] = [
     memberName: "You",
     instrument: "Electric Guitar",
     mode: "individual",
-    startsAt: new Date(NOW.getTime() - 2 * 24 * 60 * 60_000),
-    endsAt:   new Date(NOW.getTime() - 2 * 24 * 60 * 60_000 + 45 * 60_000),
+    startsAt: new Date("2026-10-15T16:00:00Z"),
+    endsAt:   new Date("2026-10-15T16:45:00Z"),
     status: "completed",
   },
 ];

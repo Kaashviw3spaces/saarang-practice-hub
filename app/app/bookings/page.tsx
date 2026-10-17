@@ -3,8 +3,6 @@ import { Plus } from "lucide-react";
 import { BookingCard } from "@/components/bookings/BookingCard";
 import { type Booking } from "@/types";
 
-const NOW = new Date();
-
 const ALL_BOOKINGS: Booking[] = [
   {
     id: "b1",
@@ -14,8 +12,8 @@ const ALL_BOOKINGS: Booking[] = [
     memberName: "You",
     instrument: "Electric Guitar",
     mode: "collaborative",
-    startsAt: new Date(NOW.getTime() + 60 * 60_000),
-    endsAt:   new Date(NOW.getTime() + 120 * 60_000),
+    startsAt: new Date("2026-10-17T19:30:00Z"),
+    endsAt:   new Date("2026-10-17T20:30:00Z"),
     status: "confirmed",
     compatibilityLevel: "compatible",
     compatibilityNote: "Compatible with the acoustic drum session already booked.",
@@ -28,8 +26,8 @@ const ALL_BOOKINGS: Booking[] = [
     memberName: "You",
     instrument: "Bass Guitar",
     mode: "band_rehearsal",
-    startsAt: new Date(NOW.getTime() + 2 * 24 * 60 * 60_000),
-    endsAt:   new Date(NOW.getTime() + 2 * 24 * 60 * 60_000 + 90 * 60_000),
+    startsAt: new Date("2026-10-19T18:00:00Z"),
+    endsAt:   new Date("2026-10-19T19:30:00Z"),
     status: "confirmed",
   },
   {
@@ -40,8 +38,8 @@ const ALL_BOOKINGS: Booking[] = [
     memberName: "You",
     instrument: "Electric Guitar",
     mode: "individual",
-    startsAt: new Date(NOW.getTime() - 2 * 24 * 60 * 60_000),
-    endsAt:   new Date(NOW.getTime() - 2 * 24 * 60 * 60_000 + 45 * 60_000),
+    startsAt: new Date("2026-10-15T16:00:00Z"),
+    endsAt:   new Date("2026-10-15T16:45:00Z"),
     status: "completed",
   },
   {
@@ -52,8 +50,8 @@ const ALL_BOOKINGS: Booking[] = [
     memberName: "You",
     instrument: "Vocals",
     mode: "individual",
-    startsAt: new Date(NOW.getTime() - 7 * 24 * 60 * 60_000),
-    endsAt:   new Date(NOW.getTime() - 7 * 24 * 60 * 60_000 + 30 * 60_000),
+    startsAt: new Date("2026-10-10T14:00:00Z"),
+    endsAt:   new Date("2026-10-10T14:30:00Z"),
     status: "cancelled",
   },
 ];

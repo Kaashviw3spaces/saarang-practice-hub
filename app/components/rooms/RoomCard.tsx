@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { type RoomStatus, type PracticeMode } from "@/types";
 import { cn } from "@/lib/utils";
 import {
@@ -116,11 +117,25 @@ export function RoomCard({
 }: RoomCardProps) {
   const isBookable = status === "available";
 
-  // Compute remaining minutes outside JSX to keep render pure
-  const nowMs = currentBooking ? currentBooking.endsAt.getTime() : 0;
-  const endsIn = currentBooking
-    ? Math.max(0, Math.floor((nowMs - new Date().getTime()) / 60_000))
-    : null;
+  const [endsIn, setEndsIn] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!currentBooking) return;
+
+    const calculateRemaining = () => {
+      const nowMs = currentBooking.endsAt.getTime();
+      setEndsIn(Math.max(0, Math.floor((nowMs - Date.now()) / 60_000)));
+    };
+
+    const timer = setInterval(calculateRemaining, 60_000);
+    // Also trigger on next tick to avoid synchronous update in effect
+    const initialTimer = setTimeout(calculateRemaining, 0);
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(initialTimer);
+    };
+  }, [currentBooking]);
 
   return (
     <div

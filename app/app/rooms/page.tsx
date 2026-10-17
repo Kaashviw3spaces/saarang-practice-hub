@@ -1,3 +1,5 @@
+"use client";
+
 import { RoomCard } from "@/components/rooms/RoomCard";
 import { type Room } from "@/types";
 import { Filter, Search } from "lucide-react";
@@ -25,7 +27,7 @@ const ALL_ROOMS: Room[] = [
       memberName: "Aryan K.",
       instrument: "Electric Guitar",
       mode: "individual",
-      endsAt: new Date(Date.now() + 22 * 60_000),
+      endsAt: new Date("2026-10-17T19:00:00Z"),
     },
   },
   {
@@ -36,7 +38,7 @@ const ALL_ROOMS: Room[] = [
     status: "reserved",
     equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard", "Cables"],
     acousticProperties: "Acoustic panels — good for ensemble practice.",
-    nextAvailableAt: new Date(Date.now() + 45 * 60_000),
+    nextAvailableAt: new Date("2026-10-17T19:30:00Z"),
   },
   {
     id: "r4",
@@ -50,7 +52,7 @@ const ALL_ROOMS: Room[] = [
       memberName: "Priya S.",
       instrument: "Vocals",
       mode: "individual",
-      endsAt: new Date(Date.now() + 3 * 60_000),
+      endsAt: new Date("2026-10-17T18:45:00Z"),
     },
   },
   {
