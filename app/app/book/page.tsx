@@ -1,28 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Calendar, Clock, Music2, Users, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Calendar, Clock, Music2, Users, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { supabase } from "@/lib/supabase/client";
+import { BackButton } from "@/components/ui/BackButton";
 
-const ROOM_OPTIONS = [
-  { id: "11111111-1111-1111-1111-111111111111", name: "Session A (Soundproof Rehearsal Space)" },
-  { id: "22222222-2222-2222-2222-222222222222", name: "Session B (Intimate Practice Space)" },
-  { id: "33333333-3333-3333-3333-333333333333", name: "Jam Session Area (Ensemble Space)" },
-  { id: "44444444-4444-4444-4444-444444444444", name: "Recording Session (Vocals & Acoustic)" },
-  { id: "55555555-5555-5555-5555-555555555555", name: "Electronics Session (Synth & DAW)" },
-];
+interface RoomOption {
+  id: string;
+  name: string;
+}
 
 export default function BookingPage() {
   const router = useRouter();
-  const [roomId, setRoomId] = useState(ROOM_OPTIONS[0].id);
+
+  // Form state
+  const [roomId, setRoomId] = useState("");
   const [instrument, setInstrument] = useState("Electric Guitar");
   const [mode, setMode] = useState<"individual" | "collaborative" | "band_rehearsal">("individual");
   const [date, setDate] = useState("2026-10-18");
   const [startTime, setStartTime] = useState("16:00");
   const [durationMinutes, setDurationMinutes] = useState(60);
+
+  // Async state
+  const [rooms, setRooms] = useState<RoomOption[]>([]);
+  const [roomsLoading, setRoomsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  // Fetch available rooms for the dropdown
+  useEffect(() => {
+    setDate(new Date().toISOString().split("T")[0]);
+
+    supabase
+      .from("rooms")
+      .select("id, name")
+      .order("name")
+      .then(({ data }) => {
+        const opts = (data ?? []) as RoomOption[];
+        setRooms(opts);
+        if (opts.length > 0) setRoomId(opts[0].id);
+        setRoomsLoading(false);
+      });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,42 +51,62 @@ export default function BookingPage() {
     setError(null);
 
     try {
-      const res = await fetch("/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          roomId,
-          instrument,
-          mode,
-          date,
-          startTime,
-          durationMinutes,
-        }),
+      // Require authenticated user
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        router.push("/login");
+        return;
+      }
+
+      // Build timestamps
+      const startsAt = new Date(`${date}T${startTime}:00`);
+      const endsAt = new Date(startsAt.getTime() + durationMinutes * 60_000);
+
+      // Check for overlapping confirmed bookings in the same room
+      const { data: conflicts } = await supabase
+        .from("bookings")
+        .select("id")
+        .eq("room_id", roomId)
+        .eq("status", "confirmed")
+        .lt("starts_at", endsAt.toISOString())
+        .gt("ends_at", startsAt.toISOString());
+
+      if (conflicts && conflicts.length > 0) {
+        throw new Error(
+          "This session slot is already booked. Please choose a different time or session."
+        );
+      }
+
+      // Insert booking
+      const { error: insertError } = await supabase.from("bookings").insert({
+        room_id: roomId,
+        user_id: user.id,
+        instrument,
+        mode,
+        starts_at: startsAt.toISOString(),
+        ends_at: endsAt.toISOString(),
+        status: "confirmed",
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || data.error || "Failed to create booking");
-      }
+      if (insertError) throw new Error(insertError.message);
 
       setSuccess(true);
-      setTimeout(() => {
-        router.push("/bookings");
-      }, 1500);
+      setTimeout(() => router.push("/bookings"), 1500);
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Failed to create reservation.");
-      }
+      setError(err instanceof Error ? err.message : "Failed to create reservation.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="section min-h-[85vh] flex items-center justify-center">
+    <div className="section min-h-[85vh] flex flex-col items-center justify-center gap-4">
+      <div className="w-full max-w-xl">
+        <BackButton href="/rooms" label="Back to Sessions" />
+      </div>
       <div className="w-full max-w-xl card flex flex-col gap-6 p-8">
         <div className="flex flex-col gap-1">
           <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
@@ -99,17 +140,24 @@ export default function BookingPage() {
             <label className="text-xs font-semibold text-[var(--color-text-muted)]">
               Practice Session
             </label>
-            <select
-              value={roomId}
-              onChange={(e) => setRoomId(e.target.value)}
-              className="w-full h-10 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-2)] px-3 text-sm text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)]"
-            >
-              {ROOM_OPTIONS.map((room) => (
-                <option key={room.id} value={room.id}>
-                  {room.name}
-                </option>
-              ))}
-            </select>
+            {roomsLoading ? (
+              <div className="flex items-center gap-2 h-10 text-sm text-[var(--color-text-muted)]">
+                <Loader2 size={14} className="animate-spin" />
+                Loading sessions…
+              </div>
+            ) : (
+              <select
+                value={roomId}
+                onChange={(e) => setRoomId(e.target.value)}
+                className="w-full h-10 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-2)] px-3 text-sm text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)]"
+              >
+                {rooms.map((room) => (
+                  <option key={room.id} value={room.id}>
+                    {room.name}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           {/* Mode & Instrument grid */}
@@ -192,13 +240,14 @@ export default function BookingPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || roomsLoading}
             className="mt-3 h-11 rounded-[var(--radius-full)] bg-[var(--color-accent)] text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors disabled:opacity-50 cursor-pointer"
           >
             {loading ? "Checking Availability…" : "Confirm Booking"}
           </button>
         </form>
       </div>
+      {/* closes the outer flex-col wrapper */}
     </div>
   );
 }

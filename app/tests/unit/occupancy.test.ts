@@ -38,3 +38,4 @@ console.log("▶ Running Unit Test: evaluateOccupancyState");
 }
 
 console.log("✅ All Occupancy State Engine unit tests passed!");
+

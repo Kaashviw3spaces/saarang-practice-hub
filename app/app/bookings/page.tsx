@@ -1,72 +1,97 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, Loader2 } from "lucide-react";
 import { BookingCard } from "@/components/bookings/BookingCard";
 import { type Booking } from "@/types";
+import { supabase } from "@/lib/supabase/client";
+import { BackButton } from "@/components/ui/BackButton";
 
-const ALL_BOOKINGS: Booking[] = [
-  {
-    id: "b1",
-    roomId: "r1",
-    roomName: "Session A",
-    userId: "u1",
-    memberName: "You",
-    instrument: "Electric Guitar",
-    mode: "collaborative",
-    startsAt: new Date("2026-10-17T19:30:00Z"),
-    endsAt:   new Date("2026-10-17T20:30:00Z"),
-    status: "confirmed",
-    compatibilityLevel: "compatible",
-    compatibilityNote: "Compatible with the acoustic drum session already booked.",
-  },
-  {
-    id: "b2",
-    roomId: "r3",
-    roomName: "Jam Session",
-    userId: "u1",
-    memberName: "You",
-    instrument: "Bass Guitar",
-    mode: "band_rehearsal",
-    startsAt: new Date("2026-10-19T18:00:00Z"),
-    endsAt:   new Date("2026-10-19T19:30:00Z"),
-    status: "confirmed",
-  },
-  {
-    id: "b3",
-    roomId: "r2",
-    roomName: "Session B",
-    userId: "u1",
-    memberName: "You",
-    instrument: "Electric Guitar",
-    mode: "individual",
-    startsAt: new Date("2026-10-15T16:00:00Z"),
-    endsAt:   new Date("2026-10-15T16:45:00Z"),
-    status: "completed",
-  },
-  {
-    id: "b4",
-    roomId: "r4",
-    roomName: "Recording Session",
-    userId: "u1",
-    memberName: "You",
-    instrument: "Vocals",
-    mode: "individual",
-    startsAt: new Date("2026-10-10T14:00:00Z"),
-    endsAt:   new Date("2026-10-10T14:30:00Z"),
-    status: "cancelled",
-  },
-];
+/* ─── Supabase row shape ──────────────────────────────────────────────────── */
+interface BookingRow {
+  id: string;
+  room_id: string;
+  user_id: string;
+  instrument: string;
+  mode: Booking["mode"];
+  starts_at: string;
+  ends_at: string;
+  status: Booking["status"];
+  rooms: { name: string } | null;
+}
+
+function toBooking(row: BookingRow, userEmail: string): Booking {
+  return {
+    id: row.id,
+    roomId: row.room_id,
+    roomName: row.rooms?.name ?? "Unknown Session",
+    userId: row.user_id,
+    memberName: userEmail.split("@")[0],
+    instrument: row.instrument,
+    mode: row.mode,
+    startsAt: new Date(row.starts_at),
+    endsAt: new Date(row.ends_at),
+    status: row.status,
+  };
+}
 
 export default function BookingsPage() {
-  const upcoming = ALL_BOOKINGS.filter(
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    async function fetchBookings() {
+      setLoading(true);
+      setError(null);
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      setAuthChecked(true);
+
+      if (!user) {
+        setLoggedIn(false);
+        setLoading(false);
+        return;
+      }
+
+      setLoggedIn(true);
+
+      const { data, error: err } = await supabase
+        .from("bookings")
+        .select("*, rooms(name)")
+        .eq("user_id", user.id)
+        .order("starts_at", { ascending: true });
+
+      if (err) {
+        setError(err.message);
+      } else {
+        setBookings((data as BookingRow[]).map((row) => toBooking(row, user.email ?? "")));
+      }
+      setLoading(false);
+    }
+
+    fetchBookings();
+  }, []);
+
+  const upcoming = bookings.filter(
     (b) => b.status === "confirmed" || b.status === "pending"
   );
-  const past = ALL_BOOKINGS.filter(
+  const past = bookings.filter(
     (b) => b.status === "completed" || b.status === "cancelled"
   );
 
   return (
     <div className="section">
       <div className="container flex flex-col gap-8">
+        {/* Back navigation */}
+        <BackButton href="/" label="Home" />
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
@@ -85,38 +110,81 @@ export default function BookingsPage() {
           </Link>
         </div>
 
-        {/* Upcoming */}
-        <section className="flex flex-col gap-4">
-          <h2 className="font-semibold text-[var(--color-text)]">Upcoming</h2>
-          {upcoming.length === 0 ? (
-            <div className="card text-center py-10 text-[var(--color-text-muted)] text-sm">
-              No upcoming bookings.{" "}
-              <Link href="/rooms" className="text-[var(--color-accent)] hover:underline">
-                Book a slot →
-              </Link>
-            </div>
-          ) : (
-            <div className="grid sm:grid-cols-2 gap-4">
-              {upcoming.map((b) => (
-                <BookingCard key={b.id} booking={b} />
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* History */}
-        <section className="flex flex-col gap-4">
-          <h2 className="font-semibold text-[var(--color-text)]">History</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {past.map((b) => (
-              <BookingCard key={b.id} booking={b} />
-            ))}
+        {/* Loading */}
+        {loading && (
+          <div className="flex items-center justify-center py-20 gap-2 text-[var(--color-text-muted)]">
+            <Loader2 size={18} className="animate-spin" />
+            <span className="text-sm">Loading your bookings…</span>
           </div>
-        </section>
+        )}
 
-        <p className="text-xs text-[var(--color-text-dim)] text-center">
-          ⚠️ Placeholder data — Supabase integration in Milestone 3.
-        </p>
+        {/* Not logged in */}
+        {authChecked && !loggedIn && !loading && (
+          <div className="card text-center py-14 text-[var(--color-text-muted)] text-sm">
+            <p className="mb-3">Sign in to see your bookings.</p>
+            <Link
+              href="/login"
+              className="inline-flex h-9 items-center rounded-[var(--radius-full)] bg-[var(--color-accent)] px-6 text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors"
+            >
+              Sign in →
+            </Link>
+          </div>
+        )}
+
+        {/* Error */}
+        {!loading && error && (
+          <div className="card text-center py-10 text-[var(--color-danger)] text-sm">
+            Failed to load bookings: {error}
+          </div>
+        )}
+
+        {/* Data */}
+        {!loading && loggedIn && !error && (
+          <>
+            {/* Upcoming */}
+            <section className="flex flex-col gap-4">
+              <h2 className="font-semibold text-[var(--color-text)]">Upcoming</h2>
+              {upcoming.length === 0 ? (
+                <div className="card text-center py-10 text-[var(--color-text-muted)] text-sm">
+                  No upcoming bookings.{" "}
+                  <Link href="/rooms" className="text-[var(--color-accent)] hover:underline">
+                    Book a slot →
+                  </Link>
+                </div>
+              ) : (
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {upcoming.map((b) => (
+                    <BookingCard key={b.id} booking={b} />
+                  ))}
+                </div>
+              )}
+            </section>
+
+            {/* History */}
+            {past.length > 0 && (
+              <section className="flex flex-col gap-4">
+                <h2 className="font-semibold text-[var(--color-text)]">History</h2>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {past.map((b) => (
+                    <BookingCard key={b.id} booking={b} />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {bookings.length === 0 && (
+              <div className="card text-center py-14 text-[var(--color-text-muted)] text-sm">
+                <p className="mb-3">You have no bookings yet.</p>
+                <Link
+                  href="/rooms"
+                  className="inline-flex h-9 items-center rounded-[var(--radius-full)] bg-[var(--color-accent)] px-6 text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors"
+                >
+                  Browse sessions →
+                </Link>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

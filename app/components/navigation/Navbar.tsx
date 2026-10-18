@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Menu, X, Music2 } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { Menu, X, Music2, LogOut, User } from "lucide-react";
+import { supabase } from "@/lib/supabase/client";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
   { href: "/rooms", label: "Sessions" },
@@ -15,7 +17,35 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [signingOut, setSigningOut] = useState(false);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user ?? null);
+    });
+
+    // Subscribe to auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    setSigningOut(true);
+    await supabase.auth.signOut();
+    setSigningOut(false);
+    router.push("/");
+  };
+
+  const displayName = user?.user_metadata?.full_name
+    ? (user.user_metadata.full_name as string).split(" ")[0]
+    : user?.email?.split("@")[0] ?? "";
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-background)]/90 backdrop-blur-md">
@@ -48,18 +78,37 @@ export function Navbar() {
 
         {/* Desktop CTAs */}
         <div className="hidden md:flex items-center gap-3">
-          <Link
-            href="/login"
-            className="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
-          >
-            Sign in
-          </Link>
-          <Link
-            href="/signup"
-            className="inline-flex h-9 items-center rounded-[var(--radius-full)] bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors"
-          >
-            Join Club
-          </Link>
+          {user ? (
+            <>
+              <span className="flex items-center gap-1.5 text-sm text-[var(--color-text-muted)]">
+                <User size={14} className="text-[var(--color-accent)]" />
+                {displayName}
+              </span>
+              <button
+                onClick={handleSignOut}
+                disabled={signingOut}
+                className="inline-flex items-center gap-1.5 h-9 rounded-[var(--radius-full)] border border-[var(--color-border)] px-4 text-sm font-semibold text-[var(--color-text-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-50 cursor-pointer"
+              >
+                <LogOut size={13} />
+                {signingOut ? "Signing out…" : "Sign out"}
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/signup"
+                className="inline-flex h-9 items-center rounded-[var(--radius-full)] bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors"
+              >
+                Join Club
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile burger */}
@@ -90,23 +139,41 @@ export function Navbar() {
             </Link>
           ))}
           <hr className="border-[var(--color-border)]" />
-          <Link
-            href="/login"
-            onClick={() => setMobileOpen(false)}
-            className="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
-          >
-            Sign in
-          </Link>
-          <Link
-            href="/signup"
-            onClick={() => setMobileOpen(false)}
-            className="inline-flex h-9 items-center justify-center rounded-[var(--radius-full)] bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-background)]"
-          >
-            Join Club
-          </Link>
+          {user ? (
+            <>
+              <span className="flex items-center gap-1.5 text-sm text-[var(--color-text-muted)]">
+                <User size={14} className="text-[var(--color-accent)]" />
+                {displayName}
+              </span>
+              <button
+                onClick={() => { setMobileOpen(false); handleSignOut(); }}
+                disabled={signingOut}
+                className="inline-flex items-center gap-1.5 h-9 rounded-[var(--radius-full)] border border-[var(--color-border)] px-4 text-sm font-semibold text-[var(--color-text-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-50 cursor-pointer"
+              >
+                <LogOut size={13} />
+                {signingOut ? "Signing out…" : "Sign out"}
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                onClick={() => setMobileOpen(false)}
+                className="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/signup"
+                onClick={() => setMobileOpen(false)}
+                className="inline-flex h-9 items-center justify-center rounded-[var(--radius-full)] bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-background)]"
+              >
+                Join Club
+              </Link>
+            </>
+          )}
         </div>
       )}
     </header>
   );
 }
-

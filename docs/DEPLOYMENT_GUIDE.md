@@ -58,3 +58,4 @@ When deploying to a live Supabase project:
 2. Set Root Directory to `app`.
 3. Add the Supabase environment variables under Project Settings.
 4. Deploy!
+

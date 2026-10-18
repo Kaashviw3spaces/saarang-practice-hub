@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Zap, Volume2, ShieldAlert, CheckCircle2, AlertTriangle, ArrowRight } from "lucide-react";
 import { CompatibilityAnalysis, SessionSetup } from "@/lib/compatibility/engine";
+import { BackButton } from "@/components/ui/BackButton";
 
 export default function CompatibilityPage() {
   const [sessionA, setSessionA] = useState<SessionSetup>({
@@ -46,6 +47,7 @@ export default function CompatibilityPage() {
   return (
     <div className="section min-h-[90vh]">
       <div className="container flex flex-col gap-8 max-w-4xl mx-auto">
+        <BackButton href="/" label="Home" />
         <div className="flex flex-col gap-2">
           <div className="inline-flex items-center gap-2 rounded-[var(--radius-full)] border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/10 px-3 py-1 text-xs font-semibold text-[var(--color-accent)] w-fit">
             <Zap size={14} /> AI Acoustic Intelligence

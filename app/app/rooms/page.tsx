@@ -1,78 +1,74 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { RoomCard } from "@/components/rooms/RoomCard";
 import { type Room } from "@/types";
-import { Filter, Search } from "lucide-react";
+import { supabase } from "@/lib/supabase/client";
+import { BackButton } from "@/components/ui/BackButton";
+import { Filter, Search, Loader2 } from "lucide-react";
 
-/* Placeholder data — replaced with Supabase in Milestone 3 */
-const ALL_ROOMS: Room[] = [
-  {
-    id: "r1",
-    name: "Session A",
-    description: "Fully soundproofed rehearsal space with professional mixing desk, drum kit, and PA system.",
-    capacity: 6,
-    status: "available",
-    equipment: ["Drum Kit", "PA System", "Bass Amp", "Guitar Amp", "Vocal Mics"],
-    acousticProperties: "Fully isolated — suitable for loud instruments and full-band rehearsals.",
-  },
-  {
-    id: "r2",
-    name: "Session B",
-    description: "Intimate practice space ideal for solo practice, duets, and acoustic or keyboard sessions.",
-    capacity: 3,
-    status: "occupied",
-    equipment: ["Piano", "Headphone Amp", "Music Stands", "Audio Interface"],
-    acousticProperties: "Semi-isolated — moderate noise reduction.",
-    currentBooking: {
-      memberName: "Aryan K.",
-      instrument: "Electric Guitar",
-      mode: "individual",
-      endsAt: new Date("2026-10-17T19:00:00Z"),
-    },
-  },
-  {
-    id: "r3",
-    name: "Jam Session",
-    description: "Open jam space for collaborative sessions and small band rehearsals.",
-    capacity: 8,
-    status: "reserved",
-    equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard", "Cables"],
-    acousticProperties: "Acoustic panels — good for ensemble practice.",
-    nextAvailableAt: new Date("2026-10-17T19:30:00Z"),
-  },
-  {
-    id: "r4",
-    name: "Recording Session",
-    description: "Professional recording and monitoring space for vocals and acoustic instruments.",
-    capacity: 2,
-    status: "departure_pending",
-    equipment: ["Bring your own equipments"],
-    acousticProperties: "Broadcast-grade isolation — near silent.",
-    currentBooking: {
-      memberName: "Priya S.",
-      instrument: "Vocals",
-      mode: "individual",
-      endsAt: new Date("2026-10-17T18:45:00Z"),
-    },
-  },
-  {
-    id: "r5",
-    name: "Electronics Corner",
-    description: "Dedicated space for keyboard players, synth players, and home-recording setups.",
-    capacity: 2,
-    status: "occupancy_uncertain",
-    equipment: ["Synthesizer", "MIDI Keyboard", "Session Headphones"],
-    acousticProperties: "Open layout — suitable for headphone-only practice.",
-  },
-];
+/* ─── Supabase row shape ──────────────────────────────────────────────────── */
+interface RoomRow {
+  id: string;
+  name: string;
+  description: string | null;
+  capacity: number;
+  status: Room["status"];
+  acoustic_properties: string | null;
+  room_equipment: Array<{ equipment: { name: string } | null }>;
+}
+
+function toRoom(row: RoomRow): Room {
+  return {
+    id: row.id,
+    name: row.name,
+    description: row.description ?? "",
+    capacity: row.capacity,
+    status: row.status,
+    acousticProperties: row.acoustic_properties ?? "",
+    equipment: row.room_equipment
+      .map((re) => re.equipment?.name ?? "")
+      .filter(Boolean),
+  };
+}
 
 export default function RoomsPage() {
   const router = useRouter();
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchRooms() {
+      setLoading(true);
+      setError(null);
+      const { data, error: err } = await supabase
+        .from("rooms")
+        .select("*, room_equipment(equipment(name))")
+        .order("name");
+
+      if (err) {
+        setError(err.message);
+      } else {
+        setRooms((data as RoomRow[]).map(toRoom));
+      }
+      setLoading(false);
+    }
+
+    fetchRooms();
+
+    // Re-fetch every 30 s for near-real-time status
+    const interval = setInterval(fetchRooms, 30_000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="section">
       <div className="container flex flex-col gap-8">
+        {/* Back navigation */}
+        <BackButton href="/" label="Home" />
+
         {/* Page header */}
         <div className="flex flex-col gap-2">
           <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
@@ -122,29 +118,47 @@ export default function RoomsPage() {
             <span key={label} className="flex items-center gap-1.5">
               <span
                 className="h-2 w-2 rounded-full"
-                style={{ backgroundColor: `var(--color-${label.toLowerCase().replace(/\s+/g, "-")})`, background: color }}
+                style={{ background: color }}
               />
               {label}
             </span>
           ))}
         </div>
 
-        {/* Session grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {ALL_ROOMS.map((room) => (
-            <RoomCard
-              key={room.id}
-              {...room}
-              onBook={() => {
-                router.push("/book");
-              }}
-            />
-          ))}
-        </div>
+        {/* Loading skeleton */}
+        {loading && (
+          <div className="flex items-center justify-center py-20 gap-2 text-[var(--color-text-muted)]">
+            <Loader2 size={18} className="animate-spin" />
+            <span className="text-sm">Loading sessions…</span>
+          </div>
+        )}
 
-        <p className="text-xs text-[var(--color-text-dim)] text-center">
-          ⚠️ Session data is placeholder until Supabase integration. Booking buttons navigate to reservation form.
-        </p>
+        {/* Error */}
+        {!loading && error && (
+          <div className="card text-center py-10 text-[var(--color-danger)] text-sm">
+            Failed to load sessions: {error}
+          </div>
+        )}
+
+        {/* Empty state */}
+        {!loading && !error && rooms.length === 0 && (
+          <div className="card text-center py-10 text-[var(--color-text-muted)] text-sm">
+            No sessions found. Check back soon!
+          </div>
+        )}
+
+        {/* Session grid */}
+        {!loading && rooms.length > 0 && (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {rooms.map((room) => (
+              <RoomCard
+                key={room.id}
+                {...room}
+                onBook={() => router.push("/book")}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { QrCode, CheckCircle2, LogOut, AlertCircle, Sparkles } from "lucide-react";
+import { BackButton } from "@/components/ui/BackButton";
 
 export default function CheckinPage() {
   const [bookingId, setBookingId] = useState("b1");
@@ -37,7 +38,10 @@ export default function CheckinPage() {
   };
 
   return (
-    <div className="section min-h-[85vh] flex items-center justify-center">
+    <div className="section min-h-[85vh] flex flex-col items-center justify-center gap-4">
+      <div className="w-full max-w-md">
+        <BackButton href="/" label="Home" />
+      </div>
       <div className="w-full max-w-md card flex flex-col items-center text-center gap-6 p-8">
         <div className="flex h-14 w-14 items-center justify-center rounded-[var(--radius-full)] bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
           <QrCode size={28} />

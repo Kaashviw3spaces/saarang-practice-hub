@@ -46,3 +46,4 @@ console.log("▶ Running Unit Test: findConflictingBookings");
 }
 
 console.log("✅ All Booking Conflict Engine unit tests passed!");
+

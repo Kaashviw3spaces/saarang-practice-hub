@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Music2, Lock, Mail, User, AlertCircle, CheckCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
+import { BackButton } from "@/components/ui/BackButton";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -78,7 +79,10 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="section min-h-[80vh] flex items-center justify-center">
+    <div className="section min-h-[80vh] flex flex-col items-center justify-center gap-4">
+      <div className="w-full max-w-md">
+        <BackButton href="/" label="Home" />
+      </div>
       <div className="w-full max-w-md card flex flex-col gap-6 p-8">
         <div className="flex flex-col items-center text-center gap-2">
           <div className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
