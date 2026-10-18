@@ -9,105 +9,7 @@ import { BackButton } from "@/components/ui/BackButton";
 import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 import { Filter, Search, Loader2, Radio, Sparkles, Zap } from "lucide-react";
 
-interface RoomRow {
-  id: string;
-  name: string;
-  description: string | null;
-  capacity: number;
-  status: Room["status"];
-  acoustic_properties: string | null;
-  room_equipment: Array<{ equipment: { name: string } | null }>;
-}
 
-const SEED_ROOM_DETAILS: Record<
-  string,
-  { name: string; description: string; acousticProperties: string; capacity: number }
-> = {
-  "session a": {
-    name: "Session A",
-    description: "Rehearsal space with drums, drum pads and amplifiers.",
-    capacity: 6,
-    acousticProperties: "Fully isolated — suitable for loud instruments and full-band rehearsals.",
-  },
-  "session b": {
-    name: "Session B",
-    description: "Practice space ideal for solo practice, duets, and acoustic or electronic sessions.",
-    capacity: 3,
-    acousticProperties: "Semi-isolated — suitable for moderately loud practice sessions together.",
-  },
-  "jam session": {
-    name: "Jam Session",
-    description: "Open jam space for collaborative sessions and small band rehearsals.",
-    capacity: 8,
-    acousticProperties: "Acoustic panels — good for ensemble practice.",
-  },
-  "recording session": {
-    name: "Recording Session",
-    description: "Recording space for vocals and acoustic instruments.",
-    capacity: 2,
-    acousticProperties: "Broadcast-grade isolation — near silent.",
-  },
-};
-
-const DEFAULT_ROOMS: Room[] = [
-  {
-    id: "seed-a",
-    name: "Session A",
-    description: "Rehearsal space with drums, drum pads and amplifiers.",
-    capacity: 6,
-    status: "available",
-    equipment: ["Drums", "Drum Pads", "Amplifiers", "PA System"],
-    acousticProperties: "Fully isolated — suitable for loud instruments and full-band rehearsals.",
-  },
-  {
-    id: "seed-b",
-    name: "Session B",
-    description: "Practice space ideal for solo practice, duets, and acoustic or electronic sessions.",
-    capacity: 3,
-    status: "available",
-    equipment: ["Upright Piano", "Headphone Amp", "Music Stands"],
-    acousticProperties: "Semi-isolated — suitable for moderately loud practice sessions together.",
-  },
-  {
-    id: "seed-jam",
-    name: "Jam Session",
-    description: "Open jam space for collaborative sessions and small band rehearsals.",
-    capacity: 8,
-    status: "available",
-    equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard"],
-    acousticProperties: "Acoustic panels — good for ensemble practice.",
-  },
-  {
-    id: "seed-rec",
-    name: "Recording Session",
-    description: "Recording space for vocals and acoustic instruments.",
-    capacity: 2,
-    status: "available",
-    equipment: ["Studio Mics", "Audio Interface", "Monitor Speakers"],
-    acousticProperties: "Broadcast-grade isolation — near silent.",
-  },
-];
-
-function toRoom(row: RoomRow): Room {
-  const normKey = row.name
-    .toLowerCase()
-    .replace(/\s*\(acoustic\)\s*/g, "")
-    .replace(/\s*area\s*/g, "")
-    .trim();
-  const seed = SEED_ROOM_DETAILS[normKey];
-
-  return {
-    id: row.id,
-    name: seed?.name ?? row.name,
-    description: seed?.description ?? row.description ?? "",
-    capacity: seed?.capacity ?? row.capacity,
-    status: row.status,
-    acousticProperties: seed?.acousticProperties ?? row.acoustic_properties ?? "",
-    equipment: row.room_equipment
-      .map((re) => re.equipment?.name ?? "")
-      .filter(Boolean),
-  };
-}
 
 export default function RoomsPage() {
   const router = useRouter();
@@ -119,42 +21,34 @@ export default function RoomsPage() {
     async function fetchRooms() {
       setLoading(true);
       setError(null);
-      const { data, error: err } = await supabase
-        .from("rooms")
-        .select("*, room_equipment(equipment(name))")
-        .order("name");
+      try {
+        const res = await fetch("/api/rooms", { cache: "no-store" });
+        const json = await res.json();
+        const seedRooms: Room[] = json.rooms ?? [];
 
-      if (err) {
-        setError(err.message);
-        setRooms(DEFAULT_ROOMS);
-      } else {
-        const isExcluded = (name: string) => {
-          const lower = name.toLowerCase().trim();
-          return lower.includes("electronics corner");
-        };
+        // Check if Supabase has live room status overrides
+        const { data: dbData } = await supabase
+          .from("rooms")
+          .select("name, status");
 
-        const roomMap = new Map<string, Room>();
-        for (const row of ((data ?? []) as RoomRow[])) {
-          const r = toRoom(row);
-          if (isExcluded(r.name)) continue;
-          const key = r.name.toLowerCase().trim();
-          const existing = roomMap.get(key);
-          if (!existing) {
-            roomMap.set(key, r);
-          } else {
-            const combinedEquipment = Array.from(
-              new Set([...existing.equipment, ...r.equipment])
-            );
-            roomMap.set(key, { ...existing, equipment: combinedEquipment });
+        const statusMap = new Map<string, Room["status"]>();
+        if (dbData) {
+          for (const item of dbData) {
+            statusMap.set(item.name.toLowerCase().trim(), item.status as Room["status"]);
           }
         }
-        if (roomMap.size === 0) {
-          setRooms(DEFAULT_ROOMS);
-        } else {
-          setRooms(Array.from(roomMap.values()));
-        }
+
+        const finalRooms = seedRooms.map((r) => {
+          const liveStatus = statusMap.get(r.name.toLowerCase().trim());
+          return liveStatus ? { ...r, status: liveStatus } : r;
+        });
+
+        setRooms(finalRooms);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Failed to load rooms");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
 
     fetchRooms();

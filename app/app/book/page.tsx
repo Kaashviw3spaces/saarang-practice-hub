@@ -35,6 +35,16 @@ export default function BookingPage() {
   const [startTime, setStartTime] = useState("16:00");
   const [durationMinutes, setDurationMinutes] = useState(60);
 
+  const [instrumentsList, setInstrumentsList] = useState<string[]>([
+    "Electric Guitar",
+    "Acoustic Drums",
+    "Bass Guitar",
+    "Piano",
+    "Synthesizer / Keyboard",
+    "Vocals (Amplified)",
+    "Acoustic Guitar",
+  ]);
+
   // Async state
   const [rooms, setRooms] = useState<RoomOption[]>([]);
   const [roomsLoading, setRoomsLoading] = useState(true);
@@ -42,41 +52,17 @@ export default function BookingPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  // Fetch available rooms for the dropdown
+  // Fetch available rooms and instruments from seed.sql / database
   useEffect(() => {
     setDate(new Date().toISOString().split("T")[0]);
 
-    supabase
-      .from("rooms")
-      .select("id, name")
-      .order("name")
-      .then(({ data }) => {
-        const isExcluded = (name: string) => {
-          const lower = name.toLowerCase().trim();
-          return lower.includes("electronics corner");
-        };
-
-        const opts = (data ?? []) as RoomOption[];
-        const seenNames = new Set<string>();
-        const uniqueOpts = opts
-          .filter((opt) => !isExcluded(opt.name))
-          .map((opt) => {
-            const cleanName = opt.name
-              .replace(/\s*\(Acoustic\)/i, "")
-              .replace(/\s*Area/i, "")
-              .trim();
-            return { id: opt.id, name: cleanName };
-          })
-          .filter((opt) => {
-            const key = opt.name.toLowerCase().trim();
-            if (seenNames.has(key)) return false;
-            seenNames.add(key);
-            return true;
-          });
-
-        if (uniqueOpts.length > 0) {
-          setRooms(uniqueOpts);
-          setRoomId(uniqueOpts[0].id);
+    fetch("/api/rooms", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((json: { rooms?: { id: string; name: string }[]; instruments?: { name: string }[] }) => {
+        if (json.rooms && json.rooms.length > 0) {
+          const mapped = json.rooms.map((r) => ({ id: r.id, name: r.name }));
+          setRooms(mapped);
+          setRoomId(mapped[0].id);
         } else {
           const defaultOpts: RoomOption[] = [
             { id: "seed-a", name: "Session A" },
@@ -87,6 +73,17 @@ export default function BookingPage() {
           setRooms(defaultOpts);
           setRoomId(defaultOpts[0].id);
         }
+
+        if (json.instruments && json.instruments.length > 0) {
+          const names = json.instruments.map((i) => i.name);
+          setInstrumentsList(names);
+          if (!names.includes(instrument)) {
+            setInstrument(names[0]);
+          }
+        }
+        setRoomsLoading(false);
+      })
+      .catch(() => {
         setRoomsLoading(false);
       });
   }, []);
@@ -251,14 +248,17 @@ export default function BookingPage() {
               <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
                 <Music2 size={13} /> Primary Instrument
               </label>
-              <input
-                type="text"
-                required
+              <select
                 value={instrument}
                 onChange={(e) => setInstrument(e.target.value)}
-                placeholder="e.g. Electric Guitar, Drums"
-                className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono text-[var(--color-cream)] placeholder:text-[var(--color-text-dim)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors"
-              />
+                className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors cursor-pointer"
+              >
+                {instrumentsList.map((inst) => (
+                  <option key={inst} value={inst} className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                    {inst}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 

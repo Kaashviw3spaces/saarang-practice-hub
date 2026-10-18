@@ -15,14 +15,15 @@ import { OpeningCurtain } from "@/components/motion/OpeningCurtain";
 import { SoundwaveVisualizer } from "@/components/motion/SoundwaveVisualizer";
 import { RockArchive } from "@/components/gallery/RockArchive";
 import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
+import { parseSeedSql } from "@/lib/seed/parser";
 
-/* ─── Placeholder data for hero preview ───────────────────────────────────── */
-const PREVIEW_ROOMS: Room[] = [
+/* ─── Fallback placeholder data ───────────────────────────────────────────── */
+const FALLBACK_ROOMS: Room[] = [
   {
     id: "r1",
     name: "Session A",
     description: "Rehearsal space with drums, drum pads and amplifiers.",
-    capacity: 6,
+    capacity: 8,
     status: "available",
     equipment: ["Drums", "Drum Pads", "Amplifiers", "PA System"],
     acousticProperties: "Fully isolated — suitable for loud instruments and full-band rehearsals.",
@@ -31,9 +32,9 @@ const PREVIEW_ROOMS: Room[] = [
     id: "r2",
     name: "Session B",
     description: "Practice space ideal for solo practice, duets, and acoustic or electronic sessions.",
-    capacity: 3,
-    status: "occupied",
-    equipment: ["Upright Piano", "Headphone Amp", "Music Stands"],
+    capacity: 6,
+    status: "available",
+    equipment: ["Piano", "Headphone Amp", "Music Stands"],
     acousticProperties: "Semi-isolated — suitable for moderately loud practice sessions together.",
   },
   {
@@ -41,7 +42,7 @@ const PREVIEW_ROOMS: Room[] = [
     name: "Jam Session",
     description: "Open jam space for collaborative sessions and small band rehearsals.",
     capacity: 8,
-    status: "reserved",
+    status: "available",
     equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard"],
     acousticProperties: "Acoustic panels — good for ensemble practice.",
   },
@@ -49,22 +50,23 @@ const PREVIEW_ROOMS: Room[] = [
     id: "r4",
     name: "Recording Session",
     description: "Recording space for vocals and acoustic instruments.",
-    capacity: 2,
+    capacity: 4,
     status: "available",
     equipment: ["Studio Mics", "Audio Interface", "Monitor Speakers"],
-    acousticProperties: "Broadcast-grade isolation — near silent.",
+    acousticProperties: "Isolated — perfect for focused recording sessions.",
   },
 ];
 
-
-const STATS = [
-  { value: "04", label: "ACTIVE REHEARSAL STAGES" },
-  { value: "100%", label: "CONFLICT FREE PROTOCOL" },
-  { value: "<60s", label: "INSTANT SLOT RESERVATION" },
-  { value: "24/7", label: "LIVE REHEARSAL ACCESS" },
-];
-
 export default function HomePage() {
+  const seedData = parseSeedSql();
+  const displayRooms = seedData.rooms.length > 0 ? seedData.rooms : FALLBACK_ROOMS;
+
+  const STATS = [
+    { value: String(displayRooms.length).padStart(2, "0"), label: "ACTIVE REHEARSAL STAGES" },
+    { value: "100%", label: "CONFLICT FREE PROTOCOL" },
+    { value: "<60s", label: "INSTANT SLOT RESERVATION" },
+    { value: "24/7", label: "LIVE REHEARSAL ACCESS" },
+  ];
   return (
     <div className="flex flex-col bg-[var(--color-ink)] text-[var(--color-cream)]">
       {/* ── OPENING CURTAIN (Awwwards reveal animation) ──────────────────── */}
@@ -219,7 +221,7 @@ export default function HomePage() {
 
           {/* Session Cards */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {PREVIEW_ROOMS.map((room) => (
+            {displayRooms.map((room) => (
               <RoomCard key={room.id} {...room} />
             ))}
           </div>

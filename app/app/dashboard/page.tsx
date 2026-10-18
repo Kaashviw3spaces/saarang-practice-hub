@@ -120,37 +120,43 @@ export default function DashboardPage() {
         }
       }
 
-      const { data: rData } = await supabase
-        .from("rooms")
-        .select("name, status")
-        .order("name");
+      try {
+        const res = await fetch("/api/rooms", { cache: "no-store" });
+        const json = await res.json();
+        const seedRooms: Room[] = json.rooms ?? [];
 
-      if (rData && rData.length > 0) {
-        const isExcluded = (name: string) => {
-          const lower = name.toLowerCase().trim();
-          return lower.includes("electronics corner");
-        };
+        const { data: rData } = await supabase
+          .from("rooms")
+          .select("name, status")
+          .order("name");
 
-        const seen = new Set<string>();
-        const uniqueSummary: RoomStatusItem[] = [];
-        for (const r of rData) {
-          if (isExcluded(r.name)) continue;
-          const key = r.name.toLowerCase().trim();
-          if (!seen.has(key)) {
-            const cleanName = r.name
-              .replace(/\s*\(Acoustic\)/i, "")
-              .replace(/\s*Area/i, "")
-              .trim();
-            seen.add(key);
-            uniqueSummary.push({
-              room: cleanName,
-              status: r.status as Room["status"],
-              note: STATUS_LABEL[r.status as Room["status"]] || "STAGE OPEN",
-            });
+        const statusMap = new Map<string, Room["status"]>();
+        if (rData) {
+          for (const item of rData) {
+            statusMap.set(item.name.toLowerCase().trim(), item.status as Room["status"]);
           }
         }
-        setRoomsSummary(uniqueSummary);
-      } else {
+
+        const summary: RoomStatusItem[] = seedRooms.map((r) => {
+          const status = statusMap.get(r.name.toLowerCase().trim()) || r.status;
+          return {
+            room: r.name,
+            status,
+            note: STATUS_LABEL[status] || "STAGE OPEN",
+          };
+        });
+
+        setRoomsSummary(
+          summary.length > 0
+            ? summary
+            : [
+                { room: "Session A", status: "available", note: "STAGE OPEN" },
+                { room: "Session B", status: "occupied", note: "IN REHEARSAL" },
+                { room: "Jam Session", status: "reserved", note: "RESERVED" },
+                { room: "Recording Session", status: "departure_pending", note: "FINISHING UP" },
+              ]
+        );
+      } catch {
         setRoomsSummary([
           { room: "Session A", status: "available", note: "STAGE OPEN" },
           { room: "Session B", status: "occupied", note: "IN REHEARSAL" },
