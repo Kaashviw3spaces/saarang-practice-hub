@@ -322,9 +322,9 @@ export default function DashboardPage() {
               </div>
 
               <div className="flex flex-col gap-2.5">
-                {roomsSummary.map(({ room, status, note }) => (
+                {roomsSummary.map(({ room, status, note }, idx) => (
                   <div
-                    key={room}
+                    key={`${room}-${idx}`}
                     className="flex items-center justify-between gap-2 p-2.5 bg-[var(--color-ink)] border border-[var(--color-border)] text-xs font-mono"
                   >
                     <div className="flex items-center gap-2 min-w-0">
