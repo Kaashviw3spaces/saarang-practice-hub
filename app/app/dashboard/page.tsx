@@ -121,13 +121,20 @@ export default function DashboardPage() {
         .order("name");
 
       if (rData && rData.length > 0) {
-        setRoomsSummary(
-          rData.map((r) => ({
-            room: r.name,
-            status: r.status as Room["status"],
-            note: STATUS_LABEL[r.status as Room["status"]] || "STAGE OPEN",
-          }))
-        );
+        const seen = new Set<string>();
+        const uniqueSummary: RoomStatusItem[] = [];
+        for (const r of rData) {
+          const key = r.name.toLowerCase().trim();
+          if (!seen.has(key)) {
+            seen.add(key);
+            uniqueSummary.push({
+              room: r.name,
+              status: r.status as Room["status"],
+              note: STATUS_LABEL[r.status as Room["status"]] || "STAGE OPEN",
+            });
+          }
+        }
+        setRoomsSummary(uniqueSummary);
       } else {
         setRoomsSummary([
           { room: "Session A", status: "available", note: "STAGE OPEN" },

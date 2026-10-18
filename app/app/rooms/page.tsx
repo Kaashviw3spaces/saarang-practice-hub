@@ -51,7 +51,21 @@ export default function RoomsPage() {
       if (err) {
         setError(err.message);
       } else {
-        setRooms((data as RoomRow[]).map(toRoom));
+        const roomMap = new Map<string, Room>();
+        for (const row of ((data ?? []) as RoomRow[])) {
+          const r = toRoom(row);
+          const key = r.name.toLowerCase().trim();
+          const existing = roomMap.get(key);
+          if (!existing) {
+            roomMap.set(key, r);
+          } else {
+            const combinedEquipment = Array.from(
+              new Set([...existing.equipment, ...r.equipment])
+            );
+            roomMap.set(key, { ...existing, equipment: combinedEquipment });
+          }
+        }
+        setRooms(Array.from(roomMap.values()));
       }
       setLoading(false);
     }

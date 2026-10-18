@@ -52,8 +52,15 @@ export default function BookingPage() {
       .order("name")
       .then(({ data }) => {
         const opts = (data ?? []) as RoomOption[];
-        setRooms(opts);
-        if (opts.length > 0) setRoomId(opts[0].id);
+        const seenNames = new Set<string>();
+        const uniqueOpts = opts.filter((opt) => {
+          const key = opt.name.toLowerCase().trim();
+          if (seenNames.has(key)) return false;
+          seenNames.add(key);
+          return true;
+        });
+        setRooms(uniqueOpts);
+        if (uniqueOpts.length > 0) setRoomId(uniqueOpts[0].id);
         setRoomsLoading(false);
       });
   }, []);
