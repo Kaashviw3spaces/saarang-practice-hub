@@ -14,3 +14,4 @@ export async function GET() {
     return NextResponse.json({ error: message, rooms: [], instruments: [] }, { status: 500 });
   }
 }
+

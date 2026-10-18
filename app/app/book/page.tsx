@@ -10,11 +10,9 @@ import {
   AlertCircle,
   CheckCircle2,
   Loader2,
-  Ticket,
-  Zap,
-  ArrowRight,
   Radio,
   Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { BackButton } from "@/components/ui/BackButton";
@@ -215,9 +213,7 @@ export default function BookingPage() {
         {/* Top Header Strip */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4">
           <div className="flex items-center gap-2">
-            <span className="badge-tour badge-tour-accent">
-              <Calendar size={12} /> REHEARSAL RESERVATION
-            </span>
+            <span className="badge-tour badge-tour-rust">PRACTICE HUB</span>
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
               SLOT ALLOCATION
             </span>
@@ -341,7 +337,7 @@ export default function BookingPage() {
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
                     <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
-                      <Music2 size={13} /> Jam Lineup Instruments (Select Multiple)
+                      <Music2 size={13} /> Your Instruments (Select Multiple)
                     </label>
                     <span className="text-[10px] font-mono uppercase text-[var(--color-ochre)]">
                       {selectedInstruments.length} Selected
