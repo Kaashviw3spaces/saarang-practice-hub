@@ -46,6 +46,23 @@ export default function BookingPage() {
     "Acoustic Guitar",
   ]);
 
+  // Selected instruments for collaborative jam sessions (multi-select)
+  const [selectedInstruments, setSelectedInstruments] = useState<string[]>([
+    "Electric Guitar",
+    "Acoustic Drums",
+  ]);
+
+  const toggleInstrument = (inst: string) => {
+    setSelectedInstruments((prev) => {
+      if (prev.includes(inst)) {
+        if (prev.length <= 1) return prev; // Keep at least one selected
+        return prev.filter((i) => i !== inst);
+      } else {
+        return [...prev, inst];
+      }
+    });
+  };
+
   // Async state
   const [rooms, setRooms] = useState<RoomOption[]>([]);
   const [roomsLoading, setRoomsLoading] = useState(true);
@@ -89,6 +106,7 @@ export default function BookingPage() {
   const selectedRoom = rooms.find((r) => r.id === roomId);
   const isSessionA = Boolean(selectedRoom?.name.toLowerCase().includes("session a"));
   const isBandRehearsal = mode === "band_rehearsal";
+  const isCollaborative = mode === "collaborative";
 
   // Compute available instruments based on room & mode:
   // In Session A solo practice, only Drums and Electric Guitar are permitted
@@ -107,10 +125,15 @@ export default function BookingPage() {
   useEffect(() => {
     if (isBandRehearsal) {
       setInstrument("Full Band Setup");
+    } else if (isCollaborative) {
+      // Ensure at least one instrument is selected in collaborative mode
+      if (selectedInstruments.length === 0 && instrumentsList.length > 0) {
+        setSelectedInstruments([instrumentsList[0]]);
+      }
     } else if (!currentAllowedInstruments.includes(instrument)) {
       setInstrument(currentAllowedInstruments[0] || "Acoustic Drums");
     }
-  }, [isBandRehearsal, currentAllowedInstruments, instrument]);
+  }, [isBandRehearsal, isCollaborative, currentAllowedInstruments, instrument, selectedInstruments, instrumentsList]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,8 +169,16 @@ export default function BookingPage() {
         );
       }
 
-      // Insert booking - Full band rehearsal covers all instruments under one reservation
-      const finalInstrument = isBandRehearsal ? "Full Band Setup" : instrument;
+      // Insert booking - Full band rehearsal covers all instruments, collaborative jam combines selected instruments
+      let finalInstrument = instrument;
+      if (isBandRehearsal) {
+        finalInstrument = "Full Band Setup";
+      } else if (isCollaborative) {
+        if (selectedInstruments.length === 0) {
+          throw new Error("Please select at least one instrument for your collaborative jam session.");
+        }
+        finalInstrument = selectedInstruments.join(", ");
+      }
 
       const { error: insertError } = await supabase.from("bookings").insert({
         room_id: roomId,
@@ -249,29 +280,29 @@ export default function BookingPage() {
 
           {/* STEP 02: Mode & Instrument */}
           <div className="flex flex-col gap-3">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
-                  <Users size={13} /> [STEP 02] Practice Mode
-                </label>
-                <select
-                  value={mode}
-                  onChange={(e) => setMode(e.target.value as "individual" | "collaborative" | "band_rehearsal")}
-                  className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors cursor-pointer"
-                >
-                  <option value="individual" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-                    Solo Practice
-                  </option>
-                  <option value="collaborative" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-                    Collaborative Jam
-                  </option>
-                  <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-                    Full Band Rehearsal
-                  </option>
-                </select>
-              </div>
+            {isBandRehearsal ? (
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
+                    <Users size={13} /> [STEP 02] Practice Mode
+                  </label>
+                  <select
+                    value={mode}
+                    onChange={(e) => setMode(e.target.value as "individual" | "collaborative" | "band_rehearsal")}
+                    className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors cursor-pointer"
+                  >
+                    <option value="individual" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                      Solo Practice
+                    </option>
+                    <option value="collaborative" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                      Collaborative Jam
+                    </option>
+                    <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                      Full Band Rehearsal
+                    </option>
+                  </select>
+                </div>
 
-              {isBandRehearsal ? (
                 <div className="flex flex-col gap-2">
                   <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
                     <Sparkles size={13} /> Band Equipment Setup
@@ -283,7 +314,92 @@ export default function BookingPage() {
                     </span>
                   </div>
                 </div>
-              ) : (
+              </div>
+            ) : isCollaborative ? (
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
+                    <Users size={13} /> [STEP 02] Practice Mode
+                  </label>
+                  <select
+                    value={mode}
+                    onChange={(e) => setMode(e.target.value as "individual" | "collaborative" | "band_rehearsal")}
+                    className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors cursor-pointer"
+                  >
+                    <option value="individual" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                      Solo Practice
+                    </option>
+                    <option value="collaborative" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                      Collaborative Jam
+                    </option>
+                    <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                      Full Band Rehearsal
+                    </option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
+                      <Music2 size={13} /> Jam Lineup Instruments (Select Multiple)
+                    </label>
+                    <span className="text-[10px] font-mono uppercase text-[var(--color-ochre)]">
+                      {selectedInstruments.length} Selected
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-3 bg-[var(--color-ink)] border border-[var(--color-border)]">
+                    {instrumentsList.map((inst) => {
+                      const isSelected = selectedInstruments.includes(inst);
+                      return (
+                        <button
+                          key={inst}
+                          type="button"
+                          onClick={() => toggleInstrument(inst)}
+                          className={`flex items-center gap-2 p-2.5 text-xs font-mono transition-all text-left border cursor-pointer ${
+                            isSelected
+                              ? "bg-[var(--color-rust)]/25 border-[var(--color-rust)] text-[var(--color-cream)] font-bold shadow-[inset_0_0_0_1px_var(--color-rust)]"
+                              : "bg-[var(--color-surface)]/60 border-[var(--color-border)] text-[var(--color-text-dim)] hover:border-[var(--color-text-muted)] hover:text-[var(--color-cream)]"
+                          }`}
+                        >
+                          <div
+                            className={`w-4 h-4 rounded-none border flex items-center justify-center shrink-0 ${
+                              isSelected
+                                ? "bg-[var(--color-rust)] border-[var(--color-ochre)] text-[var(--color-cream)]"
+                                : "border-[var(--color-border)] bg-[var(--color-ink)]"
+                            }`}
+                          >
+                            {isSelected && <CheckCircle2 size={12} className="text-[var(--color-cream)]" />}
+                          </div>
+                          <span className="truncate">{inst}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
+                    <Users size={13} /> [STEP 02] Practice Mode
+                  </label>
+                  <select
+                    value={mode}
+                    onChange={(e) => setMode(e.target.value as "individual" | "collaborative" | "band_rehearsal")}
+                    className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors cursor-pointer"
+                  >
+                    <option value="individual" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                      Solo Practice
+                    </option>
+                    <option value="collaborative" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                      Collaborative Jam
+                    </option>
+                    <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                      Full Band Rehearsal
+                    </option>
+                  </select>
+                </div>
+
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
                     <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
@@ -307,8 +423,8 @@ export default function BookingPage() {
                     ))}
                   </select>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Contextual Guidance Notes */}
             {isBandRehearsal && (
@@ -320,6 +436,20 @@ export default function BookingPage() {
                   </span>
                   <span className="text-[var(--color-text-dim)]">
                     Only one band member needs to book this slot for everyone. No need to select individual instruments — the entire session space and all backline gear are reserved for your full band.
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {isCollaborative && (
+              <div className="p-3.5 border border-[var(--color-ochre)]/40 bg-[var(--color-ochre)]/10 text-xs font-mono text-[var(--color-cream)] flex items-start gap-2.5">
+                <Users size={16} className="text-[var(--color-ochre)] shrink-0 mt-0.5" />
+                <div className="leading-relaxed">
+                  <span className="font-bold text-[var(--color-ochre)] uppercase tracking-wider block mb-0.5">
+                    One Member Books For The Entire Jam
+                  </span>
+                  <span className="text-[var(--color-text-dim)]">
+                    Only one member needs to book this jam session for the group. Select all instruments that will be played above.
                   </span>
                 </div>
               </div>
