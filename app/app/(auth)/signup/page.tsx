@@ -62,7 +62,7 @@ export default function SignupPage() {
             <CheckCircle size={24} />
           </div>
           <span className="badge-tour badge-tour-accent">MEMBERSHIP PENDING</span>
-          <h2 className="font-[var(--font-poster)] text-3xl font-normal text-[var(--color-cream)] poster-headline">
+          <h2 className="font-[var(--font-display)] text-3xl font-bold text-[var(--color-cream)] poster-headline">
             VERIFICATION DISPATCHED
           </h2>
           <p className="text-xs font-mono text-[var(--color-text-muted)] leading-relaxed">
@@ -93,7 +93,7 @@ export default function SignupPage() {
             <Zap size={22} className="fill-current" />
           </div>
           <span className="badge-tour badge-tour-rust mt-2">NEW ARTIST ROSTER</span>
-          <h1 className="font-[var(--font-poster)] text-3xl sm:text-4xl font-normal text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+          <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             JOIN SAARANG CLUB
           </h1>
           <p className="text-xs font-mono text-[var(--color-text-muted)]">

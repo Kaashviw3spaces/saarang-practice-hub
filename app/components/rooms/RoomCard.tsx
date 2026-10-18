@@ -166,7 +166,7 @@ export function RoomCard({
 
         {/* Room Title & Description */}
         <div className="mb-4">
-          <h3 className="font-[var(--font-poster)] text-2xl md:text-3xl text-[var(--color-cream)] leading-none tracking-tight group-hover:text-[var(--color-ochre)] transition-colors truncate">
+          <h3 className="font-[var(--font-display)] text-2xl md:text-3xl text-[var(--color-cream)] leading-none tracking-tight group-hover:text-[var(--color-ochre)] transition-colors truncate">
             {name}
           </h3>
           <p className="mt-1.5 text-xs text-[var(--color-text-muted)] line-clamp-2 leading-relaxed">

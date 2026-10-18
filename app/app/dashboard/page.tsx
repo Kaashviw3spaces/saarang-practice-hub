@@ -173,7 +173,7 @@ export default function DashboardPage() {
                 ARTIST CONTROL PANEL
               </span>
             </div>
-            <h1 className="font-[var(--font-poster)] text-5xl sm:text-6xl font-normal text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+            <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               WELCOME BACK, {userName.toUpperCase()}
             </h1>
             <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">

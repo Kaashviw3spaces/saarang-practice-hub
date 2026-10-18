@@ -46,11 +46,10 @@
   --color-warning:     #D4A83F;
   --color-danger:      #B84C2D;
 
-  /* Typography */
-  --font-poster:       var(--font-poster), 'Anton', Impact, sans-serif;
+  /* Typography Hierarchy: Bebas Neue + Space Grotesk interface, Metal Mania for Rock Archive & decorative */
   --font-display:      var(--font-display), 'Bebas Neue', Impact, 'Arial Black', sans-serif;
-  --font-psychedelic:  var(--font-psychedelic), 'Syne', cursive, sans-serif;
   --font-body:         var(--font-body), 'Space Grotesk', -apple-system, sans-serif;
+  --font-metal:        var(--font-metal), 'Metal Mania', cursive, sans-serif;
   --font-mono:         'JetBrains Mono', 'Courier New', monospace;
 
   /* Editorial Easing & Timing — Buttery Smooth */
@@ -107,10 +106,9 @@
   --color-accent-dim:  var(--color-accent-dim);
   --color-secondary:   var(--color-secondary);
 
-  --font-poster:       var(--font-poster);
   --font-display:      var(--font-display);
-  --font-psychedelic:  var(--font-psychedelic);
   --font-body:         var(--font-body);
+  --font-metal:        var(--font-metal);
 }
 
 /* ─── Base Styles ─────────────────────────────────────────────────────────── */
@@ -137,11 +135,11 @@ body {
   overflow-x: hidden;
 }
 
-/* Monumental Poster Display Headings (Gig-Poster Condensed Uppercase) */
+/* Gig-Poster Display Headings: Bebas Neue throughout interface */
 h1, h2, h3, h4 {
-  font-family: var(--font-poster);
+  font-family: var(--font-display);
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.025em;
   line-height: 0.95;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -149,26 +147,25 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   line-height: 0.92;
 }
 
-/* Poster Font Utility Classes */
-.font-poster {
-  font-family: var(--font-poster);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
+/* Typography Utility Classes */
 .font-display {
   font-family: var(--font-display);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 
-.font-psychedelic {
-  font-family: var(--font-psychedelic);
-  letter-spacing: 0.01em;
+.font-metal {
+  font-family: var(--font-metal);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.font-body {
+  font-family: var(--font-body);
 }
 
 /* Smooth universal interaction styling */
@@ -298,11 +295,11 @@ a, button, input, select, textarea, [role="button"] {
 
 /* ─── Poster Watermarks & Halftone Edge Distress ──────────────────────────── */
 .poster-watermark {
-  font-family: var(--font-display);
+  font-family: var(--font-metal);
   font-size: clamp(6rem, 18vw, 22rem);
   line-height: 0.8;
   color: var(--color-ivory);
-  opacity: 0.035;
+  opacity: 0.04;
   user-select: none;
   pointer-events: none;
   text-transform: uppercase;
@@ -518,18 +515,18 @@ a, button, input, select, textarea, [role="button"] {
 
 /* ─── Poster Headline & Screenprint Typography Utilities ─────────────────── */
 .poster-headline {
-  font-family: var(--font-poster);
+  font-family: var(--font-display);
   text-transform: uppercase;
-  letter-spacing: 0.015em;
+  letter-spacing: 0.025em;
   line-height: 0.9;
   text-shadow: 2px 2px 0px rgba(16, 16, 15, 0.85);
   -webkit-font-smoothing: antialiased;
 }
 
 .poster-headline-stroke {
-  font-family: var(--font-poster);
+  font-family: var(--font-display);
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   line-height: 0.9;
   -webkit-text-stroke: 1.5px var(--color-cream);
   color: transparent;
@@ -553,10 +550,9 @@ a, button, input, select, textarea, [role="button"] {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--font-psychedelic);
-  font-weight: 800;
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-metal);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.25rem 0.75rem;
   border-radius: var(--radius-sm);

@@ -53,7 +53,7 @@ export default function LoginPage() {
             <Zap size={22} className="fill-current" />
           </div>
           <span className="badge-tour badge-tour-accent mt-2">MEMBER LOGIN</span>
-          <h1 className="font-[var(--font-poster)] text-3xl sm:text-4xl font-normal text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+          <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             SIGN IN TO SAARANG
           </h1>
           <p className="text-xs font-mono text-[var(--color-text-muted)]">

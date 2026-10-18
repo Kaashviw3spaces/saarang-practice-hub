@@ -75,7 +75,7 @@ export default function CompatibilityPage() {
             </span>
           </div>
 
-          <h1 className="font-[var(--font-poster)] text-4xl sm:text-5xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+          <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             INSTRUMENT RESONANCE & SETUP CHECKER
           </h1>
           <p className="text-xs md:text-sm text-[var(--color-text-muted)] max-w-2xl leading-relaxed">

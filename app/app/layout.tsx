@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { Anton, Bebas_Neue, Space_Grotesk, Syne } from "next/font/google";
+import { Bebas_Neue, Metal_Mania, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navigation/Navbar";
-
-const anton = Anton({
-  variable: "--font-poster",
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
 
 const bebasNeue = Bebas_Neue({
   variable: "--font-display",
@@ -17,10 +10,10 @@ const bebasNeue = Bebas_Neue({
   display: "swap",
 });
 
-const syne = Syne({
-  variable: "--font-psychedelic",
+const metalMania = Metal_Mania({
+  variable: "--font-metal",
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: "400",
   display: "swap",
 });
 
@@ -52,7 +45,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
       lang="en"
-      className={`${anton.variable} ${bebasNeue.variable} ${syne.variable} ${spaceGrotesk.variable} h-full`}
+      className={`${bebasNeue.variable} ${spaceGrotesk.variable} ${metalMania.variable} h-full`}
     >
       <body className="grain min-h-full flex flex-col bg-[var(--color-background)] text-[var(--color-text)] antialiased">
         <Navbar />

@@ -100,7 +100,7 @@ export function RockArchive() {
                 Archive // Volume 01
               </span>
             </div>
-            <h2 className="font-[var(--font-poster)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+            <h2 className="font-[var(--font-metal)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-wider">
               THE ROCK ARCHIVE
             </h2>
             <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-xl">
@@ -155,7 +155,7 @@ export function RockArchive() {
 
               {/* Poster Footer Text Block */}
               <div className="p-3 flex flex-col gap-1 border-t border-[var(--color-border)]">
-                <h3 className="font-[var(--font-poster)] text-lg text-[var(--color-cream)] leading-none truncate">
+                <h3 className="font-[var(--font-metal)] text-base text-[var(--color-cream)] leading-none tracking-wide truncate">
                   {poster.title}
                 </h3>
                 <p className="text-[10px] font-mono uppercase tracking-wider text-[var(--color-text-dim)] truncate">
@@ -222,7 +222,7 @@ export function RockArchive() {
                 <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] mt-2">
                   {selectedPoster.band} // {selectedPoster.year}
                 </p>
-                <h3 className="font-[var(--font-poster)] text-3xl md:text-5xl text-[var(--color-cream)] tracking-tight mt-1 poster-headline">
+                <h3 className="font-[var(--font-metal)] text-3xl md:text-5xl text-[var(--color-cream)] tracking-wide mt-1">
                   {selectedPoster.title}
                 </h3>
                 <p className="text-xs font-mono uppercase tracking-widest text-[var(--color-text-dim)] border-b border-[var(--color-border)] pb-3 mt-1">

@@ -149,7 +149,7 @@ export default function HomePage() {
             <p className="font-mono text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--color-rust)] font-bold">
               The Underground Rehearsal Network
             </p>
-            <h1 className="font-[var(--font-poster)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.85] tracking-tight poster-headline">
+            <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline">
               MAKE SOME NOISE.
               <br />
               <span className="text-[var(--color-ochre)] hover:text-[var(--color-magenta)] transition-colors duration-300">
@@ -242,7 +242,7 @@ export default function HomePage() {
                   Real-Time Availability
                 </span>
               </div>
-              <h2 className="font-[var(--font-poster)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+              <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
                 ACTIVE SESSIONS
               </h2>
               <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-xl">
@@ -274,7 +274,7 @@ export default function HomePage() {
         <div className="container flex flex-col gap-12">
           <div className="text-center max-w-2xl mx-auto">
             <span className="badge-tour badge-tour-accent mb-3">Soundcheck Roadmap</span>
-            <h2 className="font-[var(--font-poster)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+            <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               FROM RIFF TO REHEARSAL IN 60 SECONDS
             </h2>
           </div>
@@ -335,7 +335,7 @@ export default function HomePage() {
         <div className="container flex flex-col gap-12">
           <div className="text-center max-w-2xl mx-auto">
             <span className="badge-tour badge-tour-magenta mb-3">Sound Infrastructure</span>
-            <h2 className="font-[var(--font-poster)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+            <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               DESIGNED FOR HIGH DECIBEL PRECISION
             </h2>
             <p className="mt-3 text-sm text-[var(--color-text-muted)]">
@@ -382,7 +382,7 @@ export default function HomePage() {
               <Ticket size={14} /> ADMISSION PASS // SAARANG REHEARSAL CLUB
             </div>
 
-            <h2 className="font-[var(--font-poster)] text-4xl sm:text-5xl md:text-7xl font-normal text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline">
+            <h2 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-7xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               READY TO TURN UP THE VOLUME?
             </h2>
 

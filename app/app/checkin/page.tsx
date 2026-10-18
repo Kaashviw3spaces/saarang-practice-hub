@@ -62,7 +62,7 @@ export default function CheckinPage() {
           <span className="badge-tour badge-tour-rust mb-2">
             <Radio size={11} /> Doorway Terminal
           </span>
-          <h1 className="font-[var(--font-poster)] text-3xl sm:text-4xl text-[var(--color-cream)] leading-none tracking-tight mt-1 poster-headline">
+          <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl text-[var(--color-cream)] leading-none tracking-tight mt-1 poster-headline">
             STAGE CHECK-IN PORTAL
           </h1>
           <p className="mt-2 text-xs font-mono text-[var(--color-text-muted)] leading-relaxed">
