@@ -58,15 +58,35 @@ export default function BookingPage() {
 
         const opts = (data ?? []) as RoomOption[];
         const seenNames = new Set<string>();
-        const uniqueOpts = opts.filter((opt) => {
-          if (isExcluded(opt.name)) return false;
-          const key = opt.name.toLowerCase().trim();
-          if (seenNames.has(key)) return false;
-          seenNames.add(key);
-          return true;
-        });
-        setRooms(uniqueOpts);
-        if (uniqueOpts.length > 0) setRoomId(uniqueOpts[0].id);
+        const uniqueOpts = opts
+          .filter((opt) => !isExcluded(opt.name))
+          .map((opt) => {
+            const cleanName = opt.name
+              .replace(/\s*\(Acoustic\)/i, "")
+              .replace(/\s*Area/i, "")
+              .trim();
+            return { id: opt.id, name: cleanName };
+          })
+          .filter((opt) => {
+            const key = opt.name.toLowerCase().trim();
+            if (seenNames.has(key)) return false;
+            seenNames.add(key);
+            return true;
+          });
+
+        if (uniqueOpts.length > 0) {
+          setRooms(uniqueOpts);
+          setRoomId(uniqueOpts[0].id);
+        } else {
+          const defaultOpts: RoomOption[] = [
+            { id: "seed-a", name: "Session A" },
+            { id: "seed-b", name: "Session B" },
+            { id: "seed-jam", name: "Jam Session" },
+            { id: "seed-rec", name: "Recording Session" },
+          ];
+          setRooms(defaultOpts);
+          setRoomId(defaultOpts[0].id);
+        }
         setRoomsLoading(false);
       });
   }, []);

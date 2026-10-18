@@ -22,10 +22,17 @@ interface BookingRow {
 }
 
 function toBooking(row: BookingRow, userEmail: string): Booking {
+  const cleanName = row.rooms?.name
+    ? row.rooms.name
+        .replace(/\s*\(Acoustic\)/i, "")
+        .replace(/\s*Area/i, "")
+        .trim()
+    : "Unknown Session";
+
   return {
     id: row.id,
     roomId: row.room_id,
-    roomName: row.rooms?.name ?? "Unknown Session",
+    roomName: cleanName,
     userId: row.user_id,
     memberName: userEmail.split("@")[0],
     instrument: row.instrument,

@@ -91,7 +91,12 @@ export default function DashboardPage() {
           const mapped: Booking[] = (bData as BookingRow[]).map((row) => ({
             id: row.id,
             roomId: row.room_id,
-            roomName: row.rooms?.name ?? "Unknown Session",
+            roomName: row.rooms?.name
+              ? row.rooms.name
+                  .replace(/\s*\(Acoustic\)/i, "")
+                  .replace(/\s*Area/i, "")
+                  .trim()
+              : "Unknown Session",
             userId: row.user_id,
             memberName: name,
             instrument: row.instrument,
@@ -132,9 +137,13 @@ export default function DashboardPage() {
           if (isExcluded(r.name)) continue;
           const key = r.name.toLowerCase().trim();
           if (!seen.has(key)) {
+            const cleanName = r.name
+              .replace(/\s*\(Acoustic\)/i, "")
+              .replace(/\s*Area/i, "")
+              .trim();
             seen.add(key);
             uniqueSummary.push({
-              room: r.name,
+              room: cleanName,
               status: r.status as Room["status"],
               note: STATUS_LABEL[r.status as Room["status"]] || "STAGE OPEN",
             });
@@ -144,8 +153,8 @@ export default function DashboardPage() {
       } else {
         setRoomsSummary([
           { room: "Session A", status: "available", note: "STAGE OPEN" },
-          { room: "Session B (Acoustic)", status: "occupied", note: "IN REHEARSAL" },
-          { room: "Jam Session Area", status: "reserved", note: "RESERVED" },
+          { room: "Session B", status: "occupied", note: "IN REHEARSAL" },
+          { room: "Jam Session", status: "reserved", note: "RESERVED" },
           { room: "Recording Session", status: "departure_pending", note: "FINISHING UP" },
         ]);
       }

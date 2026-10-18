@@ -19,14 +19,90 @@ interface RoomRow {
   room_equipment: Array<{ equipment: { name: string } | null }>;
 }
 
+const SEED_ROOM_DETAILS: Record<
+  string,
+  { name: string; description: string; acousticProperties: string; capacity: number }
+> = {
+  "session a": {
+    name: "Session A",
+    description: "Rehearsal space with drums, drum pads and amplifiers.",
+    capacity: 6,
+    acousticProperties: "Fully isolated — suitable for loud instruments and full-band rehearsals.",
+  },
+  "session b": {
+    name: "Session B",
+    description: "Practice space ideal for solo practice, duets, and acoustic or electronic sessions.",
+    capacity: 3,
+    acousticProperties: "Semi-isolated — suitable for moderately loud practice sessions together.",
+  },
+  "jam session": {
+    name: "Jam Session",
+    description: "Open jam space for collaborative sessions and small band rehearsals.",
+    capacity: 8,
+    acousticProperties: "Acoustic panels — good for ensemble practice.",
+  },
+  "recording session": {
+    name: "Recording Session",
+    description: "Recording space for vocals and acoustic instruments.",
+    capacity: 2,
+    acousticProperties: "Broadcast-grade isolation — near silent.",
+  },
+};
+
+const DEFAULT_ROOMS: Room[] = [
+  {
+    id: "seed-a",
+    name: "Session A",
+    description: "Rehearsal space with drums, drum pads and amplifiers.",
+    capacity: 6,
+    status: "available",
+    equipment: ["Drums", "Drum Pads", "Amplifiers", "PA System"],
+    acousticProperties: "Fully isolated — suitable for loud instruments and full-band rehearsals.",
+  },
+  {
+    id: "seed-b",
+    name: "Session B",
+    description: "Practice space ideal for solo practice, duets, and acoustic or electronic sessions.",
+    capacity: 3,
+    status: "available",
+    equipment: ["Upright Piano", "Headphone Amp", "Music Stands"],
+    acousticProperties: "Semi-isolated — suitable for moderately loud practice sessions together.",
+  },
+  {
+    id: "seed-jam",
+    name: "Jam Session",
+    description: "Open jam space for collaborative sessions and small band rehearsals.",
+    capacity: 8,
+    status: "available",
+    equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard"],
+    acousticProperties: "Acoustic panels — good for ensemble practice.",
+  },
+  {
+    id: "seed-rec",
+    name: "Recording Session",
+    description: "Recording space for vocals and acoustic instruments.",
+    capacity: 2,
+    status: "available",
+    equipment: ["Studio Mics", "Audio Interface", "Monitor Speakers"],
+    acousticProperties: "Broadcast-grade isolation — near silent.",
+  },
+];
+
 function toRoom(row: RoomRow): Room {
+  const normKey = row.name
+    .toLowerCase()
+    .replace(/\s*\(acoustic\)\s*/g, "")
+    .replace(/\s*area\s*/g, "")
+    .trim();
+  const seed = SEED_ROOM_DETAILS[normKey];
+
   return {
     id: row.id,
-    name: row.name,
-    description: row.description ?? "",
-    capacity: row.capacity,
+    name: seed?.name ?? row.name,
+    description: seed?.description ?? row.description ?? "",
+    capacity: seed?.capacity ?? row.capacity,
     status: row.status,
-    acousticProperties: row.acoustic_properties ?? "",
+    acousticProperties: seed?.acousticProperties ?? row.acoustic_properties ?? "",
     equipment: row.room_equipment
       .map((re) => re.equipment?.name ?? "")
       .filter(Boolean),
@@ -50,6 +126,7 @@ export default function RoomsPage() {
 
       if (err) {
         setError(err.message);
+        setRooms(DEFAULT_ROOMS);
       } else {
         const isExcluded = (name: string) => {
           const lower = name.toLowerCase().trim();
@@ -71,7 +148,11 @@ export default function RoomsPage() {
             roomMap.set(key, { ...existing, equipment: combinedEquipment });
           }
         }
-        setRooms(Array.from(roomMap.values()));
+        if (roomMap.size === 0) {
+          setRooms(DEFAULT_ROOMS);
+        } else {
+          setRooms(Array.from(roomMap.values()));
+        }
       }
       setLoading(false);
     }
