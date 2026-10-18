@@ -45,13 +45,13 @@ export default function CheckinPage() {
 
         <div className="flex flex-col gap-1">
           <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
-            Room Entrance Portal
+            Session Entrance Portal
           </p>
           <h1 className="font-[var(--font-display)] text-2xl font-bold text-[var(--color-text)]">
             QR Check-In & Check-Out
           </h1>
           <p className="text-sm text-[var(--color-text-muted)]">
-            Scan or confirm physical presence to update room availability in real-time.
+            Scan or confirm physical presence to update session-space availability in real time.
           </p>
         </div>
 

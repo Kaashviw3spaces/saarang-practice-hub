@@ -8,10 +8,10 @@ export interface OccupancyStateInput {
 }
 
 /**
- * State machine calculating room occupancy state based on software check-ins,
+ * State machine calculating session-space occupancy state based on software check-ins,
  * session time status, and hardware sensor confidence.
  *
- * Blueprint requirement: Never treat a room as vacant solely because a booking
+ * Blueprint requirement: Never treat a session space as vacant solely because a booking
  * has expired or a user missed checkout. Flag as 'occupancy_uncertain' if signals conflict.
  */
 export function evaluateOccupancyState(input: OccupancyStateInput): {
@@ -56,7 +56,7 @@ export function evaluateOccupancyState(input: OccupancyStateInput): {
     };
   }
 
-  // 3. Room is booked, but musician has not checked in yet
+  // 3. Session space is booked, but musician has not checked in yet
   if (hasActiveBooking && !isCheckedIn) {
     if (sensorPresenceDetected === true) {
       return {
@@ -78,7 +78,7 @@ export function evaluateOccupancyState(input: OccupancyStateInput): {
     return {
       status: "occupancy_uncertain",
       confidence: 0.4,
-      reason: "Room is not reserved on schedule, but occupancy sensor reports active movement.",
+      reason: "Session space is not reserved on schedule, but occupancy sensor reports active movement.",
     };
   }
 
