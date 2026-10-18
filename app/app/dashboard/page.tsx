@@ -16,6 +16,10 @@ import {
   ArrowRight,
   CheckCircle2,
   Loader2,
+  Radio,
+  Sparkles,
+  Ticket,
+  Zap,
 } from "lucide-react";
 
 interface BookingRow {
@@ -45,11 +49,11 @@ const STATUS_DOT: Record<Room["status"], string> = {
 };
 
 const STATUS_LABEL: Record<Room["status"], string> = {
-  available: "Free now",
-  reserved: "Reserved",
-  occupied: "In session",
-  departure_pending: "Finishing up",
-  occupancy_uncertain: "Status unclear",
+  available: "STAGE OPEN",
+  reserved: "RESERVED",
+  occupied: "IN REHEARSAL",
+  departure_pending: "FINISHING UP",
+  occupancy_uncertain: "STATUS UNCLEAR",
 };
 
 export default function DashboardPage() {
@@ -76,7 +80,6 @@ export default function DashboardPage() {
           "there";
         setUserName(name);
 
-        // Fetch user's bookings
         const { data: bData } = await supabase
           .from("bookings")
           .select("*, rooms(name)")
@@ -111,7 +114,6 @@ export default function DashboardPage() {
         }
       }
 
-      // Fetch live room statuses
       const { data: rData } = await supabase
         .from("rooms")
         .select("name, status")
@@ -122,17 +124,16 @@ export default function DashboardPage() {
           rData.map((r) => ({
             room: r.name,
             status: r.status as Room["status"],
-            note: STATUS_LABEL[r.status as Room["status"]] || "Available",
+            note: STATUS_LABEL[r.status as Room["status"]] || "STAGE OPEN",
           }))
         );
       } else {
-        // Fallback default status items if table has not been populated
         setRoomsSummary([
-          { room: "Session A", status: "available", note: "Free now" },
-          { room: "Session B", status: "occupied", note: "In session" },
-          { room: "Jam Session", status: "reserved", note: "Reserved" },
-          { room: "Recording Session", status: "departure_pending", note: "Finishing up" },
-          { room: "Electronics Corner", status: "occupancy_uncertain", note: "Status unclear" },
+          { room: "Session A (Soundproof)", status: "available", note: "STAGE OPEN" },
+          { room: "Session B (Acoustic)", status: "occupied", note: "IN REHEARSAL" },
+          { room: "Jam Session Area", status: "reserved", note: "RESERVED" },
+          { room: "Recording Session", status: "departure_pending", note: "FINISHING UP" },
+          { room: "Electronics Corner", status: "occupancy_uncertain", note: "STATUS UNCLEAR" },
         ]);
       }
 
@@ -150,109 +151,124 @@ export default function DashboardPage() {
   );
 
   return (
-    <div className="section">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)]">
       <div className="container flex flex-col gap-10">
         {/* Back navigation */}
-        <BackButton href="/" label="Home" />
+        <div>
+          <BackButton href="/" label="Home" />
+        </div>
 
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        {/* Dashboard Banner Header */}
+        <div className="p-8 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)] flex flex-col sm:flex-row sm:items-end justify-between gap-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)] mb-1">
-              Welcome back, {userName}
-            </p>
-            <h1 className="font-[var(--font-display)] text-3xl md:text-4xl font-bold text-[var(--color-text)]">
-              Your Dashboard
+            <div className="flex items-center gap-2 mb-2">
+              <span className="badge-tour badge-tour-accent">
+                <Radio size={12} /> BACKSTAGE ACCESS
+              </span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
+                ARTIST CONTROL PANEL
+              </span>
+            </div>
+            <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+              WELCOME BACK, {userName.toUpperCase()}
             </h1>
+            <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">
+              Track live countdowns, stage occupancy telemetry, and manage your booked rehearsal passes.
+            </p>
           </div>
+
           <Link
             href="/book"
-            className="inline-flex items-center gap-2 h-10 rounded-[var(--radius-full)] bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors"
+            className="btn-rock-primary text-sm py-2.5 px-6 shadow-[3px_3px_0_0_var(--color-rust)] shrink-0 self-start sm:self-auto"
           >
-            <Plus size={15} /> Book a Session
+            <Plus size={15} /> Book a Stage
           </Link>
         </div>
 
-        {/* Quick-action cards */}
+        {/* Quick-action Backstage Laminate Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { icon: Calendar, label: "Book Slot", href: "/book", planned: false },
-            { icon: CheckCircle2, label: "Check In", href: "/checkin", planned: false },
-            { icon: Clock, label: "Extend", href: "#", planned: true },
+            { icon: CheckCircle2, label: "QR Check-In", href: "/checkin", planned: false },
+            { icon: Clock, label: "Extend Pass", href: "#", planned: true },
             { icon: Bell, label: "Reminders", href: "#", planned: true },
           ].map(({ icon: Icon, label, href, planned }) => (
             <Link
               key={label}
               href={href}
-              className="card flex flex-col items-center gap-3 py-6 hover:border-[var(--color-accent)]/40 transition-all text-center group"
+              className="p-5 bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-ivory)] transition-all flex flex-col items-center text-center gap-3 shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.15)] hover:shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-cream),0_8px_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 group"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-surface-2)] text-[var(--color-accent)] group-hover:bg-[var(--color-accent)]/15 transition-colors">
+              <div className="flex h-11 w-11 items-center justify-center bg-[var(--color-ink)] text-[var(--color-ochre)] border border-[var(--color-border)] group-hover:bg-[var(--color-cream)] group-hover:text-[var(--color-ink)] transition-colors">
                 <Icon size={18} />
               </div>
               <div>
-                <p className="text-sm font-medium text-[var(--color-text)]">{label}</p>
+                <p className="font-[var(--font-display)] text-lg uppercase tracking-wider text-[var(--color-cream)] leading-none">
+                  {label}
+                </p>
                 {planned && (
-                  <p className="text-[10px] text-[var(--color-accent)] mt-0.5">[planned]</p>
+                  <p className="text-[9px] font-mono uppercase tracking-widest text-[var(--color-rust)] mt-1">
+                    [planned]
+                  </p>
                 )}
               </div>
             </Link>
           ))}
         </div>
 
-        {/* Live Active Session Timer & Reminders */}
+        {/* Live Active Session Stage Clock */}
         <SessionReminderTimer
           initialMinutes={activeTimerMinutes}
           sessionName={
             upcoming.length > 0
               ? `${upcoming[0].roomName} (${upcoming[0].instrument})`
-              : "Session A (Practice Demo)"
+              : "Session A (Demo Rehearsal)"
           }
         />
 
-        {/* Main two-column grid */}
+        {/* Two-Column Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Left: Bookings */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
+          {/* Left Column: Bookings */}
+          <div className="lg:col-span-2 flex flex-col gap-8">
             {/* Upcoming */}
             <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-[var(--color-text)] flex items-center gap-2">
-                  <Calendar size={16} className="text-[var(--color-accent)]" />
-                  Upcoming Sessions
+              <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-2">
+                <h2 className="font-[var(--font-display)] text-2xl text-[var(--color-cream)] tracking-wider flex items-center gap-2">
+                  <Calendar size={18} className="text-[var(--color-ochre)]" />
+                  UPCOMING REHEARSALS
                 </h2>
                 <Link
                   href="/bookings"
-                  className="text-xs text-[var(--color-accent)] hover:underline flex items-center gap-0.5"
+                  className="text-xs font-mono uppercase tracking-wider text-[var(--color-ochre)] hover:underline flex items-center gap-1"
                 >
-                  View all <ArrowRight size={12} />
+                  View all ({bookings.length}) <ArrowRight size={12} />
                 </Link>
               </div>
 
               {loading ? (
-                <div className="flex items-center justify-center py-12 gap-2 text-[var(--color-text-muted)] text-sm">
-                  <Loader2 size={16} className="animate-spin" />
-                  Loading sessions…
+                <div className="flex items-center justify-center py-12 gap-2 border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-widest">
+                  <Loader2 size={16} className="animate-spin text-[var(--color-ochre)]" />
+                  Loading stage sessions…
                 </div>
               ) : upcoming.length === 0 ? (
-                <div className="card text-center py-10 text-[var(--color-text-muted)] text-sm">
+                <div className="p-8 text-center border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-wider">
                   {isLoggedIn ? (
                     <>
-                      No upcoming bookings.{" "}
-                      <Link href="/book" className="text-[var(--color-accent)] hover:underline">
-                        Book a slot →
+                      No upcoming rehearsals booked.{" "}
+                      <Link href="/book" className="text-[var(--color-ochre)] hover:underline ml-1">
+                        Book a pass now →
                       </Link>
                     </>
                   ) : (
                     <>
-                      Sign in to view your bookings.{" "}
-                      <Link href="/login" className="text-[var(--color-accent)] hover:underline">
-                        Sign in →
+                      Sign in to view your rehearsal schedule.{" "}
+                      <Link href="/login" className="text-[var(--color-ochre)] hover:underline ml-1">
+                        Sign In →
                       </Link>
                     </>
                   )}
                 </div>
               ) : (
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-4">
                   {upcoming.map((b) => (
                     <BookingCard key={b.id} booking={b} />
                   ))}
@@ -260,23 +276,25 @@ export default function DashboardPage() {
               )}
             </div>
 
-            {/* Recent */}
+            {/* Recent Sessions */}
             <div className="flex flex-col gap-4">
-              <h2 className="font-semibold text-[var(--color-text)] flex items-center gap-2">
-                <Clock size={16} className="text-[var(--color-accent)]" />
-                Recent Sessions
-              </h2>
+              <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-2">
+                <h2 className="font-[var(--font-display)] text-2xl text-[var(--color-cream)] tracking-wider flex items-center gap-2">
+                  <Clock size={18} className="text-[var(--color-rust)]" />
+                  RECENT ARCHIVED SETS
+                </h2>
+              </div>
               {loading ? (
-                <div className="flex items-center justify-center py-8 gap-2 text-[var(--color-text-muted)] text-sm">
+                <div className="flex items-center justify-center py-8 gap-2 border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-widest">
                   <Loader2 size={16} className="animate-spin" />
                   Loading…
                 </div>
               ) : recent.length === 0 ? (
-                <div className="card text-center py-6 text-[var(--color-text-muted)] text-sm">
+                <div className="p-6 text-center border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-wider">
                   No previous sessions on record.
                 </div>
               ) : (
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-4">
                   {recent.map((b) => (
                     <BookingCard key={b.id} booking={b} />
                   ))}
@@ -285,48 +303,80 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Right: Session status + notifications */}
+          {/* Right Column: Stage Radar & Backstage Bulletin */}
           <div className="flex flex-col gap-6">
-            {/* Session status */}
-            <div className="card flex flex-col gap-4">
-              <h2 className="font-semibold text-[var(--color-text)] flex items-center gap-2">
-                <Music2 size={16} className="text-[var(--color-accent)]" />
-                Session Status
-              </h2>
-              <div className="flex flex-col gap-3">
+            {/* Live Stage Status Radar */}
+            <div className="p-6 bg-[var(--color-surface)] border border-[var(--color-border)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.15)] flex flex-col gap-4">
+              <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-3">
+                <h2 className="font-[var(--font-display)] text-xl text-[var(--color-cream)] tracking-wider flex items-center gap-2">
+                  <Music2 size={16} className="text-[var(--color-ochre)]" />
+                  STAGE RADAR
+                </h2>
+                <span className="text-[9px] font-mono uppercase tracking-widest text-[var(--color-available)] flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-available)] animate-pulse" /> LIVE
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-2.5">
                 {roomsSummary.map(({ room, status, note }) => (
-                  <div key={room} className="flex items-center justify-between gap-2">
+                  <div
+                    key={room}
+                    className="flex items-center justify-between gap-2 p-2.5 bg-[var(--color-ink)] border border-[var(--color-border)] text-xs font-mono"
+                  >
                     <div className="flex items-center gap-2 min-w-0">
                       <span className={`h-2 w-2 rounded-full shrink-0 ${STATUS_DOT[status]}`} />
-                      <span className="text-sm text-[var(--color-text)] truncate">{room}</span>
+                      <span className="text-[var(--color-cream)] truncate font-medium">
+                        {room}
+                      </span>
                     </div>
-                    <span className="text-xs text-[var(--color-text-muted)] shrink-0">{note}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-[var(--color-text-dim)] shrink-0">
+                      {note}
+                    </span>
                   </div>
                 ))}
               </div>
+
               <Link
                 href="/rooms"
-                className="text-xs text-[var(--color-accent)] hover:underline flex items-center gap-0.5 mt-1"
+                className="btn-rock-ghost text-xs py-2 text-center justify-center mt-2"
               >
-                Full session view <ArrowRight size={11} />
+                Full Stage Directory <ArrowRight size={12} />
               </Link>
             </div>
 
-            {/* Notifications card */}
-            <div className="card flex flex-col gap-4">
-              <h2 className="font-semibold text-[var(--color-text)] flex items-center gap-2">
-                <Bell size={16} className="text-[var(--color-accent)]" />
-                Notifications
-              </h2>
-              <div className="flex flex-col gap-2">
-                <div className="rounded-[var(--radius-md)] bg-[var(--color-surface-2)] border border-[var(--color-border)] px-3 py-2.5 flex flex-col gap-0.5">
-                  <p className="text-sm text-[var(--color-text)]">Practice Hub connected to Supabase</p>
-                  <p className="text-xs text-[var(--color-text-muted)]">Live session sync active</p>
+            {/* Backstage Bulletin */}
+            <div className="p-6 bg-[var(--color-surface)] border border-[var(--color-border)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.15)] flex flex-col gap-4">
+              <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-3">
+                <h2 className="font-[var(--font-display)] text-xl text-[var(--color-cream)] tracking-wider flex items-center gap-2">
+                  <Bell size={16} className="text-[var(--color-magenta)]" />
+                  BULLETIN BOARD
+                </h2>
+                <span className="text-[9px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+                  DISPATCH
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-2.5">
+                <div className="bg-[var(--color-ink)] border border-[var(--color-border)] p-3 flex flex-col gap-1">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-ochre)]">
+                    STAGE PROTOCOL
+                  </span>
+                  <p className="text-xs font-mono text-[var(--color-cream)]">
+                    Supabase stage sensors online. Real-time availability synchronized.
+                  </p>
+                  <p className="text-[10px] font-mono text-[var(--color-text-dim)]">
+                    System Telemetry · Connected
+                  </p>
+                </div>
+                <div className="bg-[var(--color-ink)] border border-[var(--color-border)] p-3 flex flex-col gap-1 opacity-70">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-rust)]">
+                    EQUIPMENT UPDATE
+                  </span>
+                  <p className="text-xs font-mono text-[var(--color-text-muted)]">
+                    New drum heads installed in Stage A. Re-calibrated audio interface ready.
+                  </p>
                 </div>
               </div>
-              <p className="text-[10px] text-[var(--color-text-dim)]">
-                Push notifications coming in Milestone 6
-              </p>
             </div>
           </div>
         </div>

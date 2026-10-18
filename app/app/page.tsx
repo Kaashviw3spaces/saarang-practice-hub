@@ -11,288 +11,342 @@ import {
   Drum,
   Mic2,
   Piano,
+  Radio,
+  Disc3,
+  Ticket,
 } from "lucide-react";
 import { RoomCard } from "@/components/rooms/RoomCard";
 import { type Room } from "@/types";
+import { OpeningCurtain } from "@/components/motion/OpeningCurtain";
+import { SoundwaveVisualizer } from "@/components/motion/SoundwaveVisualizer";
+import { RockArchive } from "@/components/gallery/RockArchive";
 
-/* ─── Placeholder data (replaced in Milestone 3) ─────────────────────────── */
-
-const PLACEHOLDER_ROOMS: Room[] = [
+/* ─── Placeholder data for hero preview ───────────────────────────────────── */
+const PREVIEW_ROOMS: Room[] = [
   {
     id: "r1",
-    name: "Session A",
-    description: "Fully soundproofed rehearsal session area with professional mixing desk and drum kit.",
+    name: "Session A (Soundproof)",
+    description: "Fully soundproofed rehearsal space with professional mixing desk, drum kit, and PA system.",
     capacity: 6,
     status: "available",
     equipment: ["Drum Kit", "PA System", "Bass Amp", "Guitar Amp", "Mixing Desk"],
-    acousticProperties: "Fully isolated",
+    acousticProperties: "Fully isolated · Heavy Volume Ready",
   },
   {
     id: "r2",
-    name: "Session B",
-    description: "Intimate practice session area ideal for solo practice, duets, and acoustic sessions.",
+    name: "Session B (Acoustic)",
+    description: "Intimate practice space ideal for solo practice, duets, and acoustic sessions.",
     capacity: 3,
     status: "occupied",
     equipment: ["Upright Piano", "Headphone Amp", "Music Stands"],
-    acousticProperties: "Semi-isolated",
-    currentBooking: {
-      memberName: "Aryan K.",
-      instrument: "Electric Guitar",
-      mode: "individual",
-      endsAt: new Date("2026-10-17T19:00:00Z"),
-    },
+    acousticProperties: "Semi-isolated · Mid Volume",
   },
   {
     id: "r3",
-    name: "Jam Session",
-    description: "Open jam space for collaborative sessions and ensemble rehearsals.",
+    name: "Jam Session Area",
+    description: "Open jam space for collaborative sessions and small ensemble rehearsals.",
     capacity: 8,
     status: "reserved",
     equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard"],
-    acousticProperties: "Acoustic panels",
-    nextAvailableAt: new Date("2026-10-17T19:30:00Z"),
+    acousticProperties: "Acoustic panels · Ensemble Tuned",
   },
 ];
 
 const FEATURES = [
   {
     icon: Zap,
-    title: "AI Compatibility",
+    badge: "ENGINE 01",
+    title: "AI Acoustic Intelligence",
     description:
-      "Smart acoustic analysis tells you whether your setup is compatible with other musicians in the session — before you even arrive.",
+      "Acoustic frequency analysis prevents clash between heavy drums and intimate acoustic sessions before anyone sets foot inside.",
   },
   {
     icon: Calendar,
-    title: "Live Availability",
+    badge: "ENGINE 02",
+    title: "Live Stage Availability",
     description:
-      "Check real-time session occupancy, book your slot in seconds, and receive smart alternative suggestions when your preferred time is taken.",
+      "Real-time session occupancy, instant slot reservation, and automated alternatives when your preferred slot is taken.",
   },
   {
     icon: Users,
-    title: "Find Your Band",
+    badge: "ENGINE 03",
+    title: "Collaborative Jam Matching",
     description:
-      "Discover compatible musicians practising at the same time and turn solo sessions into collaborative ones.",
+      "Discover compatible musicians practising in parallel slots and transition solo practice into multi-instrument jams.",
   },
   {
     icon: Clock,
-    title: "Smart Reminders",
+    badge: "ENGINE 04",
+    title: "Stage Reminders & Extensions",
     description:
-      "Gentle mid-session check-ins, pre-expiry alerts, and one-tap extension requests keep your practice on track.",
+      "Mid-session chimes, 7-minute pre-expiry alerts, and single-click 15-minute extensions for uninterrupted flow.",
   },
   {
     icon: Shield,
-    title: "Fair Booking",
+    badge: "ENGINE 05",
+    title: "Fair Booking Protocol",
     description:
-      "Automatic conflict prevention and fairness rules ensure everyone gets equal access to practice sessions.",
+      "Zero double-bookings with automated conflict locks and fair-share quota distribution across all club members.",
   },
   {
     icon: Music2,
-    title: "All Modes",
+    badge: "ENGINE 06",
+    title: "Multi-Mode Setups",
     description:
-      "Individual practice, collaborative jams, and full-band rehearsals — each mode optimised for your needs.",
+      "Tailor equipment configurations for solo focus, 2-piece jams, or full-band thunderous rehearsals.",
   },
 ];
 
 const STATS = [
-  { value: "5", label: "Active Sessions" },
-  { value: "50+", label: "Club Members" },
-  { value: "< 60s", label: "To Book a Slot" },
-  { value: "0", label: "Double Bookings" },
+  { value: "05", label: "ACTIVE REHEARSAL STAGES" },
+  { value: "100%", label: "CONFLICT FREE PROTOCOL" },
+  { value: "<60s", label: "INSTANT PASS GENERATION" },
+  { value: "24/7", label: "LIVE DOORWAY QR CHECK-IN" },
 ];
-
-/* ─── Decorative floating note ────────────────────────────────────────────── */
-function FloatingNote({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <span
-      className={`absolute text-[var(--color-accent)] opacity-20 font-[var(--font-display)] font-black select-none pointer-events-none ${className}`}
-    >
-      {children}
-    </span>
-  );
-}
-
-/* ─── Page ────────────────────────────────────────────────────────────────── */
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col">
-      {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
-        {/* Decorative background glows */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[var(--color-accent)]/5 blur-[120px]" />
-          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[var(--color-secondary)]/8 blur-[100px]" />
-        </div>
+    <div className="flex flex-col bg-[var(--color-ink)] text-[var(--color-cream)]">
+      {/* ── OPENING CURTAIN (Awwwards reveal animation) ──────────────────── */}
+      <OpeningCurtain />
 
-        {/* Floating musical notes */}
-        <FloatingNote className="top-20 left-[8%] text-6xl md:text-8xl rotate-[-12deg]">♩</FloatingNote>
-        <FloatingNote className="top-32 right-[10%] text-5xl md:text-7xl rotate-[8deg]">♪</FloatingNote>
-        <FloatingNote className="bottom-24 left-[12%] text-4xl md:text-6xl rotate-[15deg]">♫</FloatingNote>
-        <FloatingNote className="bottom-16 right-[8%] text-7xl md:text-9xl rotate-[-5deg]">𝄞</FloatingNote>
+      {/* ── HERO SECTION (Gig Poster Composition) ────────────────────────── */}
+      <section className="relative min-h-[92vh] flex flex-col items-center justify-center overflow-hidden px-4 md:px-8 py-20 text-center">
+        {/* Subtle background halftone & radial aura */}
+        <div className="absolute inset-0 halftone-overlay opacity-40 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[var(--color-burgundy)]/15 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute -top-20 right-10 w-[400px] h-[400px] bg-[var(--color-ochre)]/10 rounded-full blur-[120px] pointer-events-none" />
 
-        {/* Content */}
-        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-8">
-          {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 rounded-[var(--radius-full)] border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
-            <Music2 size={12} />
-            Saarang Music Club
+        {/* Outer Poster Frame Box */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto p-6 md:p-12 border border-[var(--color-ivory)]/50 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3)] bg-[var(--color-surface)]/80 backdrop-blur-sm">
+          {/* Top Billing Line (Aragon Ballroom / Arctic Monkeys poster inspired) */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4 mb-8 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] text-[var(--color-text-dim)]">
+            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+              <Radio size={13} className="text-[var(--color-rust)]" /> SAARANG MUSIC HUB
+            </span>
+            <span className="text-[var(--color-ochre)] font-bold">
+              NOW OPEN · AUTUMN / SPRING SESSIONS
+            </span>
+            <span className="hidden sm:inline text-[var(--color-text-muted)]">
+              CHENNAI, INDIA
+            </span>
           </div>
 
-          {/* Headline */}
-          <h1 className="font-[var(--font-display)] text-5xl md:text-7xl lg:text-8xl font-black leading-none tracking-tight text-[var(--color-text)]">
-            Make Space{" "}
-            <br />
-            <span className="text-[var(--color-accent)] relative inline-block">
-              for Music
-              {/* Underline flourish */}
-              <svg
-                className="absolute -bottom-2 left-0 w-full"
-                viewBox="0 0 300 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M2 8 Q75 2 150 8 Q225 14 298 8"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  fill="none"
-                  opacity="0.5"
-                />
-              </svg>
-            </span>
-          </h1>
+          {/* Monumental Headline */}
+          <div className="flex flex-col items-center gap-2 mb-6">
+            <p className="font-mono text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--color-rust)] font-bold">
+              The Underground Rehearsal Network
+            </p>
+            <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-[var(--color-cream)] leading-[0.88] tracking-tight">
+              MAKE SOME NOISE.
+              <br />
+              <span className="text-[var(--color-ochre)] hover:text-[var(--color-magenta)] transition-colors">
+                FIND YOUR SPACE.
+              </span>
+            </h1>
+          </div>
+
+          {/* Interactive Soundwave Visualizer */}
+          <div className="my-6 max-w-2xl mx-auto">
+            <SoundwaveVisualizer barsCount={32} />
+            <p className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)] mt-1">
+              • • • LIVE ACOUSTIC FREQUENCY METER • • •
+            </p>
+          </div>
 
           {/* Subheading */}
-          <p className="max-w-2xl text-lg md:text-xl text-[var(--color-text-muted)] leading-relaxed">
-            AI-powered practice session management for the Saarang music club. Book
-            your slot, find compatible bandmates, and make every minute count.
+          <p className="max-w-xl mx-auto text-sm md:text-base text-[var(--color-text-muted)] leading-relaxed mb-8">
+            High-contrast rehearsal rooms, AI acoustic resonance analysis, and automated conflict-free
+            scheduling for artists, bands, and late-night creators.
           </p>
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center gap-4">
+          {/* CTAs (Inverted Rock Buttons) */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               href="/rooms"
-              className="inline-flex h-12 items-center gap-2 rounded-[var(--radius-full)] bg-[var(--color-accent)] px-7 text-base font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="btn-rock-primary text-base py-3 px-8 shadow-[4px_4px_0_0_var(--color-rust)] w-full sm:w-auto"
             >
-              Book a Practice Slot
-              <ArrowRight size={16} />
+              Book Practice Slot <ArrowRight size={16} />
             </Link>
             <Link
               href="/dashboard"
-              className="inline-flex h-12 items-center gap-2 rounded-[var(--radius-full)] border border-[var(--color-border)] px-7 text-base font-medium text-[var(--color-text-muted)] hover:border-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-all"
+              className="btn-rock-ghost text-base py-3 px-8 w-full sm:w-auto"
             >
-              View Dashboard
+              Access Dashboard
             </Link>
           </div>
 
-          {/* Instrument row */}
-          <div className="flex items-center gap-6 text-[var(--color-text-dim)] mt-4">
-            <div className="flex items-center gap-1.5 text-sm">
-              <Guitar size={15} /> Guitar
-            </div>
-            <div className="flex items-center gap-1.5 text-sm">
-              <Drum size={15} /> Drums
-            </div>
-            <div className="flex items-center gap-1.5 text-sm">
-              <Piano size={15} /> Keys
-            </div>
-            <div className="flex items-center gap-1.5 text-sm">
-              <Mic2 size={15} /> Vocals
-            </div>
-            <span className="text-xs opacity-60">& more</span>
+          {/* Instrument Lineup Footer */}
+          <div className="flex flex-wrap items-center justify-center gap-6 text-[var(--color-text-dim)] border-t border-[var(--color-border)] mt-10 pt-5 text-xs font-mono uppercase tracking-widest">
+            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+              <Guitar size={14} className="text-[var(--color-rust)]" /> Electric & Bass
+            </span>
+            <span>·</span>
+            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+              <Drum size={14} className="text-[var(--color-ochre)]" /> Acoustic Drums
+            </span>
+            <span>·</span>
+            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+              <Piano size={14} className="text-[var(--color-olive)]" /> Keyboards & DAW
+            </span>
+            <span>·</span>
+            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+              <Mic2 size={14} className="text-[var(--color-magenta)]" /> Lead Vocals
+            </span>
           </div>
         </div>
       </section>
 
-      {/* ── STATS ────────────────────────────────────────────────────────── */}
-      <section className="border-y border-[var(--color-border)] bg-[var(--color-surface)] py-12 px-6">
-        <div className="container grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      {/* ── STATS (Ticket Admission Strip) ─────────────────────────────────── */}
+      <section className="border-t border-b border-[var(--color-border)] bg-[var(--color-surface)] py-8 px-4">
+        <div className="container grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {STATS.map(({ value, label }) => (
-            <div key={label} className="flex flex-col gap-1">
-              <span className="font-[var(--font-display)] text-4xl md:text-5xl font-black text-[var(--color-accent)]">
+            <div
+              key={label}
+              className="flex flex-col items-center justify-center p-4 border border-[var(--color-border)] bg-[var(--color-ink)]"
+            >
+              <span className="font-[var(--font-display)] text-4xl md:text-5xl font-bold text-[var(--color-ochre)] leading-none">
                 {value}
               </span>
-              <span className="text-sm text-[var(--color-text-muted)]">{label}</span>
+              <span className="mt-2 text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+                {label}
+              </span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── LIVE SESSIONS PREVIEW ────────────────────────────────────────── */}
-      <section className="section">
+      {/* ── LIVE REHEARSAL SESSIONS PREVIEW ───────────────────────────────── */}
+      <section className="section bg-[var(--color-ink)]">
         <div className="container flex flex-col gap-10">
-          <div className="flex items-end justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--color-border)] pb-6">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)] mb-2">
-                Right Now
-              </p>
-              <h2 className="font-[var(--font-display)] text-3xl md:text-4xl font-bold text-[var(--color-text)]">
-                Practice Sessions
+              <div className="flex items-center gap-2 mb-2">
+                <span className="badge-tour badge-tour-rust">Stage Radar</span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+                  Real-Time Availability
+                </span>
+              </div>
+              <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight">
+                ACTIVE SESSIONS
               </h2>
-              <p className="mt-2 text-[var(--color-text-muted)]">
-                Live status — check session availability before you head over.
+              <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-xl">
+                Check stage availability, equipment setup, and volume limits before heading to the hub.
               </p>
             </div>
             <Link
               href="/rooms"
-              className="hidden md:inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:underline shrink-0"
+              className="btn-rock-ghost text-xs py-2 px-4 self-start md:self-auto"
             >
-              See all sessions <ArrowRight size={14} />
+              Explore All 5 Sessions <ArrowRight size={13} />
             </Link>
           </div>
 
-          {/* Session cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {PLACEHOLDER_ROOMS.map((room) => (
+          {/* Session Cards */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {PREVIEW_ROOMS.map((room) => (
               <RoomCard key={room.id} {...room} />
             ))}
           </div>
-
-          <Link
-            href="/rooms"
-            className="md:hidden inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:underline self-start"
-          >
-            See all sessions <ArrowRight size={14} />
-          </Link>
         </div>
       </section>
 
-      {/* ── FEATURES ─────────────────────────────────────────────────────── */}
+      {/* ── THE ROCK ARCHIVE (5 Attached Poster References) ───────────────── */}
+      <RockArchive />
+
+      {/* ── HOW IT WORKS (Stage Roadmap) ─────────────────────────────────── */}
+      <section className="section bg-[var(--color-ink)]">
+        <div className="container flex flex-col gap-12">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="badge-tour badge-tour-accent mb-3">Soundcheck Roadmap</span>
+            <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight">
+              FROM RIFF TO REHEARSAL IN 60 SECONDS
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                step: "01",
+                tag: "SETUP",
+                title: "SELECT INSTRUMENTATION",
+                body: "Specify acoustic or amplified gear, loudness tier, and session intention.",
+              },
+              {
+                step: "02",
+                tag: "RADAR",
+                title: "SCAN STAGE AVAILABILITY",
+                body: "Review real-time slots and instant acoustic compatibility with adjacent rooms.",
+              },
+              {
+                step: "03",
+                tag: "TICKET",
+                title: "LOCK DOWN RESERVATION",
+                body: "Instant pass generation with automated lockouts preventing overlapping bookings.",
+              },
+              {
+                step: "04",
+                tag: "ACCESS",
+                title: "DOORWAY QR CHECK-IN",
+                body: "Scan at the entrance to confirm arrival, switch room status, and fire countdown timer.",
+              },
+            ].map(({ step, tag, title, body }) => (
+              <div
+                key={step}
+                className="p-6 bg-[var(--color-surface)] border border-[var(--color-border)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.2)] hover:border-[var(--color-ivory)] transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-2 mb-4">
+                    <span className="font-[var(--font-display)] text-4xl text-[var(--color-rust)] leading-none">
+                      {step}
+                    </span>
+                    <span className="text-[9px] font-mono uppercase tracking-widest text-[var(--color-text-dim)] border border-[var(--color-border)] px-1.5 py-0.5">
+                      {tag}
+                    </span>
+                  </div>
+                  <h4 className="font-[var(--font-display)] text-xl text-[var(--color-cream)] leading-tight mb-2">
+                    {title}
+                  </h4>
+                  <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">{body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FEATURES (Rock Poster Card Grid) ──────────────────────────────── */}
       <section className="section bg-[var(--color-surface)] border-t border-[var(--color-border)]">
         <div className="container flex flex-col gap-12">
           <div className="text-center max-w-2xl mx-auto">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)] mb-3">
-              What Saarang AI Does
-            </p>
-            <h2 className="font-[var(--font-display)] text-3xl md:text-4xl font-bold text-[var(--color-text)]">
-              Everything a music club needs
+            <span className="badge-tour badge-tour-magenta mb-3">Sound Infrastructure</span>
+            <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight">
+              DESIGNED FOR HIGH DECIBEL PRECISION
             </h2>
-            <p className="mt-3 text-[var(--color-text-muted)]">
-              From smart acoustic compatibility to fair booking enforcement — designed
-              around how musicians actually practise.
+            <p className="mt-3 text-sm text-[var(--color-text-muted)]">
+              Everything the Saarang Music Club needs to keep creativity pumping without acoustic clash.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {FEATURES.map(({ icon: Icon, title, description }) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {FEATURES.map(({ icon: Icon, badge, title, description }) => (
               <div
                 key={title}
-                className="card group hover:border-[var(--color-accent)]/30 transition-all duration-200 flex flex-col gap-4"
+                className="p-6 bg-[var(--color-ink)] border border-[var(--color-border)] hover:border-[var(--color-ochre)] transition-all duration-300 shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.15)] flex flex-col justify-between group"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent)]/10 text-[var(--color-accent)] group-hover:bg-[var(--color-accent)]/20 transition-colors">
-                  <Icon size={20} />
-                </div>
                 <div>
-                  <h3 className="font-semibold text-[var(--color-text)] mb-1">{title}</h3>
-                  <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex h-10 w-10 items-center justify-center bg-[var(--color-surface-2)] text-[var(--color-ochre)] border border-[var(--color-border)] group-hover:bg-[var(--color-cream)] group-hover:text-[var(--color-ink)] transition-colors">
+                      <Icon size={18} />
+                    </div>
+                    <span className="text-[9px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+                      {badge}
+                    </span>
+                  </div>
+                  <h3 className="font-[var(--font-display)] text-2xl text-[var(--color-cream)] leading-tight mb-2 group-hover:text-[var(--color-ochre)] transition-colors">
+                    {title}
+                  </h3>
+                  <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
                     {description}
                   </p>
                 </div>
@@ -302,76 +356,58 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ─────────────────────────────────────────────────── */}
-      <section className="section">
-        <div className="container flex flex-col gap-12">
-          <div className="text-center max-w-xl mx-auto">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)] mb-3">
-              Simple Process
-            </p>
-            <h2 className="font-[var(--font-display)] text-3xl md:text-4xl font-bold text-[var(--color-text)]">
-              From idea to practice in 60 seconds
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-5">
-            {[
-              { step: "01", title: "Pick your setup", body: "Choose your instrument, equipment, and preferred noise level." },
-              { step: "02", title: "Browse availability", body: "See which session spaces are free, occupied, or compatible with other sessions." },
-              { step: "03", title: "Confirm your slot", body: "Book instantly. The system prevents double bookings automatically." },
-              { step: "04", title: "QR check-in", body: "Scan the QR code at the door to confirm your arrival and start your session." },
-            ].map(({ step, title, body }) => (
-              <div key={step} className="flex flex-col gap-3">
-                <span className="font-[var(--font-display)] text-5xl font-black text-[var(--color-accent)]/25 leading-none">
-                  {step}
-                </span>
-                <h4 className="font-semibold text-[var(--color-text)]">{title}</h4>
-                <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">{body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA BANNER ───────────────────────────────────────────────────── */}
-      <section className="section border-t border-[var(--color-border)] bg-[var(--color-surface)]">
+      {/* ── CTA BANNER (Concert Ticket Style) ─────────────────────────────── */}
+      <section className="section bg-[var(--color-ink)]">
         <div className="container">
-          <div className="relative overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-surface-2)] border border-[var(--color-border)] px-8 py-12 md:py-16 text-center">
-            {/* Glow */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[500px] h-[200px] bg-[var(--color-accent)]/6 blur-[80px] rounded-full" />
+          <div className="relative p-8 md:p-14 border-2 border-[var(--color-ivory)] bg-[var(--color-surface)] shadow-[inset_0_0_0_4px_var(--color-ink),inset_0_0_0_5px_rgba(238,230,213,0.4),0_12px_40px_rgba(0,0,0,0.8)] text-center flex flex-col items-center gap-6 max-w-3xl mx-auto">
+            {/* Top ticket hole and perforation */}
+            <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--color-ochre)]">
+              <Ticket size={14} /> ADMISSION PASS // SAARANG REHEARSAL CLUB
             </div>
-            <div className="relative z-10 flex flex-col items-center gap-6 max-w-xl mx-auto">
-              <h2 className="font-[var(--font-display)] text-3xl md:text-5xl font-black text-[var(--color-text)]">
-                Ready to practise?
-              </h2>
-              <p className="text-[var(--color-text-muted)]">
-                Join the Saarang club, book your first slot, and let the AI find
-                you the perfect practice window.
-              </p>
+
+            <h2 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-7xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+              READY TO TURN UP THE VOLUME?
+            </h2>
+
+            <p className="text-sm md:text-base text-[var(--color-text-muted)] max-w-lg">
+              Join Saarang now. Book your rehearsal space, check your acoustic compatibility with fellow
+              musicians, and never miss a beat.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
               <Link
                 href="/signup"
-                className="inline-flex h-12 items-center gap-2 rounded-[var(--radius-full)] bg-[var(--color-accent)] px-8 text-base font-bold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-all hover:scale-[1.02]"
+                className="btn-rock-primary text-base py-3 px-8 shadow-[4px_4px_0_0_var(--color-rust)]"
               >
-                Join Saarang <ArrowRight size={16} />
+                Get Club Membership <ArrowRight size={16} />
+              </Link>
+              <Link
+                href="/rooms"
+                className="btn-rock-ghost text-base py-3 px-8"
+              >
+                Browse Stage Sessions
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── FOOTER ───────────────────────────────────────────────────────── */}
-      <footer className="border-t border-[var(--color-border)] px-6 py-8">
-        <div className="container flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[var(--color-text-dim)]">
-          <div className="flex items-center gap-2">
-            <Music2 size={14} className="text-[var(--color-accent)]" />
-            <span className="font-[var(--font-display)] font-semibold text-[var(--color-text-muted)]">
-              Saarang Practice Hub
+      {/* ── FOOTER (Vintage Gig Billing Block) ────────────────────────────── */}
+      <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-10">
+        <div className="container flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono text-[var(--color-text-dim)] uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-[var(--color-cream)]">
+            <Zap size={14} className="text-[var(--color-ochre)]" />
+            <span className="font-[var(--font-display)] text-base tracking-widest">
+              SAARANG PRACTICE HUB
             </span>
           </div>
-          <p>
-            Built for the Saarang Music Club ·{" "}
-            <span className="text-[var(--color-accent)]/70">Milestone 2 – UI Preview</span>
+
+          <p className="text-center md:text-right">
+            ROCK ART DIRECTION INSPIRED BY AC/DC · ARCTIC MONKEYS · METALLICA · THE BEATLES · THE ROLLING STONES
+          </p>
+
+          <p className="text-[10px] text-[var(--color-text-dim)]">
+            EST. 2026 · ALL RIGHTS RESERVED
           </p>
         </div>
       </footer>

@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Plus, Loader2 } from "lucide-react";
+import { Plus, Loader2, Ticket, Sparkles, Calendar, Radio } from "lucide-react";
 import { BookingCard } from "@/components/bookings/BookingCard";
 import { type Booking } from "@/types";
 import { supabase } from "@/lib/supabase/client";
 import { BackButton } from "@/components/ui/BackButton";
 
-/* ─── Supabase row shape ──────────────────────────────────────────────────── */
 interface BookingRow {
   id: string;
   room_id: string;
@@ -87,72 +86,100 @@ export default function BookingsPage() {
   );
 
   return (
-    <div className="section">
-      <div className="container flex flex-col gap-8">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)]">
+      <div className="container flex flex-col gap-10">
         {/* Back navigation */}
-        <BackButton href="/" label="Home" />
+        <div>
+          <BackButton href="/" label="Home" />
+        </div>
 
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        {/* Page Header (Concert Gig Lineup Header) */}
+        <div className="p-8 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)] flex flex-col sm:flex-row sm:items-end justify-between gap-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)] mb-1">
-              My Sessions
-            </p>
-            <h1 className="font-[var(--font-display)] text-3xl md:text-4xl font-bold text-[var(--color-text)]">
-              Bookings
+            <div className="flex items-center gap-2 mb-2">
+              <span className="badge-tour badge-tour-accent">
+                <Ticket size={12} /> ARTIST PASS ARCHIVE
+              </span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
+                LIVE ITINERARY
+              </span>
+            </div>
+            <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+              MY BOOKINGS
             </h1>
+            <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">
+              Active rehearsal wristbands, scheduled jam sessions, and historical studio passes.
+            </p>
           </div>
+
           <Link
             href="/rooms"
-            className="inline-flex items-center gap-2 h-10 rounded-[var(--radius-full)] bg-[var(--color-accent)] px-5 text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors"
+            className="btn-rock-primary text-sm py-2.5 px-6 shadow-[3px_3px_0_0_var(--color-rust)] shrink-0 self-start sm:self-auto"
           >
-            <Plus size={15} /> New Booking
+            <Plus size={15} /> Book New Pass
           </Link>
         </div>
 
-        {/* Loading */}
+        {/* Loading state */}
         {loading && (
-          <div className="flex items-center justify-center py-20 gap-2 text-[var(--color-text-muted)]">
-            <Loader2 size={18} className="animate-spin" />
-            <span className="text-sm">Loading your bookings…</span>
+          <div className="flex items-center justify-center py-20 gap-3 border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-sm uppercase tracking-widest">
+            <Loader2 size={18} className="animate-spin text-[var(--color-ochre)]" />
+            <span>SYNCING ARTIST PASSES FROM SUPABASE…</span>
           </div>
         )}
 
         {/* Not logged in */}
         {authChecked && !loggedIn && !loading && (
-          <div className="card text-center py-14 text-[var(--color-text-muted)] text-sm">
-            <p className="mb-3">Sign in to see your bookings.</p>
+          <div className="p-12 text-center border-2 border-[var(--color-ivory)] bg-[var(--color-surface)] shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3)] max-w-xl mx-auto flex flex-col items-center gap-4">
+            <p className="font-mono text-xs uppercase tracking-widest text-[var(--color-ochre)]">
+              IDENTIFICATION REQUIRED
+            </p>
+            <h3 className="font-[var(--font-display)] text-3xl text-[var(--color-cream)]">
+              SIGN IN TO VIEW YOUR STAGE PASSES
+            </h3>
+            <p className="text-xs text-[var(--color-text-muted)] max-w-sm">
+              Your member profile links to all upcoming confirmed rehearsals and QR doorway entrance passes.
+            </p>
             <Link
               href="/login"
-              className="inline-flex h-9 items-center rounded-[var(--radius-full)] bg-[var(--color-accent)] px-6 text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors"
+              className="btn-rock-primary text-sm py-2 px-6 mt-2"
             >
-              Sign in →
+              Sign In Now →
             </Link>
           </div>
         )}
 
         {/* Error */}
         {!loading && error && (
-          <div className="card text-center py-10 text-[var(--color-danger)] text-sm">
-            Failed to load bookings: {error}
+          <div className="p-6 border border-[var(--color-danger)] bg-[var(--color-danger)]/15 text-[var(--color-cream)] font-mono text-xs uppercase tracking-wider">
+            FAILED TO RETRIEVE PASSES: {error}
           </div>
         )}
 
-        {/* Data */}
+        {/* Data List */}
         {!loading && loggedIn && !error && (
           <>
-            {/* Upcoming */}
+            {/* Upcoming Passes */}
             <section className="flex flex-col gap-4">
-              <h2 className="font-semibold text-[var(--color-text)]">Upcoming</h2>
+              <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-2">
+                <h2 className="font-[var(--font-display)] text-2xl text-[var(--color-cream)] tracking-wider flex items-center gap-2">
+                  <Calendar size={18} className="text-[var(--color-ochre)]" />
+                  UPCOMING SESSIONS ({upcoming.length})
+                </h2>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+                  AUTO DOOR CHECK-IN ENABLED
+                </span>
+              </div>
+
               {upcoming.length === 0 ? (
-                <div className="card text-center py-10 text-[var(--color-text-muted)] text-sm">
-                  No upcoming bookings.{" "}
-                  <Link href="/rooms" className="text-[var(--color-accent)] hover:underline">
-                    Book a slot →
+                <div className="p-10 text-center border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-wider">
+                  No upcoming rehearsal passes booked.{" "}
+                  <Link href="/rooms" className="text-[var(--color-ochre)] hover:underline ml-1">
+                    Book a slot now →
                   </Link>
                 </div>
               ) : (
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid sm:grid-cols-2 gap-5">
                   {upcoming.map((b) => (
                     <BookingCard key={b.id} booking={b} />
                   ))}
@@ -160,11 +187,18 @@ export default function BookingsPage() {
               )}
             </section>
 
-            {/* History */}
+            {/* Past History */}
             {past.length > 0 && (
-              <section className="flex flex-col gap-4">
-                <h2 className="font-semibold text-[var(--color-text)]">History</h2>
-                <div className="grid sm:grid-cols-2 gap-4">
+              <section className="flex flex-col gap-4 mt-6">
+                <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-2">
+                  <h2 className="font-[var(--font-display)] text-2xl text-[var(--color-cream)] tracking-wider">
+                    ARCHIVED SETS ({past.length})
+                  </h2>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+                    COMPLETED REHEARSALS
+                  </span>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-5 opacity-75 hover:opacity-100 transition-opacity">
                   {past.map((b) => (
                     <BookingCard key={b.id} booking={b} />
                   ))}
@@ -173,13 +207,13 @@ export default function BookingsPage() {
             )}
 
             {bookings.length === 0 && (
-              <div className="card text-center py-14 text-[var(--color-text-muted)] text-sm">
-                <p className="mb-3">You have no bookings yet.</p>
+              <div className="p-14 text-center border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-widest flex flex-col items-center gap-3">
+                <p>YOU CURRENTLY HAVE ZERO RECORDED REHEARSAL PASSES.</p>
                 <Link
                   href="/rooms"
-                  className="inline-flex h-9 items-center rounded-[var(--radius-full)] bg-[var(--color-accent)] px-6 text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors"
+                  className="btn-rock-ghost text-xs py-2 px-6"
                 >
-                  Browse sessions →
+                  Browse Available Stages →
                 </Link>
               </div>
             )}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Music2, Lock, Mail, AlertCircle } from "lucide-react";
+import { Zap, Lock, Mail, AlertCircle, ArrowRight, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { BackButton } from "@/components/ui/BackButton";
 
@@ -25,9 +25,7 @@ export default function LoginPage() {
         password,
       });
 
-      if (authError) {
-        throw authError;
-      }
+      if (authError) throw authError;
 
       router.push("/dashboard");
     } catch (err: unknown) {
@@ -42,61 +40,63 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="section min-h-[80vh] flex flex-col items-center justify-center gap-4">
+    <div className="section min-h-[85vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex flex-col items-center justify-center gap-6">
       <div className="w-full max-w-md">
         <BackButton href="/" label="Home" />
       </div>
-      <div className="w-full max-w-md card flex flex-col gap-6 p-8">
+
+      <div className="w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 md:p-10 flex flex-col gap-6">
         <div className="flex flex-col items-center text-center gap-2">
-          <div className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
-            <Music2 size={24} />
+          <div className="flex h-12 w-12 items-center justify-center bg-[var(--color-ink)] border-2 border-[var(--color-cream)] text-[var(--color-cream)] shadow-[3px_3px_0_0_var(--color-rust)]">
+            <Zap size={22} className="fill-current" />
           </div>
-          <h1 className="font-[var(--font-display)] text-2xl font-bold text-[var(--color-text)]">
-            Sign In to Saarang
+          <span className="badge-tour badge-tour-accent mt-2">MEMBER LOGIN</span>
+          <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+            SIGN IN TO SAARANG
           </h1>
-          <p className="text-sm text-[var(--color-text-muted)]">
-            Access your practice slots, rehearsals, and bookings.
+          <p className="text-xs font-mono text-[var(--color-text-muted)]">
+            Access your practice slots, rehearsals, and backstage passes.
           </p>
         </div>
 
         {error && (
-          <div className="flex items-center gap-2 p-3 text-xs rounded-[var(--radius-sm)] bg-[var(--color-danger)]/10 border border-[var(--color-danger)]/30 text-[var(--color-danger)]">
-            <AlertCircle size={14} className="shrink-0" />
+          <div className="flex items-center gap-2 p-3 text-xs font-mono border border-[var(--color-danger)] bg-[var(--color-danger)]/15 text-[var(--color-cream)]">
+            <AlertCircle size={14} className="shrink-0 text-[var(--color-danger)]" />
             <span>{error}</span>
           </div>
         )}
 
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-[var(--color-text-muted)]">
+            <label className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)]">
               Email Address
             </label>
             <div className="relative">
-              <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-dim)]" />
+              <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-dim)]" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="musician@college.edu"
-                className="w-full h-10 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-2)] pl-9 pr-3 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-dim)] focus:outline-none focus:border-[var(--color-accent)]"
+                placeholder="musician@saarang.club"
+                className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] pl-10 pr-3 font-mono text-xs text-[var(--color-cream)] placeholder:text-[var(--color-text-dim)] focus:outline-none focus:border-[var(--color-ivory)]"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-[var(--color-text-muted)]">
-              Password
+            <label className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)]">
+              Passphrase
             </label>
             <div className="relative">
-              <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-dim)]" />
+              <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-dim)]" />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full h-10 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-2)] pl-9 pr-3 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-dim)] focus:outline-none focus:border-[var(--color-accent)]"
+                className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] pl-10 pr-3 font-mono text-xs text-[var(--color-cream)] placeholder:text-[var(--color-text-dim)] focus:outline-none focus:border-[var(--color-ivory)]"
               />
             </div>
           </div>
@@ -104,20 +104,28 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-2 h-10 rounded-[var(--radius-full)] bg-[var(--color-accent)] text-sm font-semibold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors disabled:opacity-50 cursor-pointer"
+            className="mt-2 btn-rock-primary text-base py-3 shadow-[3px_3px_0_0_var(--color-rust)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 disabled:opacity-50"
           >
-            {loading ? "Signing in…" : "Sign In"}
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <Loader2 size={16} className="animate-spin" />
+                AUTHENTICATING…
+              </span>
+            ) : (
+              <span className="flex items-center gap-2">
+                ENTER BACKSTAGE <ArrowRight size={15} />
+              </span>
+            )}
           </button>
         </form>
 
-        <p className="text-center text-xs text-[var(--color-text-muted)]">
-          Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-[var(--color-accent)] hover:underline font-medium">
-            Join the Club
+        <p className="text-center text-xs font-mono text-[var(--color-text-muted)] border-t border-[var(--color-border)] pt-4">
+          Need backstage credentials?{" "}
+          <Link href="/signup" className="text-[var(--color-ochre)] hover:underline font-bold">
+            Join the Club →
           </Link>
         </p>
       </div>
     </div>
   );
 }
-

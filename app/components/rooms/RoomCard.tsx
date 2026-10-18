@@ -13,45 +13,58 @@ import {
   Piano,
   Headphones,
   Volume2,
+  Zap,
+  Radio,
+  ArrowRight,
 } from "lucide-react";
 
-/* ─── Status badge ────────────────────────────────────────────────────────── */
+/* ─── Status badge (Vintage Gig / Stage Indicator) ────────────────────────── */
 
 const STATUS_CONFIG: Record<
   RoomStatus,
-  { label: string; color: string; dot: string }
+  { label: string; bg: string; text: string; dot: string; frameClass: string }
 > = {
   available: {
-    label: "Available",
-    color: "text-[var(--color-available)]",
+    label: "STAGE OPEN",
+    bg: "bg-[var(--color-available)]/15 border-[var(--color-available)]",
+    text: "text-[var(--color-available)]",
     dot: "bg-[var(--color-available)]",
+    frameClass: "hover:border-[var(--color-available)]/60",
   },
   reserved: {
-    label: "Reserved",
-    color: "text-[var(--color-reserved)]",
+    label: "RESERVED",
+    bg: "bg-[var(--color-reserved)]/15 border-[var(--color-reserved)]",
+    text: "text-[var(--color-reserved)]",
     dot: "bg-[var(--color-reserved)]",
+    frameClass: "hover:border-[var(--color-reserved)]/60",
   },
   occupied: {
-    label: "Occupied",
-    color: "text-[var(--color-occupied)]",
+    label: "IN REHEARSAL",
+    bg: "bg-[var(--color-occupied)]/15 border-[var(--color-occupied)]",
+    text: "text-[var(--color-occupied)]",
     dot: "bg-[var(--color-occupied)]",
+    frameClass: "hover:border-[var(--color-occupied)]/60",
   },
   departure_pending: {
-    label: "Finishing up",
-    color: "text-[var(--color-pending)]",
+    label: "FINISHING UP",
+    bg: "bg-[var(--color-pending)]/15 border-[var(--color-pending)]",
+    text: "text-[var(--color-pending)]",
     dot: "bg-[var(--color-pending)]",
+    frameClass: "hover:border-[var(--color-pending)]/60",
   },
   occupancy_uncertain: {
-    label: "Status unclear",
-    color: "text-[var(--color-uncertain)]",
+    label: "STATUS UNCLEAR",
+    bg: "bg-[var(--color-uncertain)]/15 border-[var(--color-uncertain)]",
+    text: "text-[var(--color-uncertain)]",
     dot: "bg-[var(--color-uncertain)]",
+    frameClass: "hover:border-[var(--color-uncertain)]/60",
   },
 };
 
 const MODE_LABELS: Record<PracticeMode, string> = {
-  individual: "Solo practice",
-  collaborative: "Collaborative",
-  band_rehearsal: "Band rehearsal",
+  individual: "Solo Set",
+  collaborative: "Jam Session",
+  band_rehearsal: "Full Band",
 };
 
 function StatusBadge({ status }: { status: RoomStatus }) {
@@ -59,16 +72,12 @@ function StatusBadge({ status }: { status: RoomStatus }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest",
-        cfg.color
+        "inline-flex items-center gap-1.5 px-2.5 py-0.5 border text-[10px] font-mono font-bold uppercase tracking-widest rounded-none",
+        cfg.bg,
+        cfg.text
       )}
     >
-      <span
-        className={cn(
-          "h-1.5 w-1.5 rounded-full animate-pulse",
-          cfg.dot
-        )}
-      />
+      <span className={cn("h-1.5 w-1.5 rounded-full animate-pulse", cfg.dot)} />
       {cfg.label}
     </span>
   );
@@ -78,14 +87,14 @@ function StatusBadge({ status }: { status: RoomStatus }) {
 
 function InstrumentIcon({ name }: { name: string }) {
   const lower = name.toLowerCase();
-  if (lower.includes("drum") || lower.includes("percus")) return <Drum size={14} />;
-  if (lower.includes("guitar") || lower.includes("bass")) return <Guitar size={14} />;
-  if (lower.includes("piano") || lower.includes("keyboard")) return <Piano size={14} />;
-  if (lower.includes("vocal") || lower.includes("voice") || lower.includes("mic")) return <Mic2 size={14} />;
-  return <Music2 size={14} />;
+  if (lower.includes("drum") || lower.includes("percus")) return <Drum size={13} />;
+  if (lower.includes("guitar") || lower.includes("bass")) return <Guitar size={13} />;
+  if (lower.includes("piano") || lower.includes("keyboard")) return <Piano size={13} />;
+  if (lower.includes("vocal") || lower.includes("voice") || lower.includes("mic")) return <Mic2 size={13} />;
+  return <Music2 size={13} />;
 }
 
-/* ─── Main card ───────────────────────────────────────────────────────────── */
+/* ─── Main Room Poster Card ───────────────────────────────────────────────── */
 
 interface RoomCardProps {
   id: string;
@@ -94,6 +103,7 @@ interface RoomCardProps {
   capacity: number;
   status: RoomStatus;
   equipment: string[];
+  acousticProperties?: string;
   currentBooking?: {
     memberName: string;
     instrument: string;
@@ -111,12 +121,12 @@ export function RoomCard({
   capacity,
   status,
   equipment,
+  acousticProperties,
   currentBooking,
   nextAvailableAt,
   onBook,
 }: RoomCardProps) {
   const isBookable = status === "available";
-
   const [endsIn, setEndsIn] = useState<number | null>(null);
 
   useEffect(() => {
@@ -128,7 +138,6 @@ export function RoomCard({
     };
 
     const timer = setInterval(calculateRemaining, 60_000);
-    // Also trigger on next tick to avoid synchronous update in effect
     const initialTimer = setTimeout(calculateRemaining, 0);
 
     return () => {
@@ -140,95 +149,121 @@ export function RoomCard({
   return (
     <div
       className={cn(
-        "card group relative flex flex-col gap-4 transition-all duration-200",
-        isBookable && "hover:border-[var(--color-accent)]/50 hover:shadow-lg hover:shadow-black/30"
+        "group relative flex flex-col justify-between bg-[var(--color-surface)] border border-[var(--color-border)] p-6 transition-all duration-300",
+        "shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)]",
+        "hover:shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-cream),0_12px_28px_rgba(0,0,0,0.6)] hover:-translate-y-1",
+        STATUS_CONFIG[status].frameClass
       )}
     >
-      {/* Header row */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <h3 className="font-[var(--font-display)] text-lg font-semibold text-[var(--color-text)] leading-tight truncate">
+      <div>
+        {/* Top Header Row with Session ID & Status Badge */}
+        <div className="flex items-center justify-between gap-2 border-b border-[var(--color-border)] pb-3 mb-4">
+          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)] flex items-center gap-1">
+            <Radio size={11} className="text-[var(--color-rust)]" /> STAGE // 0{id.replace(/\D/g, "") || "1"}
+          </span>
+          <StatusBadge status={status} />
+        </div>
+
+        {/* Room Title & Description */}
+        <div className="mb-4">
+          <h3 className="font-[var(--font-display)] text-2xl md:text-3xl text-[var(--color-cream)] leading-none tracking-tight group-hover:text-[var(--color-ochre)] transition-colors truncate">
             {name}
           </h3>
-          <p className="mt-0.5 text-sm text-[var(--color-text-muted)] line-clamp-2">
+          <p className="mt-1.5 text-xs text-[var(--color-text-muted)] line-clamp-2 leading-relaxed">
             {description}
           </p>
         </div>
-        <StatusBadge status={status} />
-      </div>
 
-      {/* Current session info */}
-      {currentBooking ? (
-        <div className="rounded-[var(--radius-md)] bg-[var(--color-surface-2)] border border-[var(--color-border)] px-4 py-3 flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
-            <InstrumentIcon name={currentBooking.instrument} />
-            <span className="font-medium text-[var(--color-text)]">
-              {currentBooking.instrument}
-            </span>
-            <span>·</span>
-            <span>{MODE_LABELS[currentBooking.mode]}</span>
+        {/* Acoustic suitability stamp if available */}
+        {acousticProperties && (
+          <div className="inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-wider text-[var(--color-ochre)] border border-[var(--color-ochre)]/30 bg-[var(--color-ochre)]/10 px-2 py-0.5 mb-4">
+            <Zap size={10} /> {acousticProperties}
           </div>
-          {endsIn !== null && (
-            <div className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
-              <Clock size={12} />
-              <span>
-                {endsIn > 0 ? `Ends in ${endsIn} min` : "Session ending soon"}
+        )}
+
+        {/* Current session info */}
+        {currentBooking ? (
+          <div className="bg-[var(--color-ink)] border border-[var(--color-border)] p-3 mb-4">
+            <div className="flex items-center justify-between text-xs text-[var(--color-text-muted)]">
+              <span className="flex items-center gap-1.5 font-medium text-[var(--color-cream)]">
+                <InstrumentIcon name={currentBooking.instrument} />
+                {currentBooking.instrument}
+              </span>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+                {MODE_LABELS[currentBooking.mode]}
               </span>
             </div>
-          )}
-        </div>
-      ) : nextAvailableAt ? (
-        <div className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
-          <Clock size={12} />
-          <span>
-            Next slot at{" "}
-            {nextAvailableAt.toLocaleTimeString("en-IN", {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-            })}
-          </span>
-        </div>
-      ) : null}
-
-      {/* Equipment chips */}
-      {equipment.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {equipment.slice(0, 4).map((item) => (
-            <span
-              key={item}
-              className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] bg-[var(--color-surface-2)] border border-[var(--color-border)] px-2 py-0.5 text-[11px] text-[var(--color-text-muted)]"
-            >
-              {item.toLowerCase().includes("headphone") && <Headphones size={10} />}
-              {item.toLowerCase().includes("amp") && <Volume2 size={10} />}
-              {item}
+            {endsIn !== null && (
+              <div className="mt-2 flex items-center gap-1.5 text-[11px] font-mono text-[var(--color-ochre)] border-t border-[var(--color-border)]/60 pt-2">
+                <Clock size={11} />
+                <span>{endsIn > 0 ? `Ends in ${endsIn} min` : "Finishing up now"}</span>
+              </div>
+            )}
+          </div>
+        ) : nextAvailableAt ? (
+          <div className="bg-[var(--color-ink)] border border-[var(--color-border)] p-2.5 mb-4 flex items-center gap-1.5 text-xs font-mono text-[var(--color-text-muted)]">
+            <Clock size={12} className="text-[var(--color-ochre)]" />
+            <span>
+              Next slot:{" "}
+              {nextAvailableAt.toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
+              })}
             </span>
-          ))}
-          {equipment.length > 4 && (
-            <span className="text-[11px] text-[var(--color-text-dim)] self-center">
-              +{equipment.length - 4} more
-            </span>
-          )}
-        </div>
-      )}
+          </div>
+        ) : null}
 
-      {/* Footer */}
-      <div className="mt-auto flex items-center justify-between gap-3">
-        <span className="flex items-center gap-1.5 text-xs text-[var(--color-text-dim)]">
-          <Users size={12} />
-          Capacity: {capacity}
+        {/* Gear / Equipment list */}
+        {equipment.length > 0 && (
+          <div className="mb-5">
+            <p className="text-[9px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)] mb-1.5">
+              Available Gear Inventory
+            </p>
+            <div className="flex flex-wrap gap-1">
+              {equipment.slice(0, 4).map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-1 bg-[var(--color-ink)] border border-[var(--color-border)] px-2 py-0.5 text-[10px] font-mono text-[var(--color-text-muted)]"
+                >
+                  {item.toLowerCase().includes("headphone") && <Headphones size={9} />}
+                  {item.toLowerCase().includes("amp") && <Volume2 size={9} />}
+                  {item}
+                </span>
+              ))}
+              {equipment.length > 4 && (
+                <span className="text-[10px] font-mono text-[var(--color-text-dim)] self-center px-1">
+                  +{equipment.length - 4} more
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Ticket-Style Footer */}
+      <div className="pt-4 border-t border-[var(--color-border)] flex items-center justify-between gap-3">
+        <span className="flex items-center gap-1 text-[11px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+          <Users size={12} /> CAP: {capacity}
         </span>
+
         <button
           onClick={() => onBook?.(id)}
           disabled={!isBookable}
           className={cn(
-            "inline-flex h-8 items-center rounded-[var(--radius-full)] px-4 text-xs font-semibold transition-all",
+            "inline-flex items-center gap-1.5 font-[var(--font-display)] text-sm uppercase tracking-wider px-4 py-1.5 transition-all",
             isBookable
-              ? "bg-[var(--color-accent)] text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] cursor-pointer"
-              : "bg-[var(--color-surface-2)] text-[var(--color-text-dim)] cursor-not-allowed"
+              ? "bg-[var(--color-cream)] text-[var(--color-ink)] border border-[var(--color-cream)] hover:bg-[var(--color-ink)] hover:text-[var(--color-cream)] hover:shadow-[3px_3px_0_0_var(--color-rust)] hover:-translate-x-0.5 hover:-translate-y-0.5 cursor-pointer"
+              : "bg-[var(--color-surface-2)] text-[var(--color-text-dim)] border border-[var(--color-border)] cursor-not-allowed opacity-60"
           )}
         >
-          {isBookable ? "Book Now" : "Unavailable"}
+          {isBookable ? (
+            <>
+              Book Pass <ArrowRight size={13} />
+            </>
+          ) : (
+            "Unavailable"
+          )}
         </button>
       </div>
     </div>

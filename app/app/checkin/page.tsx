@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { QrCode, CheckCircle2, LogOut, AlertCircle, Sparkles } from "lucide-react";
+import { QrCode, CheckCircle2, LogOut, AlertCircle, Sparkles, Radio, Ticket, ArrowRight } from "lucide-react";
 import { BackButton } from "@/components/ui/BackButton";
 
 export default function CheckinPage() {
@@ -30,7 +30,7 @@ export default function CheckinPage() {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("Failed to record entry.");
+        setError("Failed to record doorway presence.");
       }
     } finally {
       setLoading(false);
@@ -38,76 +38,83 @@ export default function CheckinPage() {
   };
 
   return (
-    <div className="section min-h-[85vh] flex flex-col items-center justify-center gap-4">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex flex-col items-center justify-center gap-6">
       <div className="w-full max-w-md">
         <BackButton href="/" label="Home" />
       </div>
-      <div className="w-full max-w-md card flex flex-col items-center text-center gap-6 p-8">
-        <div className="flex h-14 w-14 items-center justify-center rounded-[var(--radius-full)] bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
-          <QrCode size={28} />
+
+      <div className="w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 flex flex-col items-center text-center gap-6">
+        {/* QR scanner target */}
+        <div className="relative flex h-20 w-20 items-center justify-center bg-[var(--color-ink)] border-2 border-[var(--color-ochre)] text-[var(--color-ochre)] shadow-[3px_3px_0_0_var(--color-rust)]">
+          <QrCode size={36} />
+          {/* Corner marks */}
+          <span className="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-[var(--color-cream)]" />
+          <span className="absolute -top-1 -right-1 w-2 h-2 border-t-2 border-r-2 border-[var(--color-cream)]" />
+          <span className="absolute -bottom-1 -left-1 w-2 h-2 border-b-2 border-l-2 border-[var(--color-cream)]" />
+          <span className="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-[var(--color-cream)]" />
         </div>
 
-        <div className="flex flex-col gap-1">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
-            Session Entrance Portal
-          </p>
-          <h1 className="font-[var(--font-display)] text-2xl font-bold text-[var(--color-text)]">
-            QR Check-In & Check-Out
+        <div>
+          <span className="badge-tour badge-tour-rust mb-2">
+            <Radio size={11} /> Doorway Terminal
+          </span>
+          <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl text-[var(--color-cream)] leading-none tracking-tight mt-1">
+            STAGE CHECK-IN PORTAL
           </h1>
-          <p className="text-sm text-[var(--color-text-muted)]">
-            Scan or confirm physical presence to update session-space availability in real time.
+          <p className="mt-2 text-xs font-mono text-[var(--color-text-muted)] leading-relaxed">
+            Scan at the doorway or select your pass below to reconcile occupancy and trigger session countdowns.
           </p>
         </div>
 
         {statusMessage && (
-          <div className="w-full flex items-center gap-2 p-3 text-xs rounded-[var(--radius-sm)] bg-[var(--color-success)]/10 border border-[var(--color-success)]/30 text-[var(--color-success)]">
-            <CheckCircle2 size={16} className="shrink-0" />
+          <div className="w-full flex items-center gap-2 p-3 text-xs font-mono border border-[var(--color-available)] bg-[var(--color-available)]/15 text-[var(--color-cream)] text-left">
+            <CheckCircle2 size={16} className="shrink-0 text-[var(--color-available)]" />
             <span>{statusMessage}</span>
           </div>
         )}
 
         {error && (
-          <div className="w-full flex items-center gap-2 p-3 text-xs rounded-[var(--radius-sm)] bg-[var(--color-danger)]/10 border border-[var(--color-danger)]/30 text-[var(--color-danger)]">
-            <AlertCircle size={16} className="shrink-0" />
+          <div className="w-full flex items-center gap-2 p-3 text-xs font-mono border border-[var(--color-danger)] bg-[var(--color-danger)]/15 text-[var(--color-cream)] text-left">
+            <AlertCircle size={16} className="shrink-0 text-[var(--color-danger)]" />
             <span>{error}</span>
           </div>
         )}
 
-        <div className="w-full flex flex-col gap-2 text-left">
-          <label className="text-xs font-semibold text-[var(--color-text-muted)]">
-            Confirmed Booking Reference
+        <div className="w-full flex flex-col gap-1.5 text-left">
+          <label className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
+            <Ticket size={12} /> Rehearsal Pass Reference
           </label>
           <select
             value={bookingId}
             onChange={(e) => setBookingId(e.target.value)}
-            className="w-full h-10 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-2)] px-3 text-sm text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)]"
+            className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] cursor-pointer"
           >
-            <option value="b1">Session A — Electric Guitar (19:30 - 20:30)</option>
-            <option value="b2">Jam Session Area — Bass Guitar (18:00 - 19:30)</option>
-            <option value="b3">Session B — Electric Guitar (16:00 - 16:45)</option>
+            <option value="b1" className="bg-[var(--color-ink)]">Stage A — Electric Guitar (19:30 - 20:30)</option>
+            <option value="b2" className="bg-[var(--color-ink)]">Jam Session Stage — Bass Guitar (18:00 - 19:30)</option>
+            <option value="b3" className="bg-[var(--color-ink)]">Stage B — Electric Guitar (16:00 - 16:45)</option>
           </select>
         </div>
 
-        <div className="w-full grid grid-cols-2 gap-3 pt-2">
+        <div className="w-full grid grid-cols-2 gap-3 pt-1">
           <button
             onClick={() => handleAction("check_in")}
             disabled={loading}
-            className="h-11 rounded-[var(--radius-full)] bg-[var(--color-accent)] text-xs font-bold text-[var(--color-background)] hover:bg-[var(--color-accent-dim)] transition-colors flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="btn-rock-primary text-sm py-2.5 shadow-[3px_3px_0_0_var(--color-rust)] disabled:opacity-50"
           >
             <CheckCircle2 size={15} /> Check In
           </button>
           <button
             onClick={() => handleAction("check_out")}
             disabled={loading}
-            className="h-11 rounded-[var(--radius-full)] border border-[var(--color-border)] bg-[var(--color-surface-2)] text-xs font-bold text-[var(--color-text)] hover:border-[var(--color-text-muted)] transition-colors flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="btn-rock-ghost text-sm py-2.5 disabled:opacity-50"
           >
-            <LogOut size={15} /> Check Out
+            <LogOut size={15} /> Vacate Stage
           </button>
         </div>
 
-        <div className="flex items-center gap-2 text-[11px] text-[var(--color-text-dim)] pt-2">
-          <Sparkles size={12} className="text-[var(--color-accent)]" />
-          <span>Automatic occupancy reconciliation active</span>
+        <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)] pt-2 border-t border-[var(--color-border)] w-full justify-center">
+          <Sparkles size={11} className="text-[var(--color-ochre)]" />
+          <span>Real-time occupancy reconciliation active</span>
         </div>
       </div>
     </div>

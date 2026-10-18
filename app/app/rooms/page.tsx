@@ -6,9 +6,8 @@ import { RoomCard } from "@/components/rooms/RoomCard";
 import { type Room } from "@/types";
 import { supabase } from "@/lib/supabase/client";
 import { BackButton } from "@/components/ui/BackButton";
-import { Filter, Search, Loader2 } from "lucide-react";
+import { Filter, Search, Loader2, Radio, Sparkles, Zap } from "lucide-react";
 
-/* ─── Supabase row shape ──────────────────────────────────────────────────── */
 interface RoomRow {
   id: string;
   name: string;
@@ -57,99 +56,104 @@ export default function RoomsPage() {
     }
 
     fetchRooms();
-
-    // Re-fetch every 30 s for near-real-time status
     const interval = setInterval(fetchRooms, 30_000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="section">
-      <div className="container flex flex-col gap-8">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)]">
+      <div className="container flex flex-col gap-10">
         {/* Back navigation */}
-        <BackButton href="/" label="Home" />
-
-        {/* Page header */}
-        <div className="flex flex-col gap-2">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent)]">
-            Live Status
-          </p>
-          <h1 className="font-[var(--font-display)] text-3xl md:text-4xl font-bold text-[var(--color-text)]">
-            Practice Sessions
-          </h1>
-          <p className="text-[var(--color-text-muted)] max-w-xl">
-            All practice sessions updated in real time. Pick an area, check the current session and
-            equipment, and book your slot instantly.
-          </p>
+        <div>
+          <BackButton href="/" label="Home" />
         </div>
 
-        {/* Search + filter row [planned] */}
+        {/* Page Header (Aragon Ballroom / Arctic Monkeys poster styling) */}
+        <div className="p-8 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)] flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-border)] pb-3">
+            <span className="badge-tour badge-tour-accent">
+              <Radio size={12} /> LIVE STAGE RADAR
+            </span>
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
+              FREQUENCY REFRESH: 30s INTERVAL
+            </span>
+          </div>
+
+          <div>
+            <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl md:text-7xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+              PRACTICE SESSIONS
+            </h1>
+            <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-2xl leading-relaxed">
+              Explore the five distinct rehearsal stages. Inspect isolation tiers, available drum kits,
+              amplifiers, and synthesizer setups, and lock in your practice pass.
+            </p>
+          </div>
+
+          {/* Status legend with vintage concert badges */}
+          <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-[var(--color-border)] text-xs font-mono">
+            {[
+              { label: "STAGE OPEN", dot: "bg-[var(--color-available)]", text: "text-[var(--color-available)]" },
+              { label: "RESERVED", dot: "bg-[var(--color-reserved)]", text: "text-[var(--color-reserved)]" },
+              { label: "IN REHEARSAL", dot: "bg-[var(--color-occupied)]", text: "text-[var(--color-occupied)]" },
+              { label: "FINISHING UP", dot: "bg-[var(--color-pending)]", text: "text-[var(--color-pending)]" },
+              { label: "STATUS UNCLEAR", dot: "bg-[var(--color-uncertain)]", text: "text-[var(--color-uncertain)]" },
+            ].map(({ label, dot, text }) => (
+              <span key={label} className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[var(--color-ink)] border border-[var(--color-border)]">
+                <span className={`h-1.5 w-1.5 rounded-full ${dot}`} />
+                <span className={`text-[10px] uppercase font-bold tracking-wider ${text}`}>{label}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Search + filter row with vintage frame */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <Search
               size={15}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-dim)]"
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-dim)]"
             />
             <input
               type="text"
-              placeholder="Search sessions or equipment…"
+              placeholder="Search stages, instruments, or backline gear…"
               disabled
-              className="w-full h-10 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] pl-9 pr-4 text-sm text-[var(--color-text-muted)] placeholder:text-[var(--color-text-dim)] cursor-not-allowed opacity-60"
+              className="w-full h-11 bg-[var(--color-surface)] border border-[var(--color-border)] pl-10 pr-4 text-xs font-mono uppercase tracking-wider text-[var(--color-text-muted)] placeholder:text-[var(--color-text-dim)] cursor-not-allowed opacity-60 shadow-[inset_0_0_0_1px_rgba(238,230,213,0.1)]"
             />
           </div>
           <button
             disabled
-            className="inline-flex items-center gap-2 h-10 px-4 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] text-sm text-[var(--color-text-dim)] cursor-not-allowed opacity-60"
+            className="inline-flex items-center gap-2 h-11 px-5 border border-[var(--color-border)] bg-[var(--color-surface)] text-xs font-mono uppercase tracking-widest text-[var(--color-text-dim)] cursor-not-allowed opacity-60"
           >
-            <Filter size={14} /> Filter
-            <span className="ml-1 text-[10px] text-[var(--color-accent)] font-semibold">[planned]</span>
+            <Filter size={13} /> Filters
+            <span className="text-[10px] text-[var(--color-ochre)] font-semibold">[planned]</span>
           </button>
-        </div>
-
-        {/* Status legend */}
-        <div className="flex flex-wrap gap-4 text-xs text-[var(--color-text-muted)]">
-          {[
-            { color: "var(--color-available)", label: "Available" },
-            { color: "var(--color-reserved)",  label: "Reserved" },
-            { color: "var(--color-occupied)",   label: "Occupied" },
-            { color: "var(--color-pending)",    label: "Finishing up" },
-            { color: "var(--color-uncertain)",  label: "Status unclear" },
-          ].map(({ color, label }) => (
-            <span key={label} className="flex items-center gap-1.5">
-              <span
-                className="h-2 w-2 rounded-full"
-                style={{ background: color }}
-              />
-              {label}
-            </span>
-          ))}
         </div>
 
         {/* Loading skeleton */}
         {loading && (
-          <div className="flex items-center justify-center py-20 gap-2 text-[var(--color-text-muted)]">
-            <Loader2 size={18} className="animate-spin" />
-            <span className="text-sm">Loading sessions…</span>
+          <div className="flex items-center justify-center py-24 gap-3 text-[var(--color-text-muted)] font-mono text-sm border border-[var(--color-border)] bg-[var(--color-surface)]">
+            <Loader2 size={18} className="animate-spin text-[var(--color-ochre)]" />
+            <span className="uppercase tracking-widest">CONNECTING TO STAGE SENSORS…</span>
           </div>
         )}
 
         {/* Error */}
         {!loading && error && (
-          <div className="card text-center py-10 text-[var(--color-danger)] text-sm">
-            Failed to load sessions: {error}
+          <div className="p-8 text-center border border-[var(--color-danger)] bg-[var(--color-danger)]/10 text-[var(--color-cream)] font-mono text-xs uppercase tracking-wider">
+            Failed to query stage data: {error}
           </div>
         )}
 
         {/* Empty state */}
         {!loading && !error && rooms.length === 0 && (
-          <div className="card text-center py-10 text-[var(--color-text-muted)] text-sm">
-            No sessions found. Check back soon!
+          <div className="p-12 text-center border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-widest">
+            NO SESSIONS RETURNED FROM STAGE CONTROLLER. VERIFY SUPABASE CONNECTION.
           </div>
         )}
 
         {/* Session grid */}
         {!loading && rooms.length > 0 && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {rooms.map((room) => (
               <RoomCard
                 key={room.id}

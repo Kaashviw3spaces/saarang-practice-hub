@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Clock, Bell, Plus, Check } from "lucide-react";
+import { Clock, Bell, Plus, Check, Radio, Zap } from "lucide-react";
 
 interface SessionTimerProps {
   initialMinutes?: number;
@@ -50,7 +50,6 @@ export function SessionReminderTimer({
   const timeFormatted = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
   const handleRequestExtension = () => {
-    // Extend by 15 mins if slot is available
     setSecondsLeft((prev) => prev + 15 * 60);
     setExtensionRequested(true);
     setNotification("Extension granted! +15 minutes added to your session.");
@@ -58,42 +57,49 @@ export function SessionReminderTimer({
   };
 
   return (
-    <div className="card flex flex-col gap-4 border-[var(--color-border)] bg-[var(--color-surface-2)] p-5">
-      <div className="flex items-center justify-between">
+    <div className="relative flex flex-col gap-4 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)] p-6 shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)]">
+      {/* Header bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--color-border)] pb-3">
         <div className="flex items-center gap-2">
-          <Clock size={16} className="text-[var(--color-accent)]" />
-          <span className="text-xs font-semibold uppercase tracking-widest text-[var(--color-text)]">
-            Active Session Timer: {sessionName}
+          <span className="h-2 w-2 rounded-full bg-[var(--color-available)] animate-pulse" />
+          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1">
+            <Radio size={12} /> LIVE STAGE CLOCK // {sessionName}
           </span>
         </div>
-        <span className="font-mono text-xl font-bold text-[var(--color-accent)]">
-          {timeFormatted}
-        </span>
+
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+            REMAINING:
+          </span>
+          <span className="font-mono text-3xl font-bold tracking-wider text-[var(--color-cream)] bg-[var(--color-ink)] px-3 py-1 border border-[var(--color-border)] shadow-inner">
+            {timeFormatted}
+          </span>
+        </div>
       </div>
 
       {notification && (
-        <div className="flex items-center gap-2 p-2.5 text-xs rounded-[var(--radius-sm)] bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/30 text-[var(--color-accent)]">
-          <Bell size={14} className="shrink-0" />
+        <div className="flex items-center gap-2 p-3 text-xs font-mono rounded-none bg-[var(--color-ochre)]/10 border border-[var(--color-ochre)] text-[var(--color-cream)]">
+          <Bell size={14} className="shrink-0 text-[var(--color-ochre)]" />
           <span>{notification}</span>
         </div>
       )}
 
-      <div className="flex items-center justify-between gap-3 pt-1">
-        <span className="text-xs text-[var(--color-text-muted)]">
-          Need more practice time?
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+        <span className="text-xs font-mono uppercase tracking-wider text-[var(--color-text-muted)] flex items-center gap-1.5">
+          <Zap size={12} className="text-[var(--color-rust)]" /> Need more stage time before handover?
         </span>
         <button
           onClick={handleRequestExtension}
           disabled={extensionRequested}
-          className="h-8 px-4 rounded-[var(--radius-full)] bg-[var(--color-surface)] border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text)] hover:border-[var(--color-accent)] transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-1.5 h-9 px-4 font-[var(--font-display)] text-sm uppercase tracking-wider bg-[var(--color-ink)] border border-[var(--color-ivory)] text-[var(--color-cream)] hover:bg-[var(--color-cream)] hover:text-[var(--color-ink)] transition-colors cursor-pointer disabled:opacity-50"
         >
           {extensionRequested ? (
             <>
-              <Check size={13} className="text-[var(--color-success)]" /> Extended
+              <Check size={14} className="text-[var(--color-available)]" /> +15m Extended
             </>
           ) : (
             <>
-              <Plus size={13} /> Request 15m Extension
+              <Plus size={14} /> Request +15m Extension
             </>
           )}
         </button>
@@ -101,4 +107,3 @@ export function SessionReminderTimer({
     </div>
   );
 }
-
