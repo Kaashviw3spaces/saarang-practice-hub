@@ -1,19 +1,13 @@
 import Link from "next/link";
 import {
   Music2,
-  Calendar,
   Zap,
-  Users,
-  Shield,
-  Clock,
   ArrowRight,
   Guitar,
   Drum,
   Mic2,
   Piano,
   Radio,
-  Disc3,
-  Ticket,
 } from "lucide-react";
 import { RoomCard } from "@/components/rooms/RoomCard";
 import { type Room } from "@/types";
@@ -53,50 +47,6 @@ const PREVIEW_ROOMS: Room[] = [
   },
 ];
 
-const FEATURES = [
-  {
-    icon: Zap,
-    badge: "ENGINE 01",
-    title: "AI Acoustic Intelligence",
-    description:
-      "Acoustic frequency analysis prevents clash between heavy drums and intimate acoustic sessions before anyone sets foot inside.",
-  },
-  {
-    icon: Calendar,
-    badge: "ENGINE 02",
-    title: "Live Stage Availability",
-    description:
-      "Real-time session occupancy, instant slot reservation, and automated alternatives when your preferred slot is taken.",
-  },
-  {
-    icon: Users,
-    badge: "ENGINE 03",
-    title: "Collaborative Jam Matching",
-    description:
-      "Discover compatible musicians practising in parallel slots and transition solo practice into multi-instrument jams.",
-  },
-  {
-    icon: Clock,
-    badge: "ENGINE 04",
-    title: "Stage Reminders & Extensions",
-    description:
-      "Mid-session chimes, 7-minute pre-expiry alerts, and single-click 15-minute extensions for uninterrupted flow.",
-  },
-  {
-    icon: Shield,
-    badge: "ENGINE 05",
-    title: "Fair Booking Protocol",
-    description:
-      "Zero double-bookings with automated conflict locks and fair-share quota distribution across all club members.",
-  },
-  {
-    icon: Music2,
-    badge: "ENGINE 06",
-    title: "Multi-Mode Setups",
-    description:
-      "Tailor equipment configurations for solo focus, 2-piece jams, or full-band thunderous rehearsals.",
-  },
-];
 
 const STATS = [
   { value: "05", label: "ACTIVE REHEARSAL STAGES" },
@@ -330,46 +280,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FEATURES (Rock Poster Card Grid) ──────────────────────────────── */}
-      <section className="section bg-[var(--color-surface)] border-t border-[var(--color-border)]">
-        <div className="container flex flex-col gap-12">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="badge-tour badge-tour-magenta mb-3">Sound Infrastructure</span>
-            <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
-              DESIGNED FOR HIGH DECIBEL PRECISION
-            </h2>
-            <p className="mt-3 text-sm text-[var(--color-text-muted)]">
-              Everything the Saarang Music Club needs to keep creativity pumping without acoustic clash.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {FEATURES.map(({ icon: Icon, badge, title, description }) => (
-              <div
-                key={title}
-                className="p-6 bg-[var(--color-ink)] border border-[var(--color-border)] hover:border-[var(--color-ochre)] transition-all duration-300 shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.15)] flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex h-10 w-10 items-center justify-center bg-[var(--color-surface-2)] text-[var(--color-ochre)] border border-[var(--color-border)] group-hover:bg-[var(--color-cream)] group-hover:text-[var(--color-ink)] transition-colors">
-                      <Icon size={18} />
-                    </div>
-                    <span className="text-[9px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
-                      {badge}
-                    </span>
-                  </div>
-                  <h3 className="font-[var(--font-display)] text-2xl text-[var(--color-cream)] leading-tight mb-2 group-hover:text-[var(--color-ochre)] transition-colors">
-                    {title}
-                  </h3>
-                  <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
-                    {description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── CTA BANNER (Concert Ticket Style) ─────────────────────────────── */}
       <section className="section bg-[var(--color-ink)] relative overflow-hidden">
