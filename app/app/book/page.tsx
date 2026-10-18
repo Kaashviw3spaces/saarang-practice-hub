@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import {
   Calendar,
@@ -14,6 +14,7 @@ import {
   Zap,
   ArrowRight,
   Radio,
+  Sparkles,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { BackButton } from "@/components/ui/BackButton";
@@ -77,9 +78,6 @@ export default function BookingPage() {
         if (json.instruments && json.instruments.length > 0) {
           const names = json.instruments.map((i) => i.name);
           setInstrumentsList(names);
-          if (!names.includes(instrument)) {
-            setInstrument(names[0]);
-          }
         }
         setRoomsLoading(false);
       })
@@ -87,6 +85,32 @@ export default function BookingPage() {
         setRoomsLoading(false);
       });
   }, []);
+
+  const selectedRoom = rooms.find((r) => r.id === roomId);
+  const isSessionA = Boolean(selectedRoom?.name.toLowerCase().includes("session a"));
+  const isBandRehearsal = mode === "band_rehearsal";
+
+  // Compute available instruments based on room & mode:
+  // In Session A solo practice, only Drums and Electric Guitar are permitted
+  const currentAllowedInstruments = useMemo(() => {
+    if (isSessionA && mode === "individual") {
+      const filtered = instrumentsList.filter((inst) => {
+        const lower = inst.toLowerCase();
+        return lower.includes("drum") || lower.includes("electric guitar");
+      });
+      return filtered.length > 0 ? filtered : ["Acoustic Drums", "Electric Guitar"];
+    }
+    return instrumentsList;
+  }, [isSessionA, mode, instrumentsList]);
+
+  // Keep instrument in sync when room or mode changes
+  useEffect(() => {
+    if (isBandRehearsal) {
+      setInstrument("Full Band Setup");
+    } else if (!currentAllowedInstruments.includes(instrument)) {
+      setInstrument(currentAllowedInstruments[0] || "Acoustic Drums");
+    }
+  }, [isBandRehearsal, currentAllowedInstruments, instrument]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,11 +146,13 @@ export default function BookingPage() {
         );
       }
 
-      // Insert booking
+      // Insert booking - Full band rehearsal covers all instruments under one reservation
+      const finalInstrument = isBandRehearsal ? "Full Band Setup" : instrument;
+
       const { error: insertError } = await supabase.from("bookings").insert({
         room_id: roomId,
         user_id: user.id,
-        instrument,
+        instrument: finalInstrument,
         mode,
         starts_at: startsAt.toISOString(),
         ends_at: endsAt.toISOString(),
@@ -162,7 +188,7 @@ export default function BookingPage() {
               <Calendar size={12} /> REHEARSAL RESERVATION
             </span>
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
-              SLOT ALLOCATION FORM
+              SLOT ALLOCATION
             </span>
           </div>
           <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-ochre)]">
@@ -222,44 +248,91 @@ export default function BookingPage() {
           </div>
 
           {/* STEP 02: Mode & Instrument */}
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
-                <Users size={13} /> [STEP 02] Practice Mode
-              </label>
-              <select
-                value={mode}
-                onChange={(e) => setMode(e.target.value as "individual" | "collaborative" | "band_rehearsal")}
-                className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors cursor-pointer"
-              >
-                <option value="individual" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-                  Solo Set
-                </option>
-                <option value="collaborative" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-                  Collaborative Jam
-                </option>
-                <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-                  Full Band Rehearsal
-                </option>
-              </select>
+          <div className="flex flex-col gap-3">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
+                  <Users size={13} /> [STEP 02] Practice Mode
+                </label>
+                <select
+                  value={mode}
+                  onChange={(e) => setMode(e.target.value as "individual" | "collaborative" | "band_rehearsal")}
+                  className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors cursor-pointer"
+                >
+                  <option value="individual" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                    Solo Practice
+                  </option>
+                  <option value="collaborative" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                    Collaborative Jam
+                  </option>
+                  <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                    Full Band Rehearsal
+                  </option>
+                </select>
+              </div>
+
+              {isBandRehearsal ? (
+                <div className="flex flex-col gap-2">
+                  <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
+                    <Sparkles size={13} /> Band Equipment Setup
+                  </label>
+                  <div className="h-11 px-3 bg-[var(--color-rust)]/15 border border-[var(--color-rust)]/50 flex items-center gap-2 text-xs font-mono text-[var(--color-cream)]">
+                    <CheckCircle2 size={14} className="text-[var(--color-ochre)] shrink-0" />
+                    <span className="truncate uppercase font-bold text-[var(--color-cream)]">
+                      All Instruments Included
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
+                      <Music2 size={13} /> Primary Instrument
+                    </label>
+                    {isSessionA && mode === "individual" && (
+                      <span className="text-[9px] font-mono text-[var(--color-rust)] uppercase font-semibold">
+                        Drums / Elec Guitar Only
+                      </span>
+                    )}
+                  </div>
+                  <select
+                    value={instrument}
+                    onChange={(e) => setInstrument(e.target.value)}
+                    className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors cursor-pointer"
+                  >
+                    {currentAllowedInstruments.map((inst) => (
+                      <option key={inst} value={inst} className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                        {inst}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
 
-            <div className="flex flex-col gap-2">
-              <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
-                <Music2 size={13} /> Primary Instrument
-              </label>
-              <select
-                value={instrument}
-                onChange={(e) => setInstrument(e.target.value)}
-                className="w-full h-11 bg-[var(--color-ink)] border border-[var(--color-border)] px-3 text-xs md:text-sm font-mono uppercase text-[var(--color-cream)] focus:outline-none focus:border-[var(--color-ivory)] transition-colors cursor-pointer"
-              >
-                {instrumentsList.map((inst) => (
-                  <option key={inst} value={inst} className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-                    {inst}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {/* Contextual Guidance Notes */}
+            {isBandRehearsal && (
+              <div className="p-3.5 border border-[var(--color-ochre)]/40 bg-[var(--color-ochre)]/10 text-xs font-mono text-[var(--color-cream)] flex items-start gap-2.5">
+                <Users size={16} className="text-[var(--color-ochre)] shrink-0 mt-0.5" />
+                <div className="leading-relaxed">
+                  <span className="font-bold text-[var(--color-ochre)] uppercase tracking-wider block mb-0.5">
+                    Single Band Booking Covers All Members
+                  </span>
+                  <span className="text-[var(--color-text-dim)]">
+                    Only one band member needs to book this slot for everyone. No need to select individual instruments — the entire session space and all backline gear are reserved for your full band.
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {isSessionA && mode === "individual" && (
+              <div className="p-3 border border-[var(--color-border)] bg-[var(--color-ink)] text-xs font-mono text-[var(--color-cream)] flex items-start gap-2.5">
+                <AlertCircle size={15} className="text-[var(--color-ochre)] shrink-0 mt-0.5" />
+                <span className="text-[var(--color-text-muted)] text-[11px] leading-relaxed">
+                  <strong className="text-[var(--color-cream)]">Session A Solo Policy:</strong> Solo rehearsal in Session A is strictly restricted to <strong className="text-[var(--color-ochre)]">Drums</strong> or <strong className="text-[var(--color-ochre)]">Electric Guitar</strong> practice.
+                </span>
+              </div>
+            )}
           </div>
 
           {/* STEP 03: Date, Time & Duration */}
