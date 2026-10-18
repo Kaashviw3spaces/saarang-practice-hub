@@ -20,6 +20,7 @@ import { type Room } from "@/types";
 import { OpeningCurtain } from "@/components/motion/OpeningCurtain";
 import { SoundwaveVisualizer } from "@/components/motion/SoundwaveVisualizer";
 import { RockArchive } from "@/components/gallery/RockArchive";
+import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 
 /* ─── Placeholder data for hero preview ───────────────────────────────────── */
 const PREVIEW_ROOMS: Room[] = [
@@ -110,15 +111,26 @@ export default function HomePage() {
       {/* ── OPENING CURTAIN (Awwwards reveal animation) ──────────────────── */}
       <OpeningCurtain />
 
+      {/* ── PSYCHEDELIC RIBBON (Beatles / Rolling Stones Color Bands) ─── */}
+      <div className="psychedelic-ribbon" />
+
       {/* ── HERO SECTION (Gig Poster Composition) ────────────────────────── */}
       <section className="relative min-h-[92vh] flex flex-col items-center justify-center overflow-hidden px-4 md:px-8 py-20 text-center">
+        {/* Actual poster artwork backdrop (AC/DC lightning + Stones burgundy swirl + AM wave) */}
+        <PosterBackdrop variant="hero" overlayOpacity={0.42} />
+
         {/* Subtle background halftone & radial aura */}
-        <div className="absolute inset-0 halftone-overlay opacity-40 pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[var(--color-burgundy)]/15 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute -top-20 right-10 w-[400px] h-[400px] bg-[var(--color-ochre)]/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[var(--color-burgundy)]/25 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute -top-20 right-10 w-[400px] h-[400px] bg-[var(--color-ochre)]/15 rounded-full blur-[120px] pointer-events-none" />
+
+        {/* Gig tour background watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 poster-watermark pointer-events-none">
+          SAARANG '85
+        </div>
 
         {/* Outer Poster Frame Box */}
-        <div className="relative z-10 w-full max-w-5xl mx-auto p-6 md:p-12 border border-[var(--color-ivory)]/50 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3)] bg-[var(--color-surface)]/80 backdrop-blur-sm">
+        <div className="relative z-10 w-full max-w-5xl mx-auto p-6 md:p-12 border border-[var(--color-ivory)]/60 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.35),0_20px_60px_rgba(0,0,0,0.85)] bg-[var(--color-surface)]/85 backdrop-blur-md">
           {/* Top Billing Line (Aragon Ballroom / Arctic Monkeys poster inspired) */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4 mb-8 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] text-[var(--color-text-dim)]">
             <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
@@ -137,10 +149,10 @@ export default function HomePage() {
             <p className="font-mono text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--color-rust)] font-bold">
               The Underground Rehearsal Network
             </p>
-            <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-[var(--color-cream)] leading-[0.88] tracking-tight">
+            <h1 className="font-[var(--font-poster)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.85] tracking-tight poster-headline">
               MAKE SOME NOISE.
               <br />
-              <span className="text-[var(--color-ochre)] hover:text-[var(--color-magenta)] transition-colors">
+              <span className="text-[var(--color-ochre)] hover:text-[var(--color-magenta)] transition-colors duration-300">
                 FIND YOUR SPACE.
               </span>
             </h1>
@@ -217,8 +229,11 @@ export default function HomePage() {
       </section>
 
       {/* ── LIVE REHEARSAL SESSIONS PREVIEW ───────────────────────────────── */}
-      <section className="section bg-[var(--color-ink)]">
-        <div className="container flex flex-col gap-10">
+      <section className="section bg-[var(--color-ink)] relative overflow-hidden">
+        {/* Metallica 1985 & Arctic Monkeys backdrop */}
+        <PosterBackdrop variant="rooms" overlayOpacity={0.25} />
+
+        <div className="container relative z-10 flex flex-col gap-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--color-border)] pb-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
@@ -227,7 +242,7 @@ export default function HomePage() {
                   Real-Time Availability
                 </span>
               </div>
-              <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight">
+              <h2 className="font-[var(--font-poster)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
                 ACTIVE SESSIONS
               </h2>
               <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-xl">
@@ -259,7 +274,7 @@ export default function HomePage() {
         <div className="container flex flex-col gap-12">
           <div className="text-center max-w-2xl mx-auto">
             <span className="badge-tour badge-tour-accent mb-3">Soundcheck Roadmap</span>
-            <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight">
+            <h2 className="font-[var(--font-poster)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               FROM RIFF TO REHEARSAL IN 60 SECONDS
             </h2>
           </div>
@@ -320,7 +335,7 @@ export default function HomePage() {
         <div className="container flex flex-col gap-12">
           <div className="text-center max-w-2xl mx-auto">
             <span className="badge-tour badge-tour-magenta mb-3">Sound Infrastructure</span>
-            <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight">
+            <h2 className="font-[var(--font-poster)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               DESIGNED FOR HIGH DECIBEL PRECISION
             </h2>
             <p className="mt-3 text-sm text-[var(--color-text-muted)]">
@@ -357,15 +372,17 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA BANNER (Concert Ticket Style) ─────────────────────────────── */}
-      <section className="section bg-[var(--color-ink)]">
-        <div className="container">
+      <section className="section bg-[var(--color-ink)] relative overflow-hidden">
+        <PosterBackdrop variant="booking" overlayOpacity={0.3} />
+
+        <div className="container relative z-10">
           <div className="relative p-8 md:p-14 border-2 border-[var(--color-ivory)] bg-[var(--color-surface)] shadow-[inset_0_0_0_4px_var(--color-ink),inset_0_0_0_5px_rgba(238,230,213,0.4),0_12px_40px_rgba(0,0,0,0.8)] text-center flex flex-col items-center gap-6 max-w-3xl mx-auto">
             {/* Top ticket hole and perforation */}
             <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--color-ochre)]">
               <Ticket size={14} /> ADMISSION PASS // SAARANG REHEARSAL CLUB
             </div>
 
-            <h2 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-7xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+            <h2 className="font-[var(--font-poster)] text-4xl sm:text-5xl md:text-7xl font-normal text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline">
               READY TO TURN UP THE VOLUME?
             </h2>
 

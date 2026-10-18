@@ -101,7 +101,7 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
             <p className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-ochre)] mb-0.5">
               {dateStr}
             </p>
-            <h4 className="font-[var(--font-display)] text-2xl text-[var(--color-cream)] leading-none tracking-tight">
+            <h4 className="font-[var(--font-poster)] text-2xl text-[var(--color-cream)] leading-none tracking-tight">
               {booking.roomName}
             </h4>
           </div>

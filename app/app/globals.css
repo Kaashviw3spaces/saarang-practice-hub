@@ -47,17 +47,21 @@
   --color-danger:      #B84C2D;
 
   /* Typography */
+  --font-poster:       var(--font-poster), 'Anton', Impact, sans-serif;
   --font-display:      var(--font-display), 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+  --font-psychedelic:  var(--font-psychedelic), 'Syne', cursive, sans-serif;
   --font-body:         var(--font-body), 'Space Grotesk', -apple-system, sans-serif;
   --font-mono:         'JetBrains Mono', 'Courier New', monospace;
 
-  /* Editorial Easing & Timing */
+  /* Editorial Easing & Timing — Buttery Smooth */
   --ease-editorial:    cubic-bezier(0.22, 1, 0.36, 1);
   --ease-sharp:        cubic-bezier(0.76, 0, 0.24, 1);
   --ease-bounce:       cubic-bezier(0.34, 1.56, 0.64, 1);
-  --motion-fast:       180ms;
-  --motion-medium:     420ms;
-  --motion-slow:       700ms;
+  --ease-smooth:       cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-instant:    100ms;
+  --motion-fast:       200ms;
+  --motion-medium:     400ms;
+  --motion-slow:       750ms;
 
   /* Poster Radius Tokens — Tight, sharp & tactile */
   --radius-sm:         2px;
@@ -103,7 +107,9 @@
   --color-accent-dim:  var(--color-accent-dim);
   --color-secondary:   var(--color-secondary);
 
+  --font-poster:       var(--font-poster);
   --font-display:      var(--font-display);
+  --font-psychedelic:  var(--font-psychedelic);
   --font-body:         var(--font-body);
 }
 
@@ -116,6 +122,9 @@ html {
   scroll-behavior: smooth;
   background-color: var(--color-ink);
   color: var(--color-cream);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -128,16 +137,43 @@ body {
   overflow-x: hidden;
 }
 
-/* Monumental Display Headings (Gig-Poster Condensed Uppercase) */
+/* Monumental Poster Display Headings (Gig-Poster Condensed Uppercase) */
 h1, h2, h3, h4 {
-  font-family: var(--font-display);
+  font-family: var(--font-poster);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 0.95;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1 {
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
+  line-height: 0.92;
+}
+
+/* Poster Font Utility Classes */
+.font-poster {
+  font-family: var(--font-poster);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.font-psychedelic {
+  font-family: var(--font-psychedelic);
+  letter-spacing: 0.01em;
+}
+
+/* Smooth universal interaction styling */
+a, button, input, select, textarea, [role="button"] {
+  transition: all var(--motion-fast) var(--ease-editorial);
 }
 
 /* ─── Poster Double-Border & Framing ──────────────────────────────────────── */
@@ -219,9 +255,104 @@ h1 {
   width: 400%;
   height: 400%;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.038;
+  opacity: 0.045;
   pointer-events: none;
   z-index: 9999;
+}
+
+/* ─── Psychedelic 5-Color Ribbon (Beatles & Rolling Stones inspired) ──────── */
+.psychedelic-ribbon {
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    var(--color-burgundy) 0%,
+    var(--color-burgundy) 20%,
+    var(--color-rust) 20%,
+    var(--color-rust) 40%,
+    var(--color-ochre) 40%,
+    var(--color-ochre) 60%,
+    var(--color-olive) 60%,
+    var(--color-olive) 80%,
+    var(--color-magenta) 80%,
+    var(--color-purple) 100%
+  );
+}
+
+.psychedelic-ribbon-vertical {
+  width: 6px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-burgundy) 0%,
+    var(--color-burgundy) 20%,
+    var(--color-rust) 20%,
+    var(--color-rust) 40%,
+    var(--color-ochre) 40%,
+    var(--color-ochre) 60%,
+    var(--color-olive) 60%,
+    var(--color-olive) 80%,
+    var(--color-magenta) 80%,
+    var(--color-purple) 100%
+  );
+}
+
+/* ─── Poster Watermarks & Halftone Edge Distress ──────────────────────────── */
+.poster-watermark {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 18vw, 22rem);
+  line-height: 0.8;
+  color: var(--color-ivory);
+  opacity: 0.035;
+  user-select: none;
+  pointer-events: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Vintage gig admission stamp */
+.vintage-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--color-rust);
+  color: var(--color-rust);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  transform: rotate(-3deg);
+  opacity: 0.85;
+}
+
+/* Rolling Stones style psychedelic wave background glow */
+.psychedelic-aura-stones {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(109, 32, 36, 0.35) 0%,
+    rgba(184, 76, 45, 0.2) 35%,
+    rgba(16, 16, 15, 0.95) 75%
+  );
+}
+
+/* AC/DC style electric lightning aura */
+.electric-aura-acdc {
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(230, 60, 166, 0.25) 0%,
+    rgba(113, 60, 232, 0.2) 40%,
+    rgba(16, 16, 15, 0.95) 80%
+  );
+}
+
+/* Metallica Aragon Ballroom halftone aura */
+.halftone-aura-metallica {
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(212, 168, 63, 0.18) 0%,
+    rgba(184, 76, 45, 0.12) 45%,
+    rgba(16, 16, 15, 0.95) 85%
+  );
 }
 
 /* ─── Rock Buttons with Editorial Inversion ────────────────────────────────── */
@@ -385,6 +516,88 @@ h1 {
   }
 }
 
+/* ─── Poster Headline & Screenprint Typography Utilities ─────────────────── */
+.poster-headline {
+  font-family: var(--font-poster);
+  text-transform: uppercase;
+  letter-spacing: 0.015em;
+  line-height: 0.9;
+  text-shadow: 2px 2px 0px rgba(16, 16, 15, 0.85);
+  -webkit-font-smoothing: antialiased;
+}
+
+.poster-headline-stroke {
+  font-family: var(--font-poster);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  -webkit-text-stroke: 1.5px var(--color-cream);
+  color: transparent;
+  transition: all var(--motion-medium) var(--ease-editorial);
+}
+
+.poster-headline-stroke:hover {
+  color: var(--color-cream);
+  -webkit-text-stroke: 1.5px transparent;
+}
+
+.poster-subhead {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.poster-curved-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-psychedelic);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--color-rust), var(--color-burgundy));
+  color: var(--color-cream);
+  box-shadow: 2px 2px 0 0 var(--color-ink);
+  transform: rotate(-1.5deg);
+  transition: transform var(--motion-fast) var(--ease-editorial);
+}
+
+.poster-curved-tag:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+
+/* ─── Ultra Smooth Hover & Motion Utilities ──────────────────────────────── */
+.smooth-lift {
+  transition: transform var(--motion-medium) var(--ease-editorial),
+              box-shadow var(--motion-medium) var(--ease-editorial),
+              border-color var(--motion-medium) var(--ease-editorial);
+  will-change: transform;
+}
+
+.smooth-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(238, 230, 213, 0.25);
+}
+
+.smooth-glow {
+  transition: box-shadow var(--motion-medium) var(--ease-editorial),
+              border-color var(--motion-medium) var(--ease-editorial);
+}
+
+.smooth-glow:hover {
+  border-color: var(--color-ochre);
+  box-shadow: 0 0 25px rgba(212, 168, 63, 0.22);
+}
+
+.smooth-fade {
+  transition: opacity var(--motion-medium) var(--ease-editorial);
+}
+
 /* ─── Scrollbar ───────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 7px;
@@ -396,6 +609,7 @@ h1 {
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
   border-radius: 0;
+  transition: background-color var(--motion-fast) ease;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-dim);

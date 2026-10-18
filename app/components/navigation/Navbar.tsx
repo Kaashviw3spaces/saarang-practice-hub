@@ -62,7 +62,7 @@ export function Navbar() {
             <Zap size={18} className="fill-current" />
           </div>
           <div className="flex flex-col">
-            <span className="font-[var(--font-display)] text-2xl tracking-wider text-[var(--color-cream)] leading-none">
+            <span className="font-[var(--font-poster)] text-2xl tracking-wider text-[var(--color-cream)] leading-none poster-headline">
               SAARANG
             </span>
             <span className="text-[8px] font-mono uppercase tracking-[0.25em] text-[var(--color-ochre)] leading-none mt-0.5">

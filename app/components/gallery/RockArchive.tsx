@@ -100,7 +100,7 @@ export function RockArchive() {
                 Archive // Volume 01
               </span>
             </div>
-            <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight">
+            <h2 className="font-[var(--font-poster)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               THE ROCK ARCHIVE
             </h2>
             <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-xl">
@@ -125,7 +125,7 @@ export function RockArchive() {
             <div
               key={poster.id}
               onClick={() => setSelectedPoster(poster)}
-              className="group cursor-pointer flex flex-col bg-[var(--color-ink)] border border-[var(--color-border)] hover:border-[var(--color-ivory)] transition-all duration-300 relative shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.2)] hover:shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-ivory),0_12px_32px_rgba(0,0,0,0.6)] hover:-translate-y-1"
+              className="group cursor-pointer flex flex-col bg-[var(--color-ink)] border border-[var(--color-border)] hover:border-[var(--color-ivory)] transition-all duration-300 relative shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.2)] hover:shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-ivory),0_16px_36px_rgba(0,0,0,0.8)] hover:-translate-y-1.5 smooth-lift"
             >
               {/* Corner tour metadata */}
               <div className="p-2.5 flex items-center justify-between border-b border-[var(--color-border)] text-[9px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
@@ -155,7 +155,7 @@ export function RockArchive() {
 
               {/* Poster Footer Text Block */}
               <div className="p-3 flex flex-col gap-1 border-t border-[var(--color-border)]">
-                <h3 className="font-[var(--font-display)] text-base text-[var(--color-cream)] leading-none truncate">
+                <h3 className="font-[var(--font-poster)] text-lg text-[var(--color-cream)] leading-none truncate">
                   {poster.title}
                 </h3>
                 <p className="text-[10px] font-mono uppercase tracking-wider text-[var(--color-text-dim)] truncate">
@@ -222,7 +222,7 @@ export function RockArchive() {
                 <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] mt-2">
                   {selectedPoster.band} // {selectedPoster.year}
                 </p>
-                <h3 className="font-[var(--font-display)] text-3xl md:text-5xl text-[var(--color-cream)] tracking-tight mt-1">
+                <h3 className="font-[var(--font-poster)] text-3xl md:text-5xl text-[var(--color-cream)] tracking-tight mt-1 poster-headline">
                   {selectedPoster.title}
                 </h3>
                 <p className="text-xs font-mono uppercase tracking-widest text-[var(--color-text-dim)] border-b border-[var(--color-border)] pb-3 mt-1">
@@ -262,3 +262,4 @@ export function RockArchive() {
     </section>
   );
 }
+

@@ -7,6 +7,7 @@ import { BookingCard } from "@/components/bookings/BookingCard";
 import { type Booking } from "@/types";
 import { supabase } from "@/lib/supabase/client";
 import { BackButton } from "@/components/ui/BackButton";
+import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 
 interface BookingRow {
   id: string;
@@ -86,8 +87,9 @@ export default function BookingsPage() {
   );
 
   return (
-    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)]">
-      <div className="container flex flex-col gap-10">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] relative overflow-hidden">
+      <PosterBackdrop variant="rooms" overlayOpacity={0.35} />
+      <div className="container flex flex-col gap-10 relative z-10">
         {/* Back navigation */}
         <div>
           <BackButton href="/" label="Home" />
@@ -104,7 +106,7 @@ export default function BookingsPage() {
                 LIVE ITINERARY
               </span>
             </div>
-            <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+            <h1 className="font-[var(--font-poster)] text-5xl sm:text-6xl font-normal text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               MY BOOKINGS
             </h1>
             <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">

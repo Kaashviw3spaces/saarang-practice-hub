@@ -6,6 +6,7 @@ import { RoomCard } from "@/components/rooms/RoomCard";
 import { type Room } from "@/types";
 import { supabase } from "@/lib/supabase/client";
 import { BackButton } from "@/components/ui/BackButton";
+import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 import { Filter, Search, Loader2, Radio, Sparkles, Zap } from "lucide-react";
 
 interface RoomRow {
@@ -61,8 +62,11 @@ export default function RoomsPage() {
   }, []);
 
   return (
-    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)]">
-      <div className="container flex flex-col gap-10">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] relative overflow-hidden">
+      {/* Background Metallica Aragon Ballroom 1985 & Arctic Monkeys poster art */}
+      <PosterBackdrop variant="rooms" overlayOpacity={0.3} />
+
+      <div className="container relative z-10 flex flex-col gap-10">
         {/* Back navigation */}
         <div>
           <BackButton href="/" label="Home" />
@@ -80,7 +84,7 @@ export default function RoomsPage() {
           </div>
 
           <div>
-            <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl md:text-7xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+            <h1 className="font-[var(--font-poster)] text-5xl sm:text-6xl md:text-7xl font-normal text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               PRACTICE SESSIONS
             </h1>
             <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-2xl leading-relaxed">

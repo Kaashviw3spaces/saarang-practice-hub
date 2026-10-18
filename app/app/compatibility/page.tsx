@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { CompatibilityAnalysis, SessionSetup } from "@/lib/compatibility/engine";
 import { BackButton } from "@/components/ui/BackButton";
+import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 
 export default function CompatibilityPage() {
   const [sessionA, setSessionA] = useState<SessionSetup>({
@@ -56,8 +57,11 @@ export default function CompatibilityPage() {
   };
 
   return (
-    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)]">
-      <div className="container flex flex-col gap-10 max-w-4xl mx-auto">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] relative overflow-hidden">
+      {/* The Beatles Strawberry Fields psychedelic optical rings & color bands */}
+      <PosterBackdrop variant="compatibility" overlayOpacity={0.45} />
+
+      <div className="container relative z-10 flex flex-col gap-10 max-w-4xl mx-auto">
         <BackButton href="/" label="Home" />
 
         {/* Page Banner Header */}
@@ -71,7 +75,7 @@ export default function CompatibilityPage() {
             </span>
           </div>
 
-          <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+          <h1 className="font-[var(--font-poster)] text-4xl sm:text-5xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             INSTRUMENT RESONANCE & SETUP CHECKER
           </h1>
           <p className="text-xs md:text-sm text-[var(--color-text-muted)] max-w-2xl leading-relaxed">

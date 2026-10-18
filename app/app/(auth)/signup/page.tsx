@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Zap, Lock, Mail, User, AlertCircle, CheckCircle, ArrowRight, Loader2, Music2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { BackButton } from "@/components/ui/BackButton";
+import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -54,13 +55,14 @@ export default function SignupPage() {
 
   if (success) {
     return (
-      <div className="section min-h-[85vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-[var(--color-surface)] border-2 border-[var(--color-ivory)] shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3)] p-8 flex flex-col items-center text-center gap-4">
+      <div className="section min-h-[85vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex items-center justify-center p-4 relative overflow-hidden">
+        <PosterBackdrop variant="auth" overlayOpacity={0.4} />
+        <div className="w-full max-w-md bg-[var(--color-surface)] border-2 border-[var(--color-ivory)] shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3)] p-8 flex flex-col items-center text-center gap-4 relative z-10">
           <div className="flex h-12 w-12 items-center justify-center bg-[var(--color-ink)] border-2 border-[var(--color-available)] text-[var(--color-available)]">
             <CheckCircle size={24} />
           </div>
           <span className="badge-tour badge-tour-accent">MEMBERSHIP PENDING</span>
-          <h2 className="font-[var(--font-display)] text-3xl font-bold text-[var(--color-cream)]">
+          <h2 className="font-[var(--font-poster)] text-3xl font-normal text-[var(--color-cream)] poster-headline">
             VERIFICATION DISPATCHED
           </h2>
           <p className="text-xs font-mono text-[var(--color-text-muted)] leading-relaxed">
@@ -79,18 +81,19 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="section min-h-[85vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex flex-col items-center justify-center gap-6">
-      <div className="w-full max-w-md">
+    <div className="section min-h-[85vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex flex-col items-center justify-center gap-6 relative overflow-hidden">
+      <PosterBackdrop variant="auth" overlayOpacity={0.4} />
+      <div className="w-full max-w-md relative z-10">
         <BackButton href="/" label="Home" />
       </div>
 
-      <div className="w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 md:p-10 flex flex-col gap-6">
+      <div className="w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 md:p-10 flex flex-col gap-6 relative z-10">
         <div className="flex flex-col items-center text-center gap-2">
           <div className="flex h-12 w-12 items-center justify-center bg-[var(--color-ink)] border-2 border-[var(--color-cream)] text-[var(--color-cream)] shadow-[3px_3px_0_0_var(--color-rust)]">
             <Zap size={22} className="fill-current" />
           </div>
           <span className="badge-tour badge-tour-rust mt-2">NEW ARTIST ROSTER</span>
-          <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+          <h1 className="font-[var(--font-poster)] text-3xl sm:text-4xl font-normal text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             JOIN SAARANG CLUB
           </h1>
           <p className="text-xs font-mono text-[var(--color-text-muted)]">

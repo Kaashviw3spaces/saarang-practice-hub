@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { BackButton } from "@/components/ui/BackButton";
+import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 
 interface RoomOption {
   id: string;
@@ -114,13 +115,16 @@ export default function BookingPage() {
   };
 
   return (
-    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex flex-col items-center justify-center gap-6">
-      <div className="w-full max-w-2xl">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex flex-col items-center justify-center gap-6 relative overflow-hidden">
+      {/* AC/DC high-voltage electric lightning background */}
+      <PosterBackdrop variant="booking" overlayOpacity={0.32} />
+
+      <div className="w-full max-w-2xl relative z-10">
         <BackButton href="/rooms" label="Back to Sessions" />
       </div>
 
       {/* Backstage Pass Booking Card */}
-      <div className="w-full max-w-2xl bg-[var(--color-surface)] border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 md:p-10 flex flex-col gap-6 relative">
+      <div className="w-full max-w-2xl bg-[var(--color-surface)]/90 backdrop-blur-md border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 md:p-10 flex flex-col gap-6 relative z-10">
         {/* Top Header Strip */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4">
           <div className="flex items-center gap-2">
@@ -137,7 +141,7 @@ export default function BookingPage() {
         </div>
 
         <div>
-          <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight">
+          <h1 className="font-[var(--font-poster)] text-4xl sm:text-5xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             BOOK REHEARSAL PASS
           </h1>
           <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-lg leading-relaxed">

@@ -6,6 +6,7 @@ import { SessionReminderTimer } from "@/components/reminders/SessionReminderTime
 import { type Booking, type Room } from "@/types";
 import Link from "next/link";
 import { BackButton } from "@/components/ui/BackButton";
+import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 import { supabase } from "@/lib/supabase/client";
 import {
   Music2,
@@ -151,8 +152,11 @@ export default function DashboardPage() {
   );
 
   return (
-    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)]">
-      <div className="container flex flex-col gap-10">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] relative overflow-hidden">
+      {/* Rolling Stones Santiago Chile burgundy swirl background */}
+      <PosterBackdrop variant="dashboard" overlayOpacity={0.3} />
+
+      <div className="container relative z-10 flex flex-col gap-10">
         {/* Back navigation */}
         <div>
           <BackButton href="/" label="Home" />
@@ -169,7 +173,7 @@ export default function DashboardPage() {
                 ARTIST CONTROL PANEL
               </span>
             </div>
-            <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight">
+            <h1 className="font-[var(--font-poster)] text-5xl sm:text-6xl font-normal text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               WELCOME BACK, {userName.toUpperCase()}
             </h1>
             <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">

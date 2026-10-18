@@ -70,7 +70,7 @@ export function OpeningCurtain() {
             Now Entering The Underground
           </p>
           <h1
-            className={`font-[var(--font-display)] text-6xl md:text-8xl tracking-tight text-[var(--color-cream)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            className={`font-[var(--font-poster)] text-6xl md:text-8xl tracking-tight text-[var(--color-cream)] poster-headline transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
               animStep >= 2 ? "translate-y-0" : "translate-y-full"
             }`}
           >
@@ -110,3 +110,4 @@ export function OpeningCurtain() {
     </div>
   );
 }
+

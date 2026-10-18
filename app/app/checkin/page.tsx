@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { QrCode, CheckCircle2, LogOut, AlertCircle, Sparkles, Radio, Ticket, ArrowRight } from "lucide-react";
 import { BackButton } from "@/components/ui/BackButton";
+import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 
 export default function CheckinPage() {
   const [bookingId, setBookingId] = useState("b1");
@@ -38,12 +39,15 @@ export default function CheckinPage() {
   };
 
   return (
-    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex flex-col items-center justify-center gap-6">
-      <div className="w-full max-w-md">
+    <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex flex-col items-center justify-center gap-6 relative overflow-hidden">
+      {/* Arctic Monkeys AM high-contrast screenprint doorway backdrop */}
+      <PosterBackdrop variant="checkin" overlayOpacity={0.45} />
+
+      <div className="w-full max-w-md relative z-10">
         <BackButton href="/" label="Home" />
       </div>
 
-      <div className="w-full max-w-md bg-[var(--color-surface)] border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 flex flex-col items-center text-center gap-6">
+      <div className="w-full max-w-md bg-[var(--color-surface)]/90 backdrop-blur-md border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 flex flex-col items-center text-center gap-6 relative z-10">
         {/* QR scanner target */}
         <div className="relative flex h-20 w-20 items-center justify-center bg-[var(--color-ink)] border-2 border-[var(--color-ochre)] text-[var(--color-ochre)] shadow-[3px_3px_0_0_var(--color-rust)]">
           <QrCode size={36} />
@@ -58,7 +62,7 @@ export default function CheckinPage() {
           <span className="badge-tour badge-tour-rust mb-2">
             <Radio size={11} /> Doorway Terminal
           </span>
-          <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl text-[var(--color-cream)] leading-none tracking-tight mt-1">
+          <h1 className="font-[var(--font-poster)] text-3xl sm:text-4xl text-[var(--color-cream)] leading-none tracking-tight mt-1 poster-headline">
             STAGE CHECK-IN PORTAL
           </h1>
           <p className="mt-2 text-xs font-mono text-[var(--color-text-muted)] leading-relaxed">
