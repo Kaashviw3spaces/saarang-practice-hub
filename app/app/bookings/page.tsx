@@ -100,7 +100,7 @@ export default function BookingsPage() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="badge-tour badge-tour-accent">
-                <Ticket size={12} /> ARTIST PASS ARCHIVE
+                <Calendar size={12} /> REHEARSAL ARCHIVE
               </span>
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
                 LIVE ITINERARY
@@ -110,7 +110,7 @@ export default function BookingsPage() {
               MY BOOKINGS
             </h1>
             <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">
-              Active rehearsal wristbands, scheduled jam sessions, and historical studio passes.
+              Active rehearsal bookings, scheduled jam sessions, and studio reservation history.
             </p>
           </div>
 
@@ -118,7 +118,7 @@ export default function BookingsPage() {
             href="/rooms"
             className="btn-rock-primary text-sm py-2.5 px-6 shadow-[3px_3px_0_0_var(--color-rust)] shrink-0 self-start sm:self-auto"
           >
-            <Plus size={15} /> Book New Pass
+            <Plus size={15} /> Book New Slot
           </Link>
         </div>
 
@@ -126,7 +126,7 @@ export default function BookingsPage() {
         {loading && (
           <div className="flex items-center justify-center py-20 gap-3 border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-sm uppercase tracking-widest">
             <Loader2 size={18} className="animate-spin text-[var(--color-ochre)]" />
-            <span>SYNCING ARTIST PASSES FROM SUPABASE…</span>
+            <span>SYNCING REHEARSAL SESSIONS FROM SUPABASE…</span>
           </div>
         )}
 
@@ -137,10 +137,10 @@ export default function BookingsPage() {
               IDENTIFICATION REQUIRED
             </p>
             <h3 className="font-[var(--font-display)] text-3xl text-[var(--color-cream)]">
-              SIGN IN TO VIEW YOUR STAGE PASSES
+              SIGN IN TO VIEW YOUR BOOKINGS
             </h3>
             <p className="text-xs text-[var(--color-text-muted)] max-w-sm">
-              Your member profile links to all upcoming confirmed rehearsals and QR doorway entrance passes.
+              Your member profile links to all upcoming confirmed rehearsals and practice slots.
             </p>
             <Link
               href="/login"
@@ -154,14 +154,14 @@ export default function BookingsPage() {
         {/* Error */}
         {!loading && error && (
           <div className="p-6 border border-[var(--color-danger)] bg-[var(--color-danger)]/15 text-[var(--color-cream)] font-mono text-xs uppercase tracking-wider">
-            FAILED TO RETRIEVE PASSES: {error}
+            FAILED TO RETRIEVE BOOKINGS: {error}
           </div>
         )}
 
         {/* Data List */}
         {!loading && loggedIn && !error && (
           <>
-            {/* Upcoming Passes */}
+            {/* Upcoming Sessions */}
             <section className="flex flex-col gap-4">
               <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-2">
                 <h2 className="font-[var(--font-display)] text-2xl text-[var(--color-cream)] tracking-wider flex items-center gap-2">
@@ -169,13 +169,13 @@ export default function BookingsPage() {
                   UPCOMING SESSIONS ({upcoming.length})
                 </h2>
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
-                  AUTO DOOR CHECK-IN ENABLED
+                  AUTOMATED CONFLICT LOCKS ACTIVE
                 </span>
               </div>
 
               {upcoming.length === 0 ? (
                 <div className="p-10 text-center border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-wider">
-                  No upcoming rehearsal passes booked.{" "}
+                  No upcoming rehearsal slots booked.{" "}
                   <Link href="/rooms" className="text-[var(--color-ochre)] hover:underline ml-1">
                     Book a slot now →
                   </Link>
@@ -210,7 +210,7 @@ export default function BookingsPage() {
 
             {bookings.length === 0 && (
               <div className="p-14 text-center border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-widest flex flex-col items-center gap-3">
-                <p>YOU CURRENTLY HAVE ZERO RECORDED REHEARSAL PASSES.</p>
+                <p>YOU CURRENTLY HAVE ZERO RECORDED REHEARSAL BOOKINGS.</p>
                 <Link
                   href="/rooms"
                   className="btn-rock-ghost text-xs py-2 px-6"

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Zap, Eye, X, Music, Radio, Disc3, Sparkles } from "lucide-react";
+import { Eye, X } from "lucide-react";
 
 interface PosterItem {
   id: string;
@@ -88,37 +88,7 @@ export function RockArchive() {
       {/* Background halftone */}
       <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none" />
 
-      <div className="container relative z-10 flex flex-col gap-10">
-        {/* Section Header with Editorial Framing */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--color-border)] pb-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="badge-tour badge-tour-accent">
-                <Sparkles size={11} /> Art Direction Inspiration
-              </span>
-              <span className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
-                Archive // Volume 01
-              </span>
-            </div>
-            <h2 className="font-[var(--font-metal)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-wider">
-              THE ROCK ARCHIVE
-            </h2>
-            <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-xl">
-              From underground gig flyers to psych-rock screenprints. The visual spirit that drives
-              every practice session at Saarang.
-            </p>
-          </div>
-
-          <div className="hidden lg:flex items-center gap-6 text-xs font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
-            <span className="flex items-center gap-1.5">
-              <Radio size={14} className="text-[var(--color-rust)]" /> Analog Screenprint
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Disc3 size={14} className="text-[var(--color-ochre)]" /> Double-Border Frame
-            </span>
-          </div>
-        </div>
-
+      <div className="container relative z-10">
         {/* Poster Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {POSTERS.map((poster) => (
@@ -176,13 +146,6 @@ export function RockArchive() {
             </div>
           ))}
         </div>
-
-        {/* Footer Editorial Tag */}
-        <div className="text-center pt-2">
-          <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
-            ARCHIVE CREDITS: AC/DC · ARCTIC MONKEYS · METALLICA · THE BEATLES · THE ROLLING STONES
-          </p>
-        </div>
       </div>
 
       {/* Lightbox Modal */}
@@ -216,10 +179,7 @@ export function RockArchive() {
             {/* Poster info block */}
             <div className="flex-1 flex flex-col justify-between gap-4">
               <div>
-                <span className="badge-tour badge-tour-rust mb-2">
-                  Vintage Gig Archive
-                </span>
-                <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] mt-2">
+                <p className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)]">
                   {selectedPoster.band} // {selectedPoster.year}
                 </p>
                 <h3 className="font-[var(--font-metal)] text-3xl md:text-5xl text-[var(--color-cream)] tracking-wide mt-1">

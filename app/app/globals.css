@@ -46,7 +46,7 @@
   --color-warning:     #D4A83F;
   --color-danger:      #B84C2D;
 
-  /* Typography Hierarchy: Bebas Neue + Space Grotesk interface, Metal Mania for Rock Archive & decorative */
+  /* Typography Hierarchy: Bebas Neue + Space Grotesk interface, Metal Mania for poster displays & decorative rock accents */
   --font-display:      var(--font-display), 'Bebas Neue', Impact, 'Arial Black', sans-serif;
   --font-body:         var(--font-body), 'Space Grotesk', -apple-system, sans-serif;
   --font-metal:        var(--font-metal), 'Metal Mania', cursive, sans-serif;
@@ -200,7 +200,7 @@ a, button, input, select, textarea, [role="button"] {
   box-shadow: inset 0 0 0 3px var(--color-ink), inset 0 0 0 4px rgba(109, 32, 36, 0.5);
 }
 
-/* ─── Ticket-Stub & Backstage Pass Styling ─────────────────────────────────── */
+/* ─── Ticket-Stub & Session Card Styling ────────────────────────────────────── */
 .ticket-stub {
   position: relative;
   background: var(--color-surface);
@@ -306,7 +306,7 @@ a, button, input, select, textarea, [role="button"] {
   white-space: nowrap;
 }
 
-/* Vintage gig admission stamp */
+/* Vintage stage verification stamp */
 .vintage-stamp {
   display: inline-flex;
   align-items: center;

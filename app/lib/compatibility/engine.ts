@@ -45,7 +45,7 @@ export function analyzeCompatibility(
     reasons.push(
       `${sessionA.instrumentName} generates physical acoustic volume that conflicts with focused, concentration-heavy practice.`
     );
-    recommendations.push("Consider reserving a fully soundproofed session space (e.g. Session A) or practicing during quiet hours.");
+    recommendations.push("Consider reserving an isolated session space (e.g. Session A) or practicing during quiet hours.");
   }
 
   if (bIsLoud && sessionA.practiceObjective === "focus") {

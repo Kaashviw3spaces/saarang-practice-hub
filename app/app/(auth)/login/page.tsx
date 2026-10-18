@@ -57,7 +57,7 @@ export default function LoginPage() {
             SIGN IN TO SAARANG
           </h1>
           <p className="text-xs font-mono text-[var(--color-text-muted)]">
-            Access your practice slots, rehearsals, and backstage passes.
+            Access your practice slots, rehearsals, and scheduled sessions.
           </p>
         </div>
 

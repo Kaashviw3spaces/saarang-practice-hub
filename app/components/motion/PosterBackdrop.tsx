@@ -173,7 +173,7 @@ export function PosterBackdrop({
         </>
       )}
 
-      {/* ── VARIANT: CHECK-IN (Arctic Monkeys AM Monochrome Band Doorway) ──── */}
+      {/* ── VARIANT: CHECK-IN (Arctic Monkeys AM Monochrome Band Backdrop) ─── */}
       {variant === "checkin" && (
         <>
           <div
@@ -182,7 +182,7 @@ export function PosterBackdrop({
           >
             <Image
               src="/posters/arctic-monkeys.jpg"
-              alt="Arctic Monkeys Doorway"
+              alt="Arctic Monkeys AM Sessions"
               fill
               priority
               className="object-cover object-center"

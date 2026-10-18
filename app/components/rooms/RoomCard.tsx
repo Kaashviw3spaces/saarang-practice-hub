@@ -259,7 +259,7 @@ export function RoomCard({
         >
           {isBookable ? (
             <>
-              Book Pass <ArrowRight size={13} />
+              Book Slot <ArrowRight size={13} />
             </>
           ) : (
             "Unavailable"

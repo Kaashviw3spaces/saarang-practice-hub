@@ -130,7 +130,7 @@ export default function DashboardPage() {
         );
       } else {
         setRoomsSummary([
-          { room: "Session A (Soundproof)", status: "available", note: "STAGE OPEN" },
+          { room: "Session A", status: "available", note: "STAGE OPEN" },
           { room: "Session B (Acoustic)", status: "occupied", note: "IN REHEARSAL" },
           { room: "Jam Session Area", status: "reserved", note: "RESERVED" },
           { room: "Recording Session", status: "departure_pending", note: "FINISHING UP" },
@@ -177,7 +177,7 @@ export default function DashboardPage() {
               WELCOME BACK, {userName.toUpperCase()}
             </h1>
             <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">
-              Track live countdowns, stage occupancy telemetry, and manage your booked rehearsal passes.
+              Track live countdowns, stage occupancy telemetry, and manage your booked rehearsal sessions.
             </p>
           </div>
 
@@ -189,12 +189,12 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        {/* Quick-action Backstage Laminate Cards */}
+        {/* Quick-action Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { icon: Calendar, label: "Book Slot", href: "/book", planned: false },
-            { icon: CheckCircle2, label: "QR Check-In", href: "/checkin", planned: false },
-            { icon: Clock, label: "Extend Pass", href: "#", planned: true },
+            { icon: Radio, label: "Acoustic AI", href: "/compatibility", planned: false },
+            { icon: Clock, label: "Extend Session", href: "#", planned: true },
             { icon: Bell, label: "Reminders", href: "#", planned: true },
           ].map(({ icon: Icon, label, href, planned }) => (
             <Link
@@ -259,7 +259,7 @@ export default function DashboardPage() {
                     <>
                       No upcoming rehearsals booked.{" "}
                       <Link href="/book" className="text-[var(--color-ochre)] hover:underline ml-1">
-                        Book a pass now →
+                        Book a slot now →
                       </Link>
                     </>
                   ) : (

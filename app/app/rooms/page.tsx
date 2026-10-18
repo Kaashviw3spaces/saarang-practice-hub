@@ -89,7 +89,7 @@ export default function RoomsPage() {
             </h1>
             <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-2xl leading-relaxed">
               Explore the five distinct rehearsal stages. Inspect isolation tiers, available drum kits,
-              amplifiers, and synthesizer setups, and lock in your practice pass.
+              amplifiers, and synthesizer setups, and lock in your practice slot.
             </p>
           </div>
 

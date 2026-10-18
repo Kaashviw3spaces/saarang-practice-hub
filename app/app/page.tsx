@@ -26,8 +26,8 @@ import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
 const PREVIEW_ROOMS: Room[] = [
   {
     id: "r1",
-    name: "Session A (Soundproof)",
-    description: "Fully soundproofed rehearsal space with professional mixing desk, drum kit, and PA system.",
+    name: "Session A",
+    description: "Dedicated rehearsal space with professional mixing desk, drum kit, and PA system.",
     capacity: 6,
     status: "available",
     equipment: ["Drum Kit", "PA System", "Bass Amp", "Guitar Amp", "Mixing Desk"],
@@ -101,8 +101,8 @@ const FEATURES = [
 const STATS = [
   { value: "05", label: "ACTIVE REHEARSAL STAGES" },
   { value: "100%", label: "CONFLICT FREE PROTOCOL" },
-  { value: "<60s", label: "INSTANT PASS GENERATION" },
-  { value: "24/7", label: "LIVE DOORWAY QR CHECK-IN" },
+  { value: "<60s", label: "INSTANT SLOT RESERVATION" },
+  { value: "24/7", label: "LIVE REHEARSAL ACCESS" },
 ];
 
 export default function HomePage() {
@@ -209,7 +209,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── STATS (Ticket Admission Strip) ─────────────────────────────────── */}
+      {/* ── STATS (Member Session Metrics Strip) ─────────────────────────── */}
       <section className="border-t border-b border-[var(--color-border)] bg-[var(--color-surface)] py-8 px-4">
         <div className="container grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {STATS.map(({ value, label }) => (
@@ -266,7 +266,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── THE ROCK ARCHIVE (5 Attached Poster References) ───────────────── */}
+      {/* ── POSTER VISUAL GALLERY (5 Attached Poster References) ─────────── */}
       <RockArchive />
 
       {/* ── HOW IT WORKS (Stage Roadmap) ─────────────────────────────────── */}
@@ -295,15 +295,15 @@ export default function HomePage() {
               },
               {
                 step: "03",
-                tag: "TICKET",
+                tag: "RESERVE",
                 title: "LOCK DOWN RESERVATION",
-                body: "Instant pass generation with automated lockouts preventing overlapping bookings.",
+                body: "Instant slot reservation with automated lockouts preventing overlapping bookings.",
               },
               {
                 step: "04",
-                tag: "ACCESS",
-                title: "DOORWAY QR CHECK-IN",
-                body: "Scan at the entrance to confirm arrival, switch room status, and fire countdown timer.",
+                tag: "SESSION",
+                title: "START REHEARSING",
+                body: "Step straight into your reserved room, power up the backline gear, and play without interruption.",
               },
             ].map(({ step, tag, title, body }) => (
               <div
@@ -377,9 +377,9 @@ export default function HomePage() {
 
         <div className="container relative z-10">
           <div className="relative p-8 md:p-14 border-2 border-[var(--color-ivory)] bg-[var(--color-surface)] shadow-[inset_0_0_0_4px_var(--color-ink),inset_0_0_0_5px_rgba(238,230,213,0.4),0_12px_40px_rgba(0,0,0,0.8)] text-center flex flex-col items-center gap-6 max-w-3xl mx-auto">
-            {/* Top ticket hole and perforation */}
+            {/* Top banner tag */}
             <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--color-ochre)]">
-              <Ticket size={14} /> ADMISSION PASS // SAARANG REHEARSAL CLUB
+              <Music2 size={14} /> REHEARSAL HUB // SAARANG MUSIC CLUB
             </div>
 
             <h2 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-7xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
@@ -387,16 +387,15 @@ export default function HomePage() {
             </h2>
 
             <p className="text-sm md:text-base text-[var(--color-text-muted)] max-w-lg">
-              Join Saarang now. Book your rehearsal space, check your acoustic compatibility with fellow
-              musicians, and never miss a beat.
+              Reserved exclusively for Saarang Music Club members. Book your rehearsal space, check your acoustic compatibility with fellow musicians, and turn up the volume.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-2">
               <Link
-                href="/signup"
+                href="/book"
                 className="btn-rock-primary text-base py-3 px-8 shadow-[4px_4px_0_0_var(--color-rust)]"
               >
-                Get Club Membership <ArrowRight size={16} />
+                Book Practice Slot <ArrowRight size={16} />
               </Link>
               <Link
                 href="/rooms"

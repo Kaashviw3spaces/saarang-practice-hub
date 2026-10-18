@@ -14,7 +14,7 @@ const STATUS_STYLES: Record<
     borderClass: "border-[var(--color-reserved)]/40",
   },
   confirmed: {
-    label: "PASS CONFIRMED",
+    label: "CONFIRMED",
     class: "text-[var(--color-cream)] bg-[var(--color-ochre)]/20 border-[var(--color-ochre)]/60",
     borderClass: "border-[var(--color-ochre)]/50",
   },
@@ -83,7 +83,7 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
         <div className="flex items-center justify-between gap-2 border-b border-[var(--color-border)] pb-2.5 mb-3">
           <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
             <Ticket size={12} className="text-[var(--color-ochre)]" />
-            <span>PASS // #{booking.id.slice(0, 6)}</span>
+            <span>SESSION // #{booking.id.slice(0, 6)}</span>
           </div>
           <span
             className={cn(
@@ -118,7 +118,7 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
               ))}
             </div>
             <span className="text-[8px] font-mono tracking-widest text-[var(--color-text-dim)] mt-0.5">
-              ADM-ONE
+              SAARANG
             </span>
           </div>
         </div>
@@ -155,14 +155,14 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
             onClick={() => onViewDetails?.(booking.id)}
             className="flex-1 inline-flex items-center justify-center gap-1 h-8 bg-[var(--color-surface-2)] border border-[var(--color-border)] text-xs font-mono uppercase tracking-wider text-[var(--color-cream)] hover:bg-[var(--color-cream)] hover:text-[var(--color-ink)] transition-colors cursor-pointer"
           >
-            Pass Details <ChevronRight size={12} />
+            Session Details <ChevronRight size={12} />
           </button>
           {isUpcoming && (
             <button
               onClick={() => onCancel?.(booking.id)}
               className="inline-flex items-center gap-1 h-8 px-3 border border-[var(--color-danger)]/40 bg-[var(--color-danger)]/10 text-xs font-mono uppercase tracking-wider text-[var(--color-danger)] hover:bg-[var(--color-danger)] hover:text-white transition-colors cursor-pointer"
             >
-              <X size={12} /> Void Pass
+              <X size={12} /> Cancel Booking
             </button>
           )}
         </div>

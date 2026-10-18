@@ -108,7 +108,7 @@ export default function BookingPage() {
       setSuccess(true);
       setTimeout(() => router.push("/bookings"), 1500);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Failed to generate pass.");
+      setError(err instanceof Error ? err.message : "Failed to confirm reservation.");
     } finally {
       setLoading(false);
     }
@@ -123,13 +123,13 @@ export default function BookingPage() {
         <BackButton href="/rooms" label="Back to Sessions" />
       </div>
 
-      {/* Backstage Pass Booking Card */}
+      {/* Rehearsal Booking Card */}
       <div className="w-full max-w-2xl bg-[var(--color-surface)]/90 backdrop-blur-md border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 md:p-10 flex flex-col gap-6 relative z-10">
         {/* Top Header Strip */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4">
           <div className="flex items-center gap-2">
             <span className="badge-tour badge-tour-accent">
-              <Ticket size={12} /> BACKSTAGE PASS
+              <Calendar size={12} /> REHEARSAL RESERVATION
             </span>
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
               STAGE ALLOCATION FORM
@@ -142,7 +142,7 @@ export default function BookingPage() {
 
         <div>
           <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
-            BOOK REHEARSAL PASS
+            BOOK REHEARSAL SLOT
           </h1>
           <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-lg leading-relaxed">
             Configure your setup, select stage area, and lock in your rehearsal window with automated conflict
@@ -161,7 +161,7 @@ export default function BookingPage() {
         {success && (
           <div className="flex items-center gap-2 p-3.5 text-xs font-mono border border-[var(--color-available)] bg-[var(--color-available)]/15 text-[var(--color-cream)]">
             <CheckCircle2 size={16} className="shrink-0 text-[var(--color-available)]" />
-            <span>REHEARSAL PASS CONFIRMED! Generating wristband and redirecting to your bookings…</span>
+            <span>REHEARSAL RESERVATION CONFIRMED! Redirecting to your bookings…</span>
           </div>
         )}
 
@@ -288,7 +288,7 @@ export default function BookingPage() {
               </span>
             ) : (
               <span className="flex items-center gap-2">
-                CONFIRM & ISSUE PASS <ArrowRight size={16} />
+                CONFIRM RESERVATION <ArrowRight size={16} />
               </span>
             )}
           </button>

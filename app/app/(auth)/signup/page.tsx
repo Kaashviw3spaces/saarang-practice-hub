@@ -67,7 +67,7 @@ export default function SignupPage() {
           </h2>
           <p className="text-xs font-mono text-[var(--color-text-muted)] leading-relaxed">
             We sent a verification link to <strong className="text-[var(--color-cream)]">{email}</strong>. Check your inbox
-            to activate your backstage pass.
+            to activate your member profile.
           </p>
           <Link
             href="/login"
@@ -192,7 +192,7 @@ export default function SignupPage() {
               </span>
             ) : (
               <span className="flex items-center gap-2">
-                ISSUE ARTIST PASS <ArrowRight size={15} />
+                COMPLETE REGISTRATION <ArrowRight size={15} />
               </span>
             )}
           </button>
