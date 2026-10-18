@@ -103,12 +103,21 @@ export default function BookingPage() {
 
   const selectedRoom = rooms.find((r) => r.id === roomId);
   const isSessionA = Boolean(selectedRoom?.name.toLowerCase().includes("session a"));
+  const isSessionB = Boolean(selectedRoom?.name.toLowerCase().includes("session b"));
   const isBandRehearsal = mode === "band_rehearsal";
   const isCollaborative = mode === "collaborative";
 
   // Compute available instruments based on room & mode:
-  // In Session A solo practice, only Drums and Electric Guitar are permitted
+  // - In Session B, drums and electric guitar are prohibited for both solo & collaborative practice
+  // - In Session A solo practice, only Drums and Electric Guitar are permitted
   const currentAllowedInstruments = useMemo(() => {
+    if (isSessionB) {
+      return instrumentsList.filter((inst) => {
+        const lower = inst.toLowerCase();
+        return !lower.includes("drum") && !lower.includes("electric guitar");
+      });
+    }
+
     if (isSessionA && mode === "individual") {
       const filtered = instrumentsList.filter((inst) => {
         const lower = inst.toLowerCase();
@@ -116,8 +125,31 @@ export default function BookingPage() {
       });
       return filtered.length > 0 ? filtered : ["Acoustic Drums", "Electric Guitar"];
     }
+
     return instrumentsList;
-  }, [isSessionA, mode, instrumentsList]);
+  }, [isSessionA, isSessionB, mode, instrumentsList]);
+
+  // Keep mode in sync: if user selects Session B, full band rehearsal is not permitted
+  useEffect(() => {
+    if (isSessionB && mode === "band_rehearsal") {
+      setMode("individual");
+    }
+  }, [isSessionB, mode]);
+
+  // Keep collaborative multi-select instruments in sync when switching to Session B
+  useEffect(() => {
+    if (isSessionB) {
+      setSelectedInstruments((prev) => {
+        const cleaned = prev.filter(
+          (inst) =>
+            !inst.toLowerCase().includes("drum") &&
+            !inst.toLowerCase().includes("electric guitar")
+        );
+        if (cleaned.length > 0) return cleaned;
+        return currentAllowedInstruments.length > 0 ? [currentAllowedInstruments[0]] : [];
+      });
+    }
+  }, [isSessionB, currentAllowedInstruments]);
 
   // Keep instrument in sync when room or mode changes
   useEffect(() => {
@@ -125,13 +157,13 @@ export default function BookingPage() {
       setInstrument("Full Band Setup");
     } else if (isCollaborative) {
       // Ensure at least one instrument is selected in collaborative mode
-      if (selectedInstruments.length === 0 && instrumentsList.length > 0) {
-        setSelectedInstruments([instrumentsList[0]]);
+      if (selectedInstruments.length === 0 && currentAllowedInstruments.length > 0) {
+        setSelectedInstruments([currentAllowedInstruments[0]]);
       }
     } else if (!currentAllowedInstruments.includes(instrument)) {
-      setInstrument(currentAllowedInstruments[0] || "Acoustic Drums");
+      setInstrument(currentAllowedInstruments[0] || "Piano");
     }
-  }, [isBandRehearsal, isCollaborative, currentAllowedInstruments, instrument, selectedInstruments, instrumentsList]);
+  }, [isBandRehearsal, isCollaborative, currentAllowedInstruments, instrument, selectedInstruments]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -170,12 +202,23 @@ export default function BookingPage() {
       // Insert booking - Full band rehearsal covers all instruments, collaborative jam combines selected instruments
       let finalInstrument = instrument;
       if (isBandRehearsal) {
+        if (isSessionB) {
+          throw new Error("Full band rehearsals are not available in Session B.");
+        }
         finalInstrument = "Full Band Setup";
       } else if (isCollaborative) {
         if (selectedInstruments.length === 0) {
           throw new Error("Please select at least one instrument for your collaborative jam session.");
         }
         finalInstrument = selectedInstruments.join(", ");
+      }
+
+      // Extra safety check for Session B acoustic policy
+      if (isSessionB) {
+        const lower = finalInstrument.toLowerCase();
+        if (lower.includes("drum") || lower.includes("electric guitar")) {
+          throw new Error("Drums and Electric Guitar are not permitted in Session B.");
+        }
       }
 
       const { error: insertError } = await supabase.from("bookings").insert({
@@ -276,7 +319,7 @@ export default function BookingPage() {
 
           {/* STEP 02: Mode & Instrument */}
           <div className="flex flex-col gap-3">
-            {isBandRehearsal ? (
+            {isBandRehearsal && !isSessionB ? (
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
                   <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
@@ -328,9 +371,11 @@ export default function BookingPage() {
                     <option value="collaborative" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
                       Collaborative Jam
                     </option>
-                    <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-                      Full Band Rehearsal
-                    </option>
+                    {!isSessionB && (
+                      <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                        Full Band Rehearsal
+                      </option>
+                    )}
                   </select>
                 </div>
 
@@ -344,7 +389,7 @@ export default function BookingPage() {
                     </span>
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 p-3 bg-[var(--color-ink)] border border-[var(--color-border)]">
-                    {instrumentsList.map((inst) => {
+                    {currentAllowedInstruments.map((inst) => {
                       const isSelected = selectedInstruments.includes(inst);
                       return (
                         <button
@@ -390,9 +435,11 @@ export default function BookingPage() {
                     <option value="collaborative" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
                       Collaborative Jam
                     </option>
-                    <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
-                      Full Band Rehearsal
-                    </option>
+                    {!isSessionB && (
+                      <option value="band_rehearsal" className="bg-[var(--color-ink)] text-[var(--color-cream)]">
+                        Full Band Rehearsal
+                      </option>
+                    )}
                   </select>
                 </div>
 
@@ -401,11 +448,15 @@ export default function BookingPage() {
                     <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
                       <Music2 size={13} /> Primary Instrument
                     </label>
-                    {isSessionA && mode === "individual" && (
+                    {isSessionA && mode === "individual" ? (
                       <span className="text-[9px] font-mono text-[var(--color-rust)] uppercase font-semibold">
                         Drums / Elec Guitar Only
                       </span>
-                    )}
+                    ) : isSessionB ? (
+                      <span className="text-[9px] font-mono text-[var(--color-rust)] uppercase font-semibold">
+                        No Drums / No Elec Guitar
+                      </span>
+                    ) : null}
                   </div>
                   <select
                     value={instrument}
@@ -423,7 +474,7 @@ export default function BookingPage() {
             )}
 
             {/* Contextual Guidance Notes */}
-            {isBandRehearsal && (
+            {isBandRehearsal && !isSessionB && (
               <div className="p-3.5 border border-[var(--color-ochre)]/40 bg-[var(--color-ochre)]/10 text-xs font-mono text-[var(--color-cream)] flex items-start gap-2.5">
                 <Users size={16} className="text-[var(--color-ochre)] shrink-0 mt-0.5" />
                 <div className="leading-relaxed">
@@ -456,6 +507,15 @@ export default function BookingPage() {
                 <AlertCircle size={15} className="text-[var(--color-ochre)] shrink-0 mt-0.5" />
                 <span className="text-[var(--color-text-muted)] text-[11px] leading-relaxed">
                   <strong className="text-[var(--color-cream)]">Session A Solo Policy:</strong> Solo rehearsal in Session A is strictly restricted to <strong className="text-[var(--color-ochre)]">Drums</strong> or <strong className="text-[var(--color-ochre)]">Electric Guitar</strong> practice.
+                </span>
+              </div>
+            )}
+
+            {isSessionB && (
+              <div className="p-3 border border-[var(--color-border)] bg-[var(--color-ink)] text-xs font-mono text-[var(--color-cream)] flex items-start gap-2.5">
+                <AlertCircle size={15} className="text-[var(--color-ochre)] shrink-0 mt-0.5" />
+                <span className="text-[var(--color-text-muted)] text-[11px] leading-relaxed">
+                  <strong className="text-[var(--color-cream)]">Session B Acoustic Policy:</strong> Full band rehearsals, <strong className="text-[var(--color-rust)]">drums</strong>, and <strong className="text-[var(--color-rust)]">electric guitar</strong> are not permitted in Session B. Suitable for solo practice, duets, vocals, acoustic instruments, or electronic/piano sessions.
                 </span>
               </div>
             )}
