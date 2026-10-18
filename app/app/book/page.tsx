@@ -448,15 +448,11 @@ export default function BookingPage() {
                     <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
                       <Music2 size={13} /> Primary Instrument
                     </label>
-                    {isSessionA && mode === "individual" ? (
+                    {isSessionA && mode === "individual" && (
                       <span className="text-[9px] font-mono text-[var(--color-rust)] uppercase font-semibold">
                         Drums / Elec Guitar Only
                       </span>
-                    ) : isSessionB ? (
-                      <span className="text-[9px] font-mono text-[var(--color-rust)] uppercase font-semibold">
-                        No Drums / No Elec Guitar
-                      </span>
-                    ) : null}
+                    )}
                   </div>
                   <select
                     value={instrument}
