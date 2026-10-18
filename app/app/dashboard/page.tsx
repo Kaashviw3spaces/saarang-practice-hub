@@ -121,9 +121,15 @@ export default function DashboardPage() {
         .order("name");
 
       if (rData && rData.length > 0) {
+        const isExcluded = (name: string) => {
+          const lower = name.toLowerCase().trim();
+          return lower.includes("jam session") || lower.includes("electronics corner");
+        };
+
         const seen = new Set<string>();
         const uniqueSummary: RoomStatusItem[] = [];
         for (const r of rData) {
+          if (isExcluded(r.name)) continue;
           const key = r.name.toLowerCase().trim();
           if (!seen.has(key)) {
             seen.add(key);
@@ -139,9 +145,7 @@ export default function DashboardPage() {
         setRoomsSummary([
           { room: "Session A", status: "available", note: "STAGE OPEN" },
           { room: "Session B (Acoustic)", status: "occupied", note: "IN REHEARSAL" },
-          { room: "Jam Session Area", status: "reserved", note: "RESERVED" },
           { room: "Recording Session", status: "departure_pending", note: "FINISHING UP" },
-          { room: "Electronics Corner", status: "occupancy_uncertain", note: "STATUS UNCLEAR" },
         ]);
       }
 

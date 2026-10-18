@@ -38,18 +38,18 @@ const PREVIEW_ROOMS: Room[] = [
   },
   {
     id: "r3",
-    name: "Jam Session Area",
-    description: "Open jam space for collaborative sessions and small ensemble rehearsals.",
-    capacity: 8,
-    status: "reserved",
-    equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard"],
-    acousticProperties: "Acoustic panels · Ensemble Tuned",
+    name: "Recording Session",
+    description: "Professional recording and monitoring space for vocals and acoustic instruments.",
+    capacity: 2,
+    status: "available",
+    equipment: ["Audio Interface", "Studio Monitors", "Condenser Mic"],
+    acousticProperties: "Broadcast-grade isolation · Near Silent",
   },
 ];
 
 
 const STATS = [
-  { value: "05", label: "ACTIVE REHEARSAL STAGES" },
+  { value: "03", label: "ACTIVE REHEARSAL STAGES" },
   { value: "100%", label: "CONFLICT FREE PROTOCOL" },
   { value: "<60s", label: "INSTANT SLOT RESERVATION" },
   { value: "24/7", label: "LIVE REHEARSAL ACCESS" },
@@ -204,7 +204,7 @@ export default function HomePage() {
               href="/rooms"
               className="btn-rock-ghost text-xs py-2 px-4 self-start md:self-auto"
             >
-              Explore All 5 Sessions <ArrowRight size={13} />
+              Explore All Sessions <ArrowRight size={13} />
             </Link>
           </div>
 

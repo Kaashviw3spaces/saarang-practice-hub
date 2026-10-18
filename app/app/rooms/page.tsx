@@ -51,9 +51,15 @@ export default function RoomsPage() {
       if (err) {
         setError(err.message);
       } else {
+        const isExcluded = (name: string) => {
+          const lower = name.toLowerCase().trim();
+          return lower.includes("jam session") || lower.includes("electronics corner");
+        };
+
         const roomMap = new Map<string, Room>();
         for (const row of ((data ?? []) as RoomRow[])) {
           const r = toRoom(row);
+          if (isExcluded(r.name)) continue;
           const key = r.name.toLowerCase().trim();
           const existing = roomMap.get(key);
           if (!existing) {
@@ -150,14 +156,14 @@ export default function RoomsPage() {
         {loading && (
           <div className="flex items-center justify-center py-24 gap-3 text-[var(--color-text-muted)] font-mono text-sm border border-[var(--color-border)] bg-[var(--color-surface)]">
             <Loader2 size={18} className="animate-spin text-[var(--color-ochre)]" />
-            <span className="uppercase tracking-widest">CONNECTING TO STAGE SENSORS…</span>
+            <span className="uppercase tracking-widest">CONNECTING TO SLOT SENSORS…</span>
           </div>
         )}
 
         {/* Error */}
         {!loading && error && (
           <div className="p-8 text-center border border-[var(--color-danger)] bg-[var(--color-danger)]/10 text-[var(--color-cream)] font-mono text-xs uppercase tracking-wider">
-            Failed to query stage data: {error}
+            Failed to query slot data: {error}
           </div>
         )}
 

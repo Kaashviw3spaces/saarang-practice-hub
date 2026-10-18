@@ -110,7 +110,7 @@ export default function BookingsPage() {
               MY BOOKINGS
             </h1>
             <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">
-              Active rehearsal bookings, scheduled jam sessions, and studio reservation history.
+              Active rehearsal bookings, confirmed slots, and studio reservation history.
             </p>
           </div>
 

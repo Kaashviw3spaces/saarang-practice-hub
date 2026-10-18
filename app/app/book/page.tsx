@@ -51,9 +51,15 @@ export default function BookingPage() {
       .select("id, name")
       .order("name")
       .then(({ data }) => {
+        const isExcluded = (name: string) => {
+          const lower = name.toLowerCase().trim();
+          return lower.includes("jam session") || lower.includes("electronics corner");
+        };
+
         const opts = (data ?? []) as RoomOption[];
         const seenNames = new Set<string>();
         const uniqueOpts = opts.filter((opt) => {
+          if (isExcluded(opt.name)) return false;
           const key = opt.name.toLowerCase().trim();
           if (seenNames.has(key)) return false;
           seenNames.add(key);
@@ -95,7 +101,7 @@ export default function BookingPage() {
 
       if (conflicts && conflicts.length > 0) {
         throw new Error(
-          "STAGE CONFLICT: This slot is already locked by another artist. Please select a different time or stage."
+          "STAGE CONFLICT: This slot is already locked by another member. Please select a different time or slot."
         );
       }
 
@@ -152,7 +158,7 @@ export default function BookingPage() {
             BOOK REHEARSAL SLOT
           </h1>
           <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-lg leading-relaxed">
-            Configure your setup, select stage area, and lock in your rehearsal window with automated conflict
+            Check your setup, select slot, and lock in your rehearsal window with automated conflict
             checks.
           </p>
         </div>
@@ -291,7 +297,7 @@ export default function BookingPage() {
             {loading ? (
               <span className="flex items-center gap-2">
                 <Loader2 size={16} className="animate-spin" />
-                VERIFYING STAGE AVAILABILITY…
+                VERIFYING SLOT AVAILABILITY…
               </span>
             ) : (
               <span className="flex items-center gap-2">
