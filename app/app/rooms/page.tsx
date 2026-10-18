@@ -53,7 +53,7 @@ export default function RoomsPage() {
       } else {
         const isExcluded = (name: string) => {
           const lower = name.toLowerCase().trim();
-          return lower.includes("jam session") || lower.includes("electronics corner");
+          return lower.includes("electronics corner");
         };
 
         const roomMap = new Map<string, Room>();

@@ -38,18 +38,18 @@ const PREVIEW_ROOMS: Room[] = [
   },
   {
     id: "r3",
-    name: "Recording Session",
-    description: "Professional recording and monitoring space for vocals and acoustic instruments.",
-    capacity: 2,
-    status: "available",
-    equipment: ["Audio Interface", "Studio Monitors", "Condenser Mic"],
-    acousticProperties: "Broadcast-grade isolation · Near Silent",
+    name: "Jam Session Area",
+    description: "Open jam space for collaborative sessions and small ensemble rehearsals.",
+    capacity: 8,
+    status: "reserved",
+    equipment: ["Drum Kit", "Bass Amp", "Guitar Amp", "Vocal Mic", "Keyboard"],
+    acousticProperties: "Acoustic panels · Ensemble Tuned",
   },
 ];
 
 
 const STATS = [
-  { value: "03", label: "ACTIVE REHEARSAL STAGES" },
+  { value: "04", label: "ACTIVE REHEARSAL STAGES" },
   { value: "100%", label: "CONFLICT FREE PROTOCOL" },
   { value: "<60s", label: "INSTANT SLOT RESERVATION" },
   { value: "24/7", label: "LIVE REHEARSAL ACCESS" },

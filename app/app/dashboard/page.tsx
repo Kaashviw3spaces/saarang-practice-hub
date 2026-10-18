@@ -123,7 +123,7 @@ export default function DashboardPage() {
       if (rData && rData.length > 0) {
         const isExcluded = (name: string) => {
           const lower = name.toLowerCase().trim();
-          return lower.includes("jam session") || lower.includes("electronics corner");
+          return lower.includes("electronics corner");
         };
 
         const seen = new Set<string>();
@@ -145,6 +145,7 @@ export default function DashboardPage() {
         setRoomsSummary([
           { room: "Session A", status: "available", note: "STAGE OPEN" },
           { room: "Session B (Acoustic)", status: "occupied", note: "IN REHEARSAL" },
+          { room: "Jam Session Area", status: "reserved", note: "RESERVED" },
           { room: "Recording Session", status: "departure_pending", note: "FINISHING UP" },
         ]);
       }

@@ -53,7 +53,7 @@ export default function BookingPage() {
       .then(({ data }) => {
         const isExcluded = (name: string) => {
           const lower = name.toLowerCase().trim();
-          return lower.includes("jam session") || lower.includes("electronics corner");
+          return lower.includes("electronics corner");
         };
 
         const opts = (data ?? []) as RoomOption[];
