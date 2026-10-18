@@ -132,7 +132,7 @@ export default function BookingPage() {
               <Calendar size={12} /> REHEARSAL RESERVATION
             </span>
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
-              STAGE ALLOCATION FORM
+              SLOT ALLOCATION FORM
             </span>
           </div>
           <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-ochre)]">
@@ -169,12 +169,12 @@ export default function BookingPage() {
           {/* STEP 01: Stage Selection */}
           <div className="flex flex-col gap-2">
             <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-[var(--color-ochre)] flex items-center gap-1.5">
-              <Radio size={13} /> [STEP 01] Practice Session Stage
+              <Radio size={13} /> [STEP 01] Practice Session slot
             </label>
             {roomsLoading ? (
               <div className="flex items-center gap-2 h-11 px-3 bg-[var(--color-ink)] border border-[var(--color-border)] text-xs font-mono text-[var(--color-text-muted)]">
                 <Loader2 size={14} className="animate-spin text-[var(--color-ochre)]" />
-                Querying available stages…
+                Querying available slots…
               </div>
             ) : (
               <select

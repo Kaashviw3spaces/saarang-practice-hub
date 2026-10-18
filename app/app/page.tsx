@@ -84,20 +84,20 @@ export default function HomePage() {
           {/* Top Billing Line (Aragon Ballroom / Arctic Monkeys poster inspired) */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4 mb-8 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] text-[var(--color-text-dim)]">
             <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-              <Radio size={13} className="text-[var(--color-rust)]" /> SAARANG MUSIC HUB
+              <Radio size={13} className="text-[var(--color-rust)]" /> SAARANG PRACTICE HUB
             </span>
             <span className="text-[var(--color-ochre)] font-bold">
-              NOW OPEN · AUTUMN / SPRING SESSIONS
+               NOW OPEN
             </span>
             <span className="hidden sm:inline text-[var(--color-text-muted)]">
-              CHENNAI, INDIA
+              SONIPAT, INDIA
             </span>
           </div>
 
           {/* Monumental Headline */}
           <div className="flex flex-col items-center gap-2 mb-6">
             <p className="font-mono text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--color-rust)] font-bold">
-              The Underground Rehearsal Network
+              The Rehearsal Network
             </p>
             <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline">
               MAKE SOME NOISE.
@@ -118,8 +118,9 @@ export default function HomePage() {
 
           {/* Subheading */}
           <p className="max-w-xl mx-auto text-sm md:text-base text-[var(--color-text-muted)] leading-relaxed mb-8">
-            High-contrast rehearsal rooms, AI acoustic resonance analysis, and automated conflict-free
-            scheduling for artists, bands, and late-night creators.
+            Now practice better
+            <br />
+            No sound bleed, no scheduling clashes, just uninterrupted rehearsal.
           </p>
 
           {/* CTAs (Inverted Rock Buttons) */}
@@ -149,7 +150,7 @@ export default function HomePage() {
             </span>
             <span>·</span>
             <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-              <Piano size={14} className="text-[var(--color-olive)]" /> Keyboards & DAW
+              <Piano size={14} className="text-[var(--color-olive)]" /> Keyboards & MIDI
             </span>
             <span>·</span>
             <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
@@ -187,7 +188,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--color-border)] pb-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="badge-tour badge-tour-rust">Stage Radar</span>
+                <span className="badge-tour badge-tour-rust">Slot Radar</span>
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
                   Real-Time Availability
                 </span>
@@ -196,7 +197,7 @@ export default function HomePage() {
                 ACTIVE SESSIONS
               </h2>
               <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-xl">
-                Check stage availability, equipment setup, and volume limits before heading to the hub.
+                Check room availability, equipment status, and volume limits before heading to the room.
               </p>
             </div>
             <Link
@@ -241,7 +242,7 @@ export default function HomePage() {
                 step: "02",
                 tag: "RADAR",
                 title: "SCAN STAGE AVAILABILITY",
-                body: "Review real-time slots and instant acoustic compatibility with adjacent rooms.",
+                body: "Review real-time slots and instant acoustic compatibility with adjacent slots.",
               },
               {
                 step: "03",
@@ -253,7 +254,7 @@ export default function HomePage() {
                 step: "04",
                 tag: "SESSION",
                 title: "START REHEARSING",
-                body: "Step straight into your reserved room, power up the backline gear, and play without interruption.",
+                body: "Step straight into your reserved slot, power up the backline gear, and play without interruption.",
               },
             ].map(({ step, tag, title, body }) => (
               <div
@@ -329,7 +330,7 @@ export default function HomePage() {
           </div>
 
           <p className="text-center md:text-right">
-            ROCK ART DIRECTION INSPIRED BY AC/DC · ARCTIC MONKEYS · METALLICA · THE BEATLES · THE ROLLING STONES
+            ROCK ART DIRECTION INSPIRED BY KNOWN BANDS <br />
           </p>
 
           <p className="text-[10px] text-[var(--color-text-dim)]">

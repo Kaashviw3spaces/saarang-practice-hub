@@ -76,7 +76,7 @@ export default function RoomsPage() {
         <div className="p-8 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)] flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-border)] pb-3">
             <span className="badge-tour badge-tour-accent">
-              <Radio size={12} /> LIVE STAGE RADAR
+              <Radio size={12} /> LIVE SLOT RADAR
             </span>
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
               FREQUENCY REFRESH: 30s INTERVAL
@@ -88,15 +88,14 @@ export default function RoomsPage() {
               PRACTICE SESSIONS
             </h1>
             <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-2xl leading-relaxed">
-              Explore the five distinct rehearsal stages. Inspect isolation tiers, available drum kits,
-              amplifiers, and synthesizer setups, and lock in your practice slot.
+              Explore available rehearsal slots. Inspect available instruments and lock in your practice slot.
             </p>
           </div>
 
           {/* Status legend with vintage concert badges */}
           <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-[var(--color-border)] text-xs font-mono">
             {[
-              { label: "STAGE OPEN", dot: "bg-[var(--color-available)]", text: "text-[var(--color-available)]" },
+              { label: "SLOT OPEN", dot: "bg-[var(--color-available)]", text: "text-[var(--color-available)]" },
               { label: "RESERVED", dot: "bg-[var(--color-reserved)]", text: "text-[var(--color-reserved)]" },
               { label: "IN REHEARSAL", dot: "bg-[var(--color-occupied)]", text: "text-[var(--color-occupied)]" },
               { label: "FINISHING UP", dot: "bg-[var(--color-pending)]", text: "text-[var(--color-pending)]" },
@@ -119,7 +118,7 @@ export default function RoomsPage() {
             />
             <input
               type="text"
-              placeholder="Search stages, instruments, or backline gear…"
+              placeholder="Search slots or instruments…"
               disabled
               className="w-full h-11 bg-[var(--color-surface)] border border-[var(--color-border)] pl-10 pr-4 text-xs font-mono uppercase tracking-wider text-[var(--color-text-muted)] placeholder:text-[var(--color-text-dim)] cursor-not-allowed opacity-60 shadow-[inset_0_0_0_1px_rgba(238,230,213,0.1)]"
             />
@@ -151,7 +150,7 @@ export default function RoomsPage() {
         {/* Empty state */}
         {!loading && !error && rooms.length === 0 && (
           <div className="p-12 text-center border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] font-mono text-xs uppercase tracking-widest">
-            NO SESSIONS RETURNED FROM STAGE CONTROLLER. VERIFY SUPABASE CONNECTION.
+            NO SLOTS RETURNED FROM SLOT CONTROLLER. VERIFY SUPABASE CONNECTION.
           </div>
         )}
 

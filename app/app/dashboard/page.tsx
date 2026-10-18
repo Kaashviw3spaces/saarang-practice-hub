@@ -177,7 +177,7 @@ export default function DashboardPage() {
               WELCOME BACK, {userName.toUpperCase()}
             </h1>
             <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">
-              Track live countdowns, stage occupancy telemetry, and manage your booked rehearsal sessions.
+              Track live countdowns, room occupancy, and manage your booked rehearsal sessions.
             </p>
           </div>
 
@@ -185,7 +185,7 @@ export default function DashboardPage() {
             href="/book"
             className="btn-rock-primary text-sm py-2.5 px-6 shadow-[3px_3px_0_0_var(--color-rust)] shrink-0 self-start sm:self-auto"
           >
-            <Plus size={15} /> Book a Stage
+            <Plus size={15} /> Book a Slot
           </Link>
         </div>
 
@@ -314,7 +314,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-3">
                 <h2 className="font-[var(--font-display)] text-xl text-[var(--color-cream)] tracking-wider flex items-center gap-2">
                   <Music2 size={16} className="text-[var(--color-ochre)]" />
-                  STAGE RADAR
+                  SLOT RADAR
                 </h2>
                 <span className="text-[9px] font-mono uppercase tracking-widest text-[var(--color-available)] flex items-center gap-1">
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-available)] animate-pulse" /> LIVE
@@ -363,10 +363,10 @@ export default function DashboardPage() {
               <div className="flex flex-col gap-2.5">
                 <div className="bg-[var(--color-ink)] border border-[var(--color-border)] p-3 flex flex-col gap-1">
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-ochre)]">
-                    STAGE PROTOCOL
+                    ROOM PROTOCOL
                   </span>
                   <p className="text-xs font-mono text-[var(--color-cream)]">
-                    Supabase stage sensors online. Real-time availability synchronized.
+                    Supabase slot sensors online. Real-time availability synchronized.
                   </p>
                   <p className="text-[10px] font-mono text-[var(--color-text-dim)]">
                     System Telemetry · Connected
@@ -377,7 +377,7 @@ export default function DashboardPage() {
                     EQUIPMENT UPDATE
                   </span>
                   <p className="text-xs font-mono text-[var(--color-text-muted)]">
-                    New drum heads installed in Stage A. Re-calibrated audio interface ready.
+                    New drum set now available.
                   </p>
                 </div>
               </div>

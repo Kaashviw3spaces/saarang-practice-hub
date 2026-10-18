@@ -11,8 +11,6 @@ import {
   Drum,
   Guitar,
   Piano,
-  Headphones,
-  Volume2,
   Zap,
   Radio,
   ArrowRight,
@@ -62,7 +60,7 @@ const STATUS_CONFIG: Record<
 };
 
 const MODE_LABELS: Record<PracticeMode, string> = {
-  individual: "Solo Set",
+  individual: "Solo Practice",
   collaborative: "Jam Session",
   band_rehearsal: "Full Band",
 };
@@ -214,31 +212,6 @@ export function RoomCard({
           </div>
         ) : null}
 
-        {/* Gear / Equipment list */}
-        {equipment.length > 0 && (
-          <div className="mb-5">
-            <p className="text-[9px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-dim)] mb-1.5">
-              Available Gear Inventory
-            </p>
-            <div className="flex flex-wrap gap-1">
-              {equipment.slice(0, 4).map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center gap-1 bg-[var(--color-ink)] border border-[var(--color-border)] px-2 py-0.5 text-[10px] font-mono text-[var(--color-text-muted)]"
-                >
-                  {item.toLowerCase().includes("headphone") && <Headphones size={9} />}
-                  {item.toLowerCase().includes("amp") && <Volume2 size={9} />}
-                  {item}
-                </span>
-              ))}
-              {equipment.length > 4 && (
-                <span className="text-[10px] font-mono text-[var(--color-text-dim)] self-center px-1">
-                  +{equipment.length - 4} more
-                </span>
-              )}
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Ticket-Style Footer */}
