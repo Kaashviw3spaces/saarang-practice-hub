@@ -340,6 +340,28 @@ a, button, input, select, textarea, [role="button"] {
   background-size: 240px 180px;
 }
 
+/* ─── Rock Paper / Mineral Stone Paper Surface Texture ───────────────────── */
+.rock-paper-surface {
+  position: relative;
+  /* Micro mineral stone tooth, limestone flecks & subtle fibrous paper texture */
+  background-image: 
+    /* Layer 1: High-frequency mineral stone tooth */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='rockGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.93  0 0 0 0 0.90  0 0 0 0 0.83  0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23rockGrain)'/%3E%3C/svg%3E"),
+    /* Layer 2: Organic mineral flecks and stone particles */
+    radial-gradient(circle at 18% 24%, rgba(238, 230, 213, 0.07) 1px, transparent 1.5px),
+    radial-gradient(circle at 64% 78%, rgba(238, 230, 213, 0.06) 1.2px, transparent 2px),
+    radial-gradient(circle at 82% 28%, rgba(238, 230, 213, 0.08) 0.8px, transparent 1.4px),
+    radial-gradient(circle at 36% 84%, rgba(238, 230, 213, 0.06) 1px, transparent 1.8px),
+    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.35) 1.5px, transparent 2.5px),
+    /* Layer 3: Faint tactile fibrous stone paper tooth relief */
+    linear-gradient(135deg, rgba(255, 247, 223, 0.02) 0%, transparent 50%, rgba(0, 0, 0, 0.12) 100%);
+  background-size: 180px 180px, 140px 140px, 140px 140px, 140px 140px, 140px 140px, 140px 140px, 100% 100%;
+}
+
+.rock-paper-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='mineralRock'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23FFF7DF' surfaceScale='1.2'%3E%3CfeDistantLight azimuth='65' elevation='55'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23mineralRock)'/%3E%3C/svg%3E");
+}
+
 /* ─── Universal Lifted Shadowy Box Effect ─────────────────────────────────── */
 .lifted-shadow-box {
   box-shadow: 

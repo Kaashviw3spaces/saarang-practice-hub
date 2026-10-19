@@ -39,24 +39,27 @@ export function HeroRockSection() {
 
       {/* ── 1. PERFECTLY CENTERED HERO BOX (EXACT AUTHENTIC ROCK GIG POSTER) ── */}
       <div
-        className={`relative z-10 w-full max-w-5xl mx-auto p-6 md:p-12 border border-[var(--color-ivory)]/60 bg-[var(--color-surface)]/95 backdrop-blur-md paper-fold-creases overflow-hidden transition-all duration-500 ${
+        className={`relative z-10 w-full max-w-5xl mx-auto p-6 md:p-12 border border-[var(--color-ivory)]/60 bg-[var(--color-surface)]/95 backdrop-blur-md paper-fold-creases rock-paper-surface overflow-hidden transition-all duration-500 ${
           isOverdrive
             ? "amp-overdrive-glow"
             : "shadow-[0_35px_80px_-10px_rgba(0,0,0,0.98),0_18px_36px_-6px_rgba(0,0,0,0.92),inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.35)]"
         }`}
       >
+        {/* Tactile Rock Paper / Mineral Stone Paper Grain */}
+        <div className="absolute inset-0 rock-paper-grain opacity-65 pointer-events-none z-0" />
+
         {/* Aesthetic Attachment Elements from Live Rock Fest poster: */}
         {/* 1. Amplifier Grill Backing Weave */}
-        <div className="absolute inset-0 amp-grill-backing opacity-30 pointer-events-none z-0" />
+        <div className="absolute inset-0 amp-grill-backing opacity-25 pointer-events-none z-0" />
 
         {/* 2. Dense Halftone Screenprint Dots */}
-        <div className="absolute inset-0 halftone-dense opacity-20 pointer-events-none z-0" />
+        <div className="absolute inset-0 halftone-dense opacity-15 pointer-events-none z-0" />
 
         {/* 3. Screenprint Grunge Speckles & Ink Splatters */}
-        <div className="absolute inset-0 grunge-speckles opacity-65 pointer-events-none z-0" />
+        <div className="absolute inset-0 grunge-speckles opacity-55 pointer-events-none z-0" />
 
         {/* 4. Rock Fissure Scratches */}
-        <div className="absolute inset-0 rock-scratches opacity-25 pointer-events-none z-0" />
+        <div className="absolute inset-0 rock-scratches opacity-20 pointer-events-none z-0" />
 
         {/* 5. Clickable & Pluckable Electric Guitar Graphic on Left */}
         <div className="absolute top-0 bottom-0 -left-6 sm:left-0 md:left-2 w-32 sm:w-44 md:w-56 lg:w-64 z-20 flex items-center justify-start overflow-hidden pointer-events-none group">
