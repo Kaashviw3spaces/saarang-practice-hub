@@ -87,11 +87,10 @@ export function HeroRockSection() {
 
               </p>
               <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline rock-headline-glitch group cursor-pointer">
-                <span>
+                <span className="block">
                   MAKE SOME NOISE.
                 </span>
-                <br />
-                <span className="text-[var(--color-ochre)] group-hover:text-[var(--color-magenta)] hover:text-[var(--color-magenta)] transition-colors duration-300">
+                <span className="block text-[var(--color-ochre)] group-hover:text-[var(--color-magenta)] hover:text-[var(--color-magenta)] transition-colors duration-300">
                   FIND YOUR SPACE.
                 </span>
               </h1>
