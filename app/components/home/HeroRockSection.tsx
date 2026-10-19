@@ -81,17 +81,17 @@ export function HeroRockSection() {
             </span>
           </div>
 
-            {/* Monumental Headline with Continuous Rock Chromatic Glitch and Pink on Hover */}
+            {/* Monumental Headline with Continuous Rock Chromatic Glitch and Pink on Hover for FIND YOUR SPACE */}
             <div className="flex flex-col items-center gap-2 mb-6">
               <p className="poster-subhead text-xs md:text-sm uppercase tracking-[0.25em] text-[var(--color-rust)] font-bold">
 
               </p>
-              <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline rock-headline-glitch group cursor-pointer transition-colors duration-300">
-                <span className="transition-colors duration-300 group-hover:text-[var(--color-magenta)]">
+              <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline rock-headline-glitch group cursor-pointer">
+                <span>
                   MAKE SOME NOISE.
                 </span>
                 <br />
-                <span className="text-[var(--color-ochre)] transition-colors duration-300 group-hover:text-[var(--color-magenta)]">
+                <span className="text-[var(--color-ochre)] group-hover:text-[var(--color-magenta)] hover:text-[var(--color-magenta)] transition-colors duration-300">
                   FIND YOUR SPACE.
                 </span>
               </h1>
