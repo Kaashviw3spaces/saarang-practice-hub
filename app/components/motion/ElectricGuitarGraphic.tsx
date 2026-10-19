@@ -9,52 +9,102 @@ interface ElectricGuitarGraphicProps {
   isOverdriven?: boolean;
 }
 
+interface StringDef {
+  x: number;
+  width: number;
+  note: string;
+  fullName: string;
+}
+
+const STRINGS: StringDef[] = [
+  { x: 99, width: 1.6, note: "E2", fullName: "Low E (82Hz)" },
+  { x: 103, width: 1.3, note: "A2", fullName: "A (110Hz)" },
+  { x: 107, width: 1.1, note: "D3", fullName: "D (147Hz)" },
+  { x: 111, width: 0.95, note: "G3", fullName: "G (196Hz)" },
+  { x: 115, width: 0.85, note: "B3", fullName: "B (247Hz)" },
+  { x: 119, width: 0.75, note: "E4", fullName: "High E (330Hz)" },
+];
+
 export function ElectricGuitarGraphic({
   className = "",
   accentColor = "var(--color-rust)",
   isOverdriven = false,
 }: ElectricGuitarGraphicProps) {
   const maskId = useId();
-  const [activeStrings, setActiveStrings] = useState<Record<number, boolean>>({});
+  // String vibration counter to force re-render of CSS keyframe animation on each click
+  const [stringVibrations, setStringVibrations] = useState<Record<number, number>>({});
+  const [pluckedNote, setPluckedNote] = useState<{ note: string; x: number; id: number } | null>(null);
   const [volumeAngle, setVolumeAngle] = useState(25);
-  const [lastStrumTime, setLastStrumTime] = useState(0);
 
-  const handleStringStrum = (index: number) => {
-    // Debounce rapid continuous hovering on the same string (120ms)
-    const now = Date.now();
-    if (now - lastStrumTime < 100 && activeStrings[index]) return;
-    setLastStrumTime(now);
+  const pluckString = (index: number, e?: React.MouseEvent) => {
+    e?.stopPropagation();
 
-    // Audio pitch
-    rockSynth.playGuitarString(index);
+    // 1. Ensure AudioContext is active upon user interaction
+    rockSynth.initContext();
 
-    // Trigger visual string vibration
-    setActiveStrings((prev) => ({ ...prev, [index]: true }));
+    // 2. Play synthesized electric guitar string pitch with harmonics
+    rockSynth.playGuitarString(index, isOverdriven);
+
+    // 3. Trigger physical string vibration animation
+    const timestamp = Date.now();
+    setStringVibrations((prev) => ({ ...prev, [index]: timestamp }));
+
+    // 4. Show floating musical note indicator
+    const str = STRINGS[index];
+    if (str) {
+      setPluckedNote({ note: str.note, x: str.x, id: timestamp });
+    }
+
+    // Auto-clear vibration after duration
     setTimeout(() => {
-      setActiveStrings((prev) => ({ ...prev, [index]: false }));
-    }, 600);
+      setStringVibrations((prev) => {
+        if (prev[index] === timestamp) {
+          const updated = { ...prev };
+          delete updated[index];
+          return updated;
+        }
+        return prev;
+      });
+    }, 700);
   };
 
-  const handleKnobClick = () => {
+  const handleKnobClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    rockSynth.initContext();
     setVolumeAngle((prev) => (prev >= 260 ? 25 : prev + 45));
     rockSynth.playStompClick();
   };
 
   return (
     <div className={`relative ${className}`}>
-      {/* Interactive Tooltip badge above headstock on hover */}
-      <div className="absolute top-2 left-6 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <span className="text-[8px] font-mono uppercase tracking-widest px-1.5 py-0.5 bg-[var(--color-ink)] border border-[var(--color-ochre)] text-[var(--color-ochre)] shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-          ⚡ STRUM
+      {/* Permanent vintage cue badge */}
+      <div className="absolute top-2 left-6 z-30 pointer-events-none transition-opacity duration-300">
+        <span className="text-[7.5px] font-mono uppercase tracking-widest px-2 py-0.5 bg-[var(--color-ink)]/95 border border-[var(--color-ochre)] text-[var(--color-ochre)] shadow-[0_4px_12px_rgba(0,0,0,0.95)] flex items-center gap-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-rust)] animate-ping inline-block" />
+          ⚡ CLICK STRINGS TO PLAY
         </span>
       </div>
+
+      {/* Floating Note indicator popup when string is plucked */}
+      {pluckedNote && (
+        <div
+          key={pluckedNote.id}
+          className="absolute z-40 pointer-events-none anim-note-float text-[9px] font-mono font-bold px-2 py-0.5 bg-[var(--color-ink)] border border-[var(--color-ochre)] text-[var(--color-ochre)] shadow-[0_0_12px_rgba(212,168,63,0.8)]"
+          style={{
+            left: `${(pluckedNote.x / 240) * 100}%`,
+            top: "45%",
+          }}
+        >
+          🎸 {pluckedNote.note}
+        </div>
+      )}
 
       <svg
         viewBox="0 0 240 760"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full select-none"
-        aria-label="Interactive Rock Electric Guitar"
+        aria-label="Interactive Rock Electric Guitar - Click strings to play notes"
       >
         <defs>
           <filter id={`${maskId}-grunge`} x="0" y="0" width="100%" height="100%">
@@ -125,7 +175,7 @@ export function ElectricGuitarGraphic({
           strokeWidth="1"
         />
 
-        {/* Frets along the neck (24 frets, spaced proportionally) */}
+        {/* Frets along the neck (spaced proportionally) */}
         {[
           122, 134, 147, 161, 175, 190, 205, 221, 237, 254,
           271, 289, 307, 325, 343, 361, 379, 396, 412, 426, 438
@@ -165,51 +215,66 @@ export function ElectricGuitarGraphic({
           />
         ))}
 
-        {/* ── 3. STRUMMABLE INTERACTIVE STRINGS ── */}
-        {/* Invisible wider hit areas + vibrating SVG string paths */}
-        {[
-          { x: 99, width: 1.4, note: "E2" },
-          { x: 103, width: 1.2, note: "A2" },
-          { x: 107, width: 1.0, note: "D3" },
-          { x: 111, width: 0.9, note: "G3" },
-          { x: 115, width: 0.8, note: "B3" },
-          { x: 119, width: 0.7, note: "E4" },
-        ].map((str, idx) => {
-          const isVibrating = activeStrings[idx];
+        {/* ── 3. STRUMMABLE & CLICKABLE INTERACTIVE STRINGS ── */}
+        {STRINGS.map((str, idx) => {
+          const isVibrating = Boolean(stringVibrations[idx]);
           return (
             <g
               key={`str-${idx}`}
-              onMouseEnter={() => handleStringStrum(idx)}
-              onClick={() => handleStringStrum(idx)}
+              onClick={(e) => pluckString(idx, e)}
+              onMouseEnter={() => pluckString(idx)}
               className="cursor-pointer group/str"
+              aria-label={`Pluck ${str.fullName}`}
             >
-              {/* Invisible wider mouse-hover hit area */}
-              <line
-                x1={str.x}
-                y1="80"
-                x2={str.x}
-                y2="630"
-                stroke="transparent"
-                strokeWidth="10"
+              <title>{`Click to pluck string ${idx + 1}: ${str.fullName}`}</title>
+
+              {/* Generous invisible hit rectangle */}
+              <rect
+                x={str.x - 7}
+                y="50"
+                width="14"
+                height="590"
+                fill="transparent"
+                className="cursor-pointer"
               />
 
-              {/* Glowing string resonance line */}
+              {/* Vibrating String Path or Resting Line */}
               {isVibrating ? (
-                <path
-                  d={`M ${str.x} 80 Q ${str.x + (idx % 2 === 0 ? 3 : -3)} 355, ${str.x} 630`}
-                  stroke="var(--color-ochre)"
-                  strokeWidth={str.width * 1.8}
-                  className="filter drop-shadow-[0_0_6px_var(--color-ochre)]"
-                />
+                <g key={`vib-anim-${stringVibrations[idx]}`} className="anim-string-pluck">
+                  {/* Left harmonic ghost blur */}
+                  <path
+                    d={`M ${str.x} 70 Q ${str.x - 3.5} 350, ${str.x} 630`}
+                    stroke="var(--color-ochre)"
+                    strokeWidth={str.width * 0.8}
+                    opacity="0.6"
+                  />
+                  {/* Right harmonic ghost blur */}
+                  <path
+                    d={`M ${str.x} 70 Q ${str.x + 3.5} 350, ${str.x} 630`}
+                    stroke="var(--color-cream)"
+                    strokeWidth={str.width * 0.8}
+                    opacity="0.6"
+                  />
+                  {/* High-intensity central vibrating wire */}
+                  <line
+                    x1={str.x}
+                    y1="70"
+                    x2={str.x}
+                    y2="630"
+                    stroke="var(--color-ochre)"
+                    strokeWidth={str.width * 2}
+                    className="filter drop-shadow-[0_0_8px_var(--color-ochre)]"
+                  />
+                </g>
               ) : (
                 <line
                   x1={str.x}
-                  y1="80"
+                  y1="70"
                   x2={str.x}
                   y2="630"
-                  stroke={isOverdriven ? "rgba(255,247,223,0.95)" : "rgba(255,247,223,0.7)"}
+                  stroke={isOverdriven ? "rgba(255,247,223,0.95)" : "rgba(255,247,223,0.72)"}
                   strokeWidth={str.width}
-                  className="group-hover/str:stroke-[var(--color-ochre)] group-hover/str:stroke-2 transition-colors"
+                  className="group-hover/str:stroke-[var(--color-ochre)] group-hover/str:stroke-[2.5px] transition-all"
                 />
               )}
             </g>
@@ -256,107 +321,128 @@ export function ElectricGuitarGraphic({
               stroke={accentColor}
               strokeWidth="1.5"
             />
-            <circle
-              cx={peg.pegX}
-              cy={peg.pegY}
-              r="1.8"
-              fill="var(--color-cream)"
-            />
           </g>
         ))}
 
-        {/* Nut */}
-        <rect
-          x="95"
-          y="108"
-          width="26"
-          height="4"
-          fill="var(--color-cream)"
-          stroke="rgba(16,16,15,0.9)"
-          strokeWidth="0.8"
+        {/* ── 5. PICKGUARD & CONTOURS ── */}
+        <path
+          d="M 120 440
+             C 105 440 90 450 82 465
+             C 74 480 72 505 72 530
+             C 72 560 80 590 95 615
+             C 105 630 115 640 120 645
+             L 120 440 Z"
+          fill="none"
+          stroke="rgba(238,230,213,0.4)"
+          strokeWidth="1.2"
+          strokeDasharray="4 3"
         />
 
-        {/* ── 5. PICKUPS WITH MAGNETIC FLUX GLOW ── */}
-        {isOverdriven && (
-          <ellipse
-            cx="104"
-            cy="510"
-            rx="32"
-            ry="60"
-            fill={`url(#${maskId}-pickup-glow)`}
-            className="animate-pulse"
-          />
-        )}
-
+        {/* ── 6. DUAL HUMBUCKER PICKUPS ── */}
         {/* Neck Pickup */}
         <g>
           <rect
-            x="90"
-            y="470"
-            width="30"
+            x="93"
+            y="450"
+            width="27"
             height="18"
             rx="2"
-            fill="var(--color-ink)"
-            stroke={accentColor}
-            strokeWidth="1.5"
-          />
-          {[96, 102, 108, 114].map((px, i) => (
-            <circle key={`np-${i}`} cx={px} cy="479" r="1.5" fill="var(--color-cream)" />
-          ))}
-        </g>
-
-        {/* Middle Pickup */}
-        <g>
-          <rect
-            x="92"
-            y="505"
-            width="28"
-            height="12"
-            rx="2"
-            fill="var(--color-ink)"
+            fill="#1A1815"
             stroke={accentColor}
             strokeWidth="1.2"
           />
-          {[96, 102, 108, 114].map((px, i) => (
-            <circle key={`mp-${i}`} cx={px} cy="511" r="1.3" fill="var(--color-cream)" />
+          {/* Overdrive Pickup Magnetic Flux Glow */}
+          {isOverdriven && (
+            <rect
+              x="91"
+              y="448"
+              width="31"
+              height="22"
+              rx="4"
+              fill="none"
+              stroke="var(--color-ochre)"
+              strokeWidth="1"
+              className="animate-pulse"
+              opacity="0.8"
+            />
+          )}
+          {/* Pickup Pole Pieces */}
+          {[454, 461].map((poleY, rIdx) => (
+            <g key={`pole-neck-${rIdx}`}>
+              {[98, 104, 110, 116].map((poleX, cIdx) => (
+                <circle
+                  key={`pole-n-${rIdx}-${cIdx}`}
+                  cx={poleX}
+                  cy={poleY}
+                  r="1.4"
+                  fill="var(--color-cream)"
+                  stroke="rgba(0,0,0,0.6)"
+                  strokeWidth="0.5"
+                />
+              ))}
+            </g>
           ))}
         </g>
 
         {/* Bridge Pickup */}
         <g>
           <rect
-            x="88"
-            y="535"
-            width="32"
-            height="22"
+            x="93"
+            y="510"
+            width="27"
+            height="18"
             rx="2"
-            fill="var(--color-ink)"
+            fill="#1A1815"
             stroke={accentColor}
-            strokeWidth="1.5"
+            strokeWidth="1.2"
           />
-          {[94, 100, 106, 112, 118].map((px, i) => (
-            <g key={`bp-${i}`}>
-              <circle cx={px} cy="541" r="1.5" fill="var(--color-cream)" />
-              <circle cx={px} cy="551" r="1.5" fill="var(--color-cream)" />
+          {isOverdriven && (
+            <rect
+              x="91"
+              y="508"
+              width="31"
+              height="22"
+              rx="4"
+              fill="none"
+              stroke="var(--color-ochre)"
+              strokeWidth="1"
+              className="animate-pulse"
+              opacity="0.8"
+            />
+          )}
+          {[514, 521].map((poleY, rIdx) => (
+            <g key={`pole-bridge-${rIdx}`}>
+              {[98, 104, 110, 116].map((poleX, cIdx) => (
+                <circle
+                  key={`pole-b-${rIdx}-${cIdx}`}
+                  cx={poleX}
+                  cy={poleY}
+                  r="1.4"
+                  fill="var(--color-cream)"
+                  stroke="rgba(0,0,0,0.6)"
+                  strokeWidth="0.5"
+                />
+              ))}
             </g>
           ))}
         </g>
 
-        {/* Bridge & Saddle */}
+        {/* ── 7. TUNE-O-MATIC BRIDGE & TAILPIECE ── */}
         <rect
-          x="86"
-          y="580"
-          width="34"
-          height="16"
-          rx="2"
-          fill="var(--color-ink)"
-          stroke="var(--color-cream)"
-          strokeWidth="1.5"
+          x="92"
+          y="575"
+          width="28"
+          height="8"
+          rx="1"
+          fill="#25221D"
+          stroke={accentColor}
+          strokeWidth="1.2"
         />
-        {[92, 98, 104, 110, 116].map((sx, i) => (
+        {/* Individual bridge saddles */}
+        {[95, 99, 103, 107, 111, 115].map((saddleX, idx) => (
           <rect
-            key={`saddle-${i}`}
-            x={sx}
+            key={`saddle-${idx}`}
+            x={saddleX}
             y="583"
             width="4"
             height="7"
@@ -422,14 +508,10 @@ export function ElectricGuitarGraphic({
             y2="603"
             stroke="var(--color-cream)"
             strokeWidth="1.5"
-            transform={`rotate(${volumeAngle * 0.8} 62 605)`}
+            transform={`rotate(${volumeAngle + 30} 62 605)`}
             className="transition-transform duration-300"
           />
         </g>
-
-        {/* Pickup Selector Switch */}
-        <circle cx="85" cy="515" r="3.5" fill="var(--color-ink)" stroke="var(--color-cream)" strokeWidth="1" />
-        <line x1="85" y1="515" x2="82" y2="508" stroke="var(--color-cream)" strokeWidth="2" />
       </svg>
     </div>
   );

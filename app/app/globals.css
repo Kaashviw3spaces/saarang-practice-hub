@@ -772,6 +772,36 @@ a, button, input, select, textarea, [role="button"] {
   will-change: transform;
 }
 
+/* ─── Heavy String Pluck Vibration Animation ──────────────────────────────── */
+@keyframes stringPluckVibrate {
+  0% { transform: scaleX(1) translateX(0); }
+  10% { transform: scaleX(1.03) translateX(-5px); }
+  20% { transform: scaleX(0.97) translateX(5px); }
+  32% { transform: scaleX(1.025) translateX(-4px); }
+  44% { transform: scaleX(0.975) translateX(3.5px); }
+  56% { transform: scaleX(1.018) translateX(-2.5px); }
+  68% { transform: scaleX(0.985) translateX(2px); }
+  80% { transform: scaleX(1.008) translateX(-1px); }
+  90% { transform: scaleX(0.995) translateX(0.6px); }
+  100% { transform: scaleX(1) translateX(0); }
+}
+
+.anim-string-pluck {
+  animation: stringPluckVibrate 0.65s cubic-bezier(0.2, 0.85, 0.35, 1) forwards;
+  transform-origin: center;
+}
+
+@keyframes stringNoteFloat {
+  0% { opacity: 0; transform: translateY(0) scale(0.8); }
+  20% { opacity: 1; transform: translateY(-8px) scale(1.1); }
+  75% { opacity: 0.95; transform: translateY(-26px) scale(1.02); }
+  100% { opacity: 0; transform: translateY(-40px) scale(0.9); }
+}
+
+.anim-note-float {
+  animation: stringNoteFloat 0.85s ease-out forwards;
+}
+
 /* ─── High Gain Amp Glow Pulse ────────────────────────────────────────────── */
 .amp-overdrive-glow {
   box-shadow: 
