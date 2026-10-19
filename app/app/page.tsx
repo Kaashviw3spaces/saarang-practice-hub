@@ -78,7 +78,7 @@ export default function HomePage() {
       {/* ── HERO SECTION (Gig Poster Composition) ────────────────────────── */}
       <section className="relative min-h-[92vh] flex flex-col items-center justify-center overflow-hidden px-4 md:px-8 py-20 text-center">
         {/* Actual poster artwork backdrop (AC/DC lightning + Stones burgundy swirl + AM wave) */}
-        <PosterBackdrop variant="hero" overlayOpacity={0.42} />
+        <PosterBackdrop variant="hero" overlayOpacity={0.72} />
 
         {/* Subtle background halftone & radial aura */}
         <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none" />
@@ -108,7 +108,7 @@ export default function HomePage() {
           {/* Monumental Headline */}
           <div className="flex flex-col items-center gap-2 mb-6">
             <p className="poster-subhead text-xs md:text-sm uppercase tracking-[0.25em] text-[var(--color-rust)] font-bold">
-              The Rehearsal Network
+
             </p>
             <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline">
               MAKE SOME NOISE.
@@ -196,7 +196,7 @@ export default function HomePage() {
       {/* ── LIVE REHEARSAL SESSIONS PREVIEW ───────────────────────────────── */}
       <section className="section bg-[var(--color-ink)] relative overflow-hidden">
         {/* Metallica 1985 & Arctic Monkeys backdrop */}
-        <PosterBackdrop variant="rooms" overlayOpacity={0.25} />
+        <PosterBackdrop variant="rooms" overlayOpacity={0.72} />
 
         <div className="container relative z-10 flex flex-col gap-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--color-border)] pb-6">
@@ -235,8 +235,9 @@ export default function HomePage() {
       <RockArchive />
 
       {/* ── HOW IT WORKS (Stage Roadmap) ─────────────────────────────────── */}
-      <section className="section bg-[var(--color-ink)]">
-        <div className="container flex flex-col gap-12">
+      <section className="section bg-[var(--color-ink)] relative overflow-hidden">
+        <PosterBackdrop variant="dashboard" overlayOpacity={0.65} />
+        <div className="container relative z-10 flex flex-col gap-12">
           <div className="text-center max-w-2xl mx-auto">
             <span className="badge-tour badge-tour-accent mb-3">Soundcheck Roadmap</span>
             <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
@@ -298,7 +299,7 @@ export default function HomePage() {
 
       {/* ── CTA BANNER (Concert Ticket Style) ─────────────────────────────── */}
       <section className="section bg-[var(--color-ink)] relative overflow-hidden">
-        <PosterBackdrop variant="booking" overlayOpacity={0.3} />
+        <PosterBackdrop variant="booking" overlayOpacity={0.75} />
 
         <div className="container relative z-10">
           <div className="relative p-8 md:p-14 border-2 border-[var(--color-ivory)] bg-[var(--color-surface)] shadow-[inset_0_0_0_4px_var(--color-ink),inset_0_0_0_5px_rgba(238,230,213,0.4),0_12px_40px_rgba(0,0,0,0.8)] text-center flex flex-col items-center gap-6 max-w-3xl mx-auto">

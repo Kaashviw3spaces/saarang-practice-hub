@@ -181,7 +181,7 @@ export default function DashboardPage() {
   return (
     <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] relative overflow-hidden">
       {/* Rolling Stones Santiago Chile burgundy swirl background */}
-      <PosterBackdrop variant="dashboard" overlayOpacity={0.3} />
+      <PosterBackdrop variant="dashboard" overlayOpacity={0.75} />
 
       <div className="container relative z-10 flex flex-col gap-10">
         {/* Back navigation */}

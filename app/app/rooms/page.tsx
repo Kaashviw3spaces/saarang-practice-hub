@@ -59,7 +59,7 @@ export default function RoomsPage() {
   return (
     <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] relative overflow-hidden">
       {/* Background Metallica Aragon Ballroom 1985 & Arctic Monkeys poster art */}
-      <PosterBackdrop variant="rooms" overlayOpacity={0.3} />
+      <PosterBackdrop variant="rooms" overlayOpacity={0.75} />
 
       <div className="container relative z-10 flex flex-col gap-10">
         {/* Back navigation */}

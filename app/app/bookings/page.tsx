@@ -95,7 +95,7 @@ export default function BookingsPage() {
 
   return (
     <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] relative overflow-hidden">
-      <PosterBackdrop variant="rooms" overlayOpacity={0.35} />
+      <PosterBackdrop variant="rooms" overlayOpacity={0.75} />
       <div className="container flex flex-col gap-10 relative z-10">
         {/* Back navigation */}
         <div>

@@ -59,7 +59,7 @@ export default function CompatibilityPage() {
   return (
     <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] relative overflow-hidden">
       {/* The Beatles Strawberry Fields psychedelic optical rings & color bands */}
-      <PosterBackdrop variant="compatibility" overlayOpacity={0.45} />
+      <PosterBackdrop variant="compatibility" overlayOpacity={0.75} />
 
       <div className="container relative z-10 flex flex-col gap-10 max-w-4xl mx-auto">
         <BackButton href="/" label="Home" />

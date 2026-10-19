@@ -245,7 +245,7 @@ export default function BookingPage() {
   return (
     <div className="section min-h-[90vh] bg-[var(--color-ink)] text-[var(--color-cream)] flex flex-col items-center justify-center gap-6 relative overflow-hidden">
       {/* AC/DC high-voltage electric lightning background */}
-      <PosterBackdrop variant="booking" overlayOpacity={0.32} />
+      <PosterBackdrop variant="booking" overlayOpacity={0.75} />
 
       <div className="w-full max-w-2xl relative z-10">
         <BackButton href="/rooms" label="Back to Sessions" />
