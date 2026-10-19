@@ -708,19 +708,29 @@ a, button, input, select, textarea, [role="button"] {
   transition: opacity var(--motion-medium) var(--ease-editorial);
 }
 
-/* ─── Rock Headline RGB Chromatic Glitch on Hover ────────────────────────── */
+/* ─── Rock Headline RGB Chromatic Glitch (Always Glitching) ──────────────── */
 .rock-headline-glitch {
   position: relative;
-  transition: all 150ms ease;
-  cursor: default;
+  transition: color 250ms ease, text-shadow 250ms ease;
+  cursor: pointer;
+  text-shadow: 
+    2.5px 0 0 rgba(230, 60, 166, 0.8),
+    -2.5px 0 0 rgba(113, 60, 232, 0.8),
+    0 0 16px rgba(212, 168, 63, 0.4);
+  animation: rockMicroJitter 0.28s infinite alternate;
 }
 
 .rock-headline-glitch:hover {
+  color: var(--color-magenta) !important;
   text-shadow: 
-    3px 0 0 rgba(230, 60, 166, 0.8),
-    -3px 0 0 rgba(113, 60, 232, 0.8),
-    0 0 16px rgba(212, 168, 63, 0.4);
-  animation: rockMicroJitter 0.25s infinite alternate;
+    3.5px 0 0 rgba(230, 60, 166, 0.95),
+    -3.5px 0 0 rgba(113, 60, 232, 0.95),
+    0 0 28px rgba(230, 60, 166, 0.7);
+  animation: rockMicroJitter 0.16s infinite alternate;
+}
+
+.rock-headline-glitch:hover span {
+  color: var(--color-magenta) !important;
 }
 
 @keyframes rockMicroJitter {

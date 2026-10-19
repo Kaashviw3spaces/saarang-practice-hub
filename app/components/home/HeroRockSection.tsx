@@ -81,19 +81,21 @@ export function HeroRockSection() {
             </span>
           </div>
 
-          {/* Monumental Headline with Rock Chromatic Glitch on Hover */}
-          <div className="flex flex-col items-center gap-2 mb-6">
-            <p className="poster-subhead text-xs md:text-sm uppercase tracking-[0.25em] text-[var(--color-rust)] font-bold">
+            {/* Monumental Headline with Continuous Rock Chromatic Glitch and Pink on Hover */}
+            <div className="flex flex-col items-center gap-2 mb-6">
+              <p className="poster-subhead text-xs md:text-sm uppercase tracking-[0.25em] text-[var(--color-rust)] font-bold">
 
-            </p>
-            <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline rock-headline-glitch">
-              MAKE SOME NOISE.
-              <br />
-              <span className="text-[var(--color-ochre)] hover:text-[var(--color-magenta)] transition-colors duration-300">
-                FIND YOUR SPACE.
-              </span>
-            </h1>
-          </div>
+              </p>
+              <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline rock-headline-glitch group cursor-pointer transition-colors duration-300">
+                <span className="transition-colors duration-300 group-hover:text-[var(--color-magenta)]">
+                  MAKE SOME NOISE.
+                </span>
+                <br />
+                <span className="text-[var(--color-ochre)] transition-colors duration-300 group-hover:text-[var(--color-magenta)]">
+                  FIND YOUR SPACE.
+                </span>
+              </h1>
+            </div>
 
           {/* Live Frequency Wave Indicator (Pure poster ornament, audio reactive) */}
           <div className="my-6 max-w-lg mx-auto flex flex-col items-center">
