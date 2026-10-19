@@ -15,7 +15,7 @@ import { OpeningCurtain } from "@/components/motion/OpeningCurtain";
 import { SoundwaveVisualizer } from "@/components/motion/SoundwaveVisualizer";
 import { RockArchive } from "@/components/gallery/RockArchive";
 import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
-import { ElectricGuitarGraphic } from "@/components/motion/ElectricGuitarGraphic";
+import { HeroRockSection } from "@/components/home/HeroRockSection";
 import { parseSeedSql } from "@/lib/seed/parser";
 
 /* ─── Fallback placeholder data ───────────────────────────────────────────── */
@@ -76,124 +76,8 @@ export default function HomePage() {
       {/* ── PSYCHEDELIC RIBBON (Beatles / Rolling Stones Color Bands) ─── */}
       <div className="psychedelic-ribbon" />
 
-      {/* ── HERO SECTION (Gig Poster Composition) ────────────────────────── */}
-      <section className="relative min-h-[92vh] flex flex-col items-center justify-center overflow-hidden px-4 md:px-8 py-20 text-center">
-        {/* Actual poster artwork backdrop (AC/DC lightning + Stones burgundy swirl + AM wave) */}
-        <PosterBackdrop variant="hero" overlayOpacity={0.72} />
-
-        {/* Subtle background halftone & radial aura */}
-        <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[var(--color-burgundy)]/25 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute -top-20 right-10 w-[400px] h-[400px] bg-[var(--color-ochre)]/15 rounded-full blur-[120px] pointer-events-none" />
-
-        {/* Gig tour background watermark */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 poster-watermark pointer-events-none">
-          SAARANG '85
-        </div>
-
-        {/* Outer Poster Frame Box */}
-        <div className="relative z-10 w-full max-w-5xl mx-auto p-6 md:p-12 border border-[var(--color-ivory)]/60 shadow-[0_35px_80px_-10px_rgba(0,0,0,0.98),0_18px_36px_-6px_rgba(0,0,0,0.92),inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.35)] bg-[var(--color-surface)]/95 backdrop-blur-md paper-fold-creases overflow-hidden">
-          {/* Aesthetic Attachment Elements from Live Rock Fest poster: */}
-          {/* 1. Amplifier Grill Backing Weave */}
-          <div className="absolute inset-0 amp-grill-backing opacity-30 pointer-events-none z-0" />
-
-          {/* 2. Dense Halftone Screenprint Dots */}
-          <div className="absolute inset-0 halftone-dense opacity-20 pointer-events-none z-0" />
-
-          {/* 3. Screenprint Grunge Speckles & Ink Splatters */}
-          <div className="absolute inset-0 grunge-speckles opacity-65 pointer-events-none z-0" />
-
-          {/* 4. Rock Fissure Scratches */}
-          <div className="absolute inset-0 rock-scratches opacity-25 pointer-events-none z-0" />
-
-          {/* 5. Vertical Electric Guitar Graphic on Left (matching attachment) */}
-          <div className="absolute top-0 bottom-0 -left-6 sm:left-0 md:left-2 w-32 sm:w-44 md:w-56 lg:w-64 pointer-events-none opacity-20 sm:opacity-30 md:opacity-75 z-0 flex items-center justify-start overflow-hidden">
-            <ElectricGuitarGraphic className="h-[95%] w-auto max-w-none" accentColor="var(--color-rust)" />
-          </div>
-
-          <div className="relative z-10">
-            {/* Top Billing Line (Aragon Ballroom / Arctic Monkeys poster inspired) */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4 mb-8 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] text-[var(--color-text-dim)]">
-              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-                <Radio size={13} className="text-[var(--color-rust)]" /> SAARANG PRACTICE HUB
-              </span>
-              <span className="text-[var(--color-ochre)] font-bold">
-                 NOW OPEN
-              </span>
-              <span className="hidden sm:inline text-[var(--color-text-muted)]">
-                SONIPAT, INDIA
-              </span>
-            </div>
-
-            {/* Monumental Headline */}
-            <div className="flex flex-col items-center gap-2 mb-6">
-              <p className="poster-subhead text-xs md:text-sm uppercase tracking-[0.25em] text-[var(--color-rust)] font-bold">
-
-              </p>
-              <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline">
-                MAKE SOME NOISE.
-                <br />
-                <span className="text-[var(--color-ochre)] hover:text-[var(--color-magenta)] transition-colors duration-300">
-                  FIND YOUR SPACE.
-                </span>
-              </h1>
-            </div>
-
-            {/* Interactive Soundwave Visualizer */}
-            <div className="my-6 max-w-2xl mx-auto">
-              <SoundwaveVisualizer barsCount={32} />
-              <p className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)] mt-1">
-                • • • LIVE ACOUSTIC FREQUENCY METER • • •
-              </p>
-            </div>
-
-            {/* Subheading */}
-            <div className="max-w-xl mx-auto mb-8 flex flex-col items-center gap-2">
-              <p className="poster-subhead text-lg md:text-2xl text-[var(--color-cream)] tracking-wider">
-                Now practice better
-              </p>
-              <p className="text-sm md:text-base text-[var(--color-text-muted)] leading-relaxed">
-                No sound bleed, no scheduling clashes, just uninterrupted rehearsal.
-              </p>
-            </div>
-
-            {/* CTAs (Inverted Rock Buttons) */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-              <Link
-                href="/rooms"
-                className="btn-rock-primary text-base py-3 px-8 shadow-[4px_4px_0_0_var(--color-rust)] w-full sm:w-auto"
-              >
-                Book Practice Slot <ArrowRight size={16} />
-              </Link>
-              <Link
-                href="/dashboard"
-                className="btn-rock-ghost text-base py-3 px-8 w-full sm:w-auto"
-              >
-                Access Dashboard
-              </Link>
-            </div>
-
-            {/* Instrument Lineup Footer */}
-            <div className="flex flex-wrap items-center justify-center gap-6 text-[var(--color-text-dim)] border-t border-[var(--color-border)] mt-10 pt-5 text-xs font-mono uppercase tracking-widest">
-              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-                <Guitar size={14} className="text-[var(--color-rust)]" /> Electric & Bass
-              </span>
-              <span>·</span>
-              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-                <Drum size={14} className="text-[var(--color-ochre)]" /> Acoustic Drums
-              </span>
-              <span>·</span>
-              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-                <Piano size={14} className="text-[var(--color-olive)]" /> Keyboards & MIDI
-              </span>
-              <span>·</span>
-              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-                <Mic2 size={14} className="text-[var(--color-magenta)]" /> Lead Vocals
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── HERO SECTION (Interactive Rock Gig Poster Composition) ──────── */}
+      <HeroRockSection />
 
       {/* ── STATS (Member Session Metrics Strip) ─────────────────────────── */}
       <section className="border-t border-b border-[var(--color-border)] bg-[var(--color-surface)] py-8 px-4">

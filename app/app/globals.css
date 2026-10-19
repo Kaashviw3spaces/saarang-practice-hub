@@ -708,6 +708,81 @@ a, button, input, select, textarea, [role="button"] {
   transition: opacity var(--motion-medium) var(--ease-editorial);
 }
 
+/* ─── Rock Headline RGB Chromatic Glitch on Hover ────────────────────────── */
+.rock-headline-glitch {
+  position: relative;
+  transition: all 150ms ease;
+  cursor: default;
+}
+
+.rock-headline-glitch:hover {
+  text-shadow: 
+    3px 0 0 rgba(230, 60, 166, 0.8),
+    -3px 0 0 rgba(113, 60, 232, 0.8),
+    0 0 16px rgba(212, 168, 63, 0.4);
+  animation: rockMicroJitter 0.25s infinite alternate;
+}
+
+@keyframes rockMicroJitter {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-1px, 1px); }
+  50% { transform: translate(1px, -0.5px); }
+  75% { transform: translate(-0.5px, -0.5px); }
+  100% { transform: translate(1px, 0.5px); }
+}
+
+/* ─── High-Voltage Electric Arc on Primary Button ───────────────────────── */
+.btn-electric-arc {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-electric-arc::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    transparent 140deg,
+    var(--color-ochre) 180deg,
+    transparent 220deg
+  );
+  animation: electricRotate 4s linear infinite;
+  opacity: 0;
+  transition: opacity var(--motion-fast) ease;
+  pointer-events: none;
+}
+
+.btn-electric-arc:hover::before {
+  opacity: 0.65;
+}
+
+@keyframes electricRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ─── 3D Interactive Card Tilt ────────────────────────────────────────────── */
+.interactive-tilt {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* ─── High Gain Amp Glow Pulse ────────────────────────────────────────────── */
+.amp-overdrive-glow {
+  box-shadow: 
+    0 0 50px rgba(184, 76, 45, 0.35),
+    0 0 100px rgba(212, 168, 63, 0.2),
+    0 35px 80px -10px rgba(0, 0, 0, 0.98),
+    0 18px 36px -6px rgba(0, 0, 0, 0.92),
+    inset 0 0 0 3px var(--color-ink),
+    inset 0 0 0 4px rgba(238, 230, 213, 0.35) !important;
+}
+
 /* ─── Scrollbar ───────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 7px;
