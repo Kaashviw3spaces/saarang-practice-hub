@@ -708,33 +708,28 @@ a, button, input, select, textarea, [role="button"] {
   transition: opacity var(--motion-medium) var(--ease-editorial);
 }
 
-/* ─── Rock Headline RGB Chromatic Glitch (Original Electric Micro Jitter) ── */
+/* ─── Physical Rapid Jittering Headline Animation ────────────────────────── */
 .rock-headline-glitch {
   position: relative;
   display: inline-block;
   cursor: pointer;
-  text-shadow: 
-    3px 0 0 rgba(230, 60, 166, 0.8),
-    -3px 0 0 rgba(113, 60, 232, 0.8),
-    0 0 16px rgba(212, 168, 63, 0.4);
-  animation: rockMicroJitter 0.25s infinite alternate;
-  will-change: transform, text-shadow;
+  animation: rockPhysicalJitter 0.12s infinite linear;
+  will-change: transform;
 }
 
 .rock-headline-glitch:hover {
-  text-shadow: 
-    4px 0 0 rgba(230, 60, 166, 0.95),
-    -4px 0 0 rgba(113, 60, 232, 0.95),
-    0 0 24px rgba(230, 60, 166, 0.6);
-  animation: rockMicroJitter 0.15s infinite alternate;
+  animation: rockPhysicalJitter 0.08s infinite linear;
 }
 
-@keyframes rockMicroJitter {
+@keyframes rockPhysicalJitter {
   0% { transform: translate(0, 0); }
-  25% { transform: translate(-1px, 1px); }
-  50% { transform: translate(1px, -0.5px); }
-  75% { transform: translate(-0.5px, -0.5px); }
-  100% { transform: translate(1px, 0.5px); }
+  15% { transform: translate(-1.2px, 0.8px); }
+  30% { transform: translate(1.4px, -0.6px); }
+  45% { transform: translate(-0.8px, -1px); }
+  60% { transform: translate(1.1px, 0.9px); }
+  75% { transform: translate(-1.3px, -0.4px); }
+  90% { transform: translate(0.7px, 1.1px); }
+  100% { transform: translate(0, 0); }
 }
 
 /* ─── High-Voltage Electric Arc on Primary Button ───────────────────────── */
