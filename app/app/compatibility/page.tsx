@@ -78,7 +78,7 @@ export default function CompatibilityPage() {
           <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             INSTRUMENT RESONANCE & SETUP CHECKER
           </h1>
-          <p className="text-xs md:text-sm text-[var(--color-text-muted)] max-w-2xl leading-relaxed">
+          <p className="text-sm md:text-base text-[var(--color-text-muted)] max-w-2xl leading-relaxed poster-subhead">
             Analyze physical decibels, monitoring topology, and sound-wave bleed between two simultaneous
             musicians before stepping into the studio.
           </p>

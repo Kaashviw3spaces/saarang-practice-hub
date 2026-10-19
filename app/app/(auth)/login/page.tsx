@@ -56,7 +56,7 @@ export default function LoginPage() {
           <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             SIGN IN TO SAARANG
           </h1>
-          <p className="text-xs font-mono text-[var(--color-text-muted)]">
+          <p className="text-xs md:text-sm text-[var(--color-text-muted)] poster-subhead">
             Access your practice slots, rehearsals, and scheduled sessions.
           </p>
         </div>

@@ -82,7 +82,7 @@ export default function RoomsPage() {
             <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl md:text-7xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               PRACTICE SESSIONS
             </h1>
-            <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-2xl leading-relaxed">
+            <p className="mt-2 text-sm md:text-base text-[var(--color-text-muted)] max-w-2xl leading-relaxed poster-subhead">
               Explore available rehearsal slots. Inspect available instruments and lock in your practice slot.
             </p>
           </div>

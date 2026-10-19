@@ -270,9 +270,8 @@ export default function BookingPage() {
           <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             BOOK REHEARSAL SLOT
           </h1>
-          <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-lg leading-relaxed">
-            Check your setup, select slot, and lock in your rehearsal window with automated conflict
-            checks.
+          <p className="mt-2 text-sm md:text-base text-[var(--color-text-muted)] max-w-lg leading-relaxed poster-subhead">
+            Check your setup, select slot, and lock in your rehearsal window with automated conflict checks.
           </p>
         </div>
 

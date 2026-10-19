@@ -46,9 +46,9 @@
   --color-warning:     #D4A83F;
   --color-danger:      #B84C2D;
 
-  /* Typography Hierarchy: Bebas Neue + Space Grotesk interface, Metal Mania for poster displays & decorative rock accents */
-  --font-display:      var(--font-display), 'Bebas Neue', Impact, 'Arial Black', sans-serif;
-  --font-body:         var(--font-body), 'Space Grotesk', -apple-system, sans-serif;
+  /* Typography Hierarchy: Metal Mania for headers & subheaders, Spectral for body, JetBrains Mono for metrics */
+  --font-display:      var(--font-metal), 'Metal Mania', cursive, sans-serif;
+  --font-body:         var(--font-body), 'Spectral', Georgia, serif;
   --font-metal:        var(--font-metal), 'Metal Mania', cursive, sans-serif;
   --font-mono:         'JetBrains Mono', 'Courier New', monospace;
 
@@ -135,11 +135,11 @@ body {
   overflow-x: hidden;
 }
 
-/* Gig-Poster Display Headings: Bebas Neue throughout interface */
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
+/* Gig-Poster Display Headings & Subheaders: Metal Mania throughout interface */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-metal), 'Metal Mania', cursive, sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.03em;
   line-height: 0.95;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
@@ -147,19 +147,23 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  letter-spacing: 0.02em;
+  letter-spacing: 0.025em;
   line-height: 0.92;
 }
 
 /* Typography Utility Classes */
 .font-display {
-  font-family: var(--font-display);
+  font-family: var(--font-metal), 'Metal Mania', cursive, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
 
+.font-body {
+  font-family: var(--font-body), 'Spectral', Georgia, serif;
+}
+
 .font-metal {
-  font-family: var(--font-metal);
+  font-family: var(--font-metal), 'Metal Mania', cursive, sans-serif;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -515,7 +519,7 @@ a, button, input, select, textarea, [role="button"] {
 
 /* ─── Poster Headline & Screenprint Typography Utilities ─────────────────── */
 .poster-headline {
-  font-family: var(--font-display);
+  font-family: var(--font-metal), 'Metal Mania', cursive, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.025em;
   line-height: 0.9;
@@ -524,7 +528,7 @@ a, button, input, select, textarea, [role="button"] {
 }
 
 .poster-headline-stroke {
-  font-family: var(--font-display);
+  font-family: var(--font-metal), 'Metal Mania', cursive, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   line-height: 0.9;
@@ -538,12 +542,13 @@ a, button, input, select, textarea, [role="button"] {
   -webkit-text-stroke: 1.5px transparent;
 }
 
-.poster-subhead {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.25em;
+.poster-subhead,
+.poster-subheader {
+  font-family: var(--font-metal), 'Metal Mania', cursive, sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-text-dim);
+  color: var(--color-text-muted);
 }
 
 .poster-curved-tag {

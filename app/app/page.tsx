@@ -107,7 +107,7 @@ export default function HomePage() {
 
           {/* Monumental Headline */}
           <div className="flex flex-col items-center gap-2 mb-6">
-            <p className="font-mono text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--color-rust)] font-bold">
+            <p className="poster-subhead text-xs md:text-sm uppercase tracking-[0.25em] text-[var(--color-rust)] font-bold">
               The Rehearsal Network
             </p>
             <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline">
@@ -128,11 +128,14 @@ export default function HomePage() {
           </div>
 
           {/* Subheading */}
-          <p className="max-w-xl mx-auto text-sm md:text-base text-[var(--color-text-muted)] leading-relaxed mb-8">
-            Now practice better
-            <br />
-            No sound bleed, no scheduling clashes, just uninterrupted rehearsal.
-          </p>
+          <div className="max-w-xl mx-auto mb-8 flex flex-col items-center gap-2">
+            <p className="poster-subhead text-lg md:text-2xl text-[var(--color-cream)] tracking-wider">
+              Now practice better
+            </p>
+            <p className="text-sm md:text-base text-[var(--color-text-muted)] leading-relaxed">
+              No sound bleed, no scheduling clashes, just uninterrupted rehearsal.
+            </p>
+          </div>
 
           {/* CTAs (Inverted Rock Buttons) */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">

@@ -96,7 +96,7 @@ export default function SignupPage() {
           <h1 className="font-[var(--font-display)] text-3xl sm:text-4xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
             JOIN SAARANG CLUB
           </h1>
-          <p className="text-xs font-mono text-[var(--color-text-muted)]">
+          <p className="text-xs md:text-sm text-[var(--color-text-muted)] poster-subhead">
             Register your profile to coordinate practice and stage rehearsals.
           </p>
         </div>

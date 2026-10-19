@@ -116,7 +116,7 @@ export default function BookingsPage() {
             <h1 className="font-[var(--font-display)] text-5xl sm:text-6xl font-bold text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               MY BOOKINGS
             </h1>
-            <p className="mt-2 text-xs md:text-sm text-[var(--color-text-muted)] max-w-xl leading-relaxed">
+            <p className="mt-2 text-sm md:text-base text-[var(--color-text-muted)] max-w-xl leading-relaxed poster-subhead">
               Active rehearsal bookings, scheduled jam sessions, and studio reservation history.
             </p>
           </div>

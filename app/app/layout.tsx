@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Metal_Mania, Space_Grotesk } from "next/font/google";
+import { Bebas_Neue, Metal_Mania, Spectral } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navigation/Navbar";
 
@@ -17,10 +17,10 @@ const metalMania = Metal_Mania({
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const spectral = Spectral({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
       lang="en"
-      className={`${bebasNeue.variable} ${spaceGrotesk.variable} ${metalMania.variable} h-full`}
+      className={`${bebasNeue.variable} ${spectral.variable} ${metalMania.variable} h-full`}
     >
       <body className="grain min-h-full flex flex-col bg-[var(--color-background)] text-[var(--color-text)] antialiased">
         <Navbar />
