@@ -708,110 +708,33 @@ a, button, input, select, textarea, [role="button"] {
   transition: opacity var(--motion-medium) var(--ease-editorial);
 }
 
-/* ─── Heavy Rock Headline Chromatic Glitch (Always Glitching Continuously) ── */
+/* ─── Rock Headline RGB Chromatic Glitch (Original Electric Micro Jitter) ── */
 .rock-headline-glitch {
   position: relative;
   display: inline-block;
   cursor: pointer;
-  animation: rockGlitchCycle 2.4s infinite ease-in-out;
+  text-shadow: 
+    3px 0 0 rgba(230, 60, 166, 0.8),
+    -3px 0 0 rgba(113, 60, 232, 0.8),
+    0 0 16px rgba(212, 168, 63, 0.4);
+  animation: rockMicroJitter 0.25s infinite alternate;
   will-change: transform, text-shadow;
 }
 
 .rock-headline-glitch:hover {
-  animation: rockGlitchCycle 1.2s infinite ease-in-out;
+  text-shadow: 
+    4px 0 0 rgba(230, 60, 166, 0.95),
+    -4px 0 0 rgba(113, 60, 232, 0.95),
+    0 0 24px rgba(230, 60, 166, 0.6);
+  animation: rockMicroJitter 0.15s infinite alternate;
 }
 
-@keyframes rockGlitchCycle {
-  0% {
-    text-shadow: 
-      2.5px 0 0 rgba(230, 60, 166, 0.85),
-      -2.5px 0 0 rgba(113, 60, 232, 0.85),
-      0 0 10px rgba(212, 168, 63, 0.3);
-    transform: translate(0, 0);
-  }
-  4% {
-    text-shadow: 
-      -3.5px 0.5px 0 rgba(230, 60, 166, 0.95),
-      3.5px -0.5px 0 rgba(0, 230, 255, 0.9),
-      0 0 16px rgba(230, 60, 166, 0.55);
-    transform: translate(-1.8px, 0.6px);
-  }
-  8% {
-    text-shadow: 
-      4px -0.5px 0 rgba(230, 60, 166, 0.9),
-      -4px 0.5px 0 rgba(113, 60, 232, 0.9);
-    transform: translate(1.2px, -0.6px);
-  }
-  12% {
-    text-shadow: 
-      -2px 0 0 rgba(230, 60, 166, 0.75),
-      2px 0 0 rgba(113, 60, 232, 0.75);
-    transform: translate(-0.6px, 0);
-  }
-  16%, 34% {
-    text-shadow: 
-      2.5px 0 0 rgba(230, 60, 166, 0.8),
-      -2.5px 0 0 rgba(113, 60, 232, 0.8);
-    transform: translate(0, 0);
-  }
-  36% {
-    /* High-voltage amplifier glitch twitch */
-    text-shadow: 
-      -5.5px 1px 0 rgba(230, 60, 166, 0.98),
-      5.5px -1px 0 rgba(0, 240, 255, 0.95),
-      0 0 24px rgba(230, 60, 166, 0.7);
-    transform: translate(-3px, 1px) skewX(-1.5deg);
-  }
-  40% {
-    text-shadow: 
-      4.5px -1px 0 rgba(230, 60, 166, 0.92),
-      -4.5px 1px 0 rgba(113, 60, 232, 0.92);
-    transform: translate(2.5px, -1px) skewX(1.5deg);
-  }
-  44% {
-    text-shadow: 
-      2.5px 0 0 rgba(230, 60, 166, 0.8),
-      -2.5px 0 0 rgba(113, 60, 232, 0.8);
-    transform: translate(0, 0);
-  }
-  64% {
-    text-shadow: 
-      -3px 0.5px 0 rgba(230, 60, 166, 0.85),
-      3px -0.5px 0 rgba(113, 60, 232, 0.85);
-    transform: translate(-1.2px, 0.5px);
-  }
-  68% {
-    text-shadow: 
-      3.5px -0.5px 0 rgba(230, 60, 166, 0.9),
-      -3.5px 0.5px 0 rgba(0, 230, 255, 0.85);
-    transform: translate(1.2px, -0.5px);
-  }
-  72%, 88% {
-    text-shadow: 
-      2.5px 0 0 rgba(230, 60, 166, 0.8),
-      -2.5px 0 0 rgba(113, 60, 232, 0.8);
-    transform: translate(0, 0);
-  }
-  90% {
-    /* Secondary CRT glitch jitter */
-    text-shadow: 
-      -4.5px 0.5px 0 rgba(230, 60, 166, 0.95),
-      4.5px -0.5px 0 rgba(113, 60, 232, 0.95),
-      0 0 18px rgba(212, 168, 63, 0.45);
-    transform: translate(-2px, 0.5px);
-  }
-  94% {
-    text-shadow: 
-      3.5px 0 0 rgba(230, 60, 166, 0.9),
-      -3.5px 0 0 rgba(0, 230, 255, 0.9);
-    transform: translate(1.8px, -0.5px);
-  }
-  100% {
-    text-shadow: 
-      2.5px 0 0 rgba(230, 60, 166, 0.85),
-      -2.5px 0 0 rgba(113, 60, 232, 0.85);
-    transform: translate(0, 0);
-  }
+@keyframes rockMicroJitter {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-1px, 1px); }
+  50% { transform: translate(1px, -0.5px); }
+  75% { transform: translate(-0.5px, -0.5px); }
+  100% { transform: translate(1px, 0.5px); }
 }
 
 /* ─── High-Voltage Electric Arc on Primary Button ───────────────────────── */
