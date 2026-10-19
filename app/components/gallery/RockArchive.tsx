@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Eye, X } from "lucide-react";
+import { ScrollReveal } from "@/components/motion/ScrollReveal";
 
 interface PosterItem {
   id: string;
@@ -91,59 +92,62 @@ export function RockArchive() {
       <div className="container relative z-10">
         {/* Poster Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          {POSTERS.map((poster) => (
-            <div
-              key={poster.id}
-              onClick={() => setSelectedPoster(poster)}
-              className="group cursor-pointer flex flex-col bg-[var(--color-ink)] border border-[var(--color-border)] hover:border-[var(--color-ivory)] transition-all duration-300 relative shadow-[0_24px_50px_-8px_rgba(0,0,0,0.95),0_12px_24px_-6px_rgba(0,0,0,0.88),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.2)] hover:shadow-[0_36px_75px_-10px_rgba(0,0,0,0.98),0_18px_32px_-6px_rgba(0,0,0,0.92),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-ivory)] hover:-translate-y-2 smooth-lift"
-            >
-              {/* Corner tour metadata */}
-              <div className="p-2.5 flex items-center justify-between border-b border-[var(--color-border)] text-[9px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
-                <span>{poster.year}</span>
-                <span className="text-[var(--color-ochre)] truncate max-w-[120px]">
-                  {poster.band}
-                </span>
-              </div>
+          {POSTERS.map((poster, idx) => (
+            <ScrollReveal key={poster.id} direction="up" delay={idx * 110} className="h-full">
+              <div
+                onClick={() => setSelectedPoster(poster)}
+                className="group cursor-pointer flex flex-col bg-[var(--color-ink)] border border-[var(--color-border)] hover:border-[var(--color-ivory)] transition-all duration-300 relative shadow-[0_24px_50px_-8px_rgba(0,0,0,0.95),0_12px_24px_-6px_rgba(0,0,0,0.88),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.2)] hover:shadow-[0_36px_75px_-10px_rgba(0,0,0,0.98),0_18px_32px_-6px_rgba(0,0,0,0.92),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-ivory)] hover:-translate-y-2 smooth-lift h-full"
+              >
+                {/* Corner tour metadata */}
+                <div className="p-2.5 flex items-center justify-between border-b border-[var(--color-border)] text-[9px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+                  <span>{poster.year}</span>
+                  <span className="text-[var(--color-ochre)] truncate max-w-[120px]">
+                    {poster.band}
+                  </span>
+                </div>
 
-              {/* Poster Image Crop */}
-              <div className="relative aspect-[3/4] w-full overflow-hidden bg-black/60">
-                <Image
-                  src={poster.src}
-                  alt={`${poster.band} — ${poster.title}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw"
-                  className="object-cover object-top transition-transform duration-500 group-hover:scale-105 filter contrast-105"
-                />
-                {/* Vintage overlay shimmer on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
+                {/* Poster Image Crop */}
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-black/60">
+                  <Image
+                    src={poster.src}
+                    alt={`${poster.band} — ${poster.title}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 20vw"
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105 filter contrast-105"
+                  />
+                  {/* Vintage overlay shimmer on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
 
-                {/* Inspect eye icon button */}
-                <div className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-ink)]/80 text-[var(--color-cream)] border border-[var(--color-border)] opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Eye size={13} />
+                  {/* Inspect eye icon button */}
+                  <div className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-ink)]/80 text-[var(--color-cream)] border border-[var(--color-border)] opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Eye size={13} />
+                  </div>
+                </div>
+
+                {/* Poster Footer Text Block */}
+                <div className="p-3 flex flex-col gap-1 border-t border-[var(--color-border)] flex-1 justify-between">
+                  <div>
+                    <h3 className="font-[var(--font-metal)] text-base text-[var(--color-cream)] leading-none tracking-wide truncate">
+                      {poster.title}
+                    </h3>
+                    <p className="text-[10px] font-mono uppercase tracking-wider text-[var(--color-text-dim)] truncate mt-1">
+                      {poster.venue}
+                    </p>
+                  </div>
+
+                  {/* Mini palette strip */}
+                  <div className="flex items-center gap-1 mt-2 pt-2 border-t border-[var(--color-border)]/60">
+                    {poster.palette.map((col, pIdx) => (
+                      <span
+                        key={pIdx}
+                        className="h-2 flex-1 rounded-none border border-black/40"
+                        style={{ backgroundColor: col }}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-
-              {/* Poster Footer Text Block */}
-              <div className="p-3 flex flex-col gap-1 border-t border-[var(--color-border)]">
-                <h3 className="font-[var(--font-metal)] text-base text-[var(--color-cream)] leading-none tracking-wide truncate">
-                  {poster.title}
-                </h3>
-                <p className="text-[10px] font-mono uppercase tracking-wider text-[var(--color-text-dim)] truncate">
-                  {poster.venue}
-                </p>
-
-                {/* Mini palette strip */}
-                <div className="flex items-center gap-1 mt-2 pt-2 border-t border-[var(--color-border)]/60">
-                  {poster.palette.map((col, idx) => (
-                    <span
-                      key={idx}
-                      className="h-2 flex-1 rounded-none border border-black/40"
-                      style={{ backgroundColor: col }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
