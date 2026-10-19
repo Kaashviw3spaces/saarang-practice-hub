@@ -68,7 +68,7 @@ export default function RoomsPage() {
         </div>
 
         {/* Page Header (Aragon Ballroom / Arctic Monkeys poster styling) */}
-        <div className="p-8 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)] flex flex-col gap-4">
+        <div className="p-8 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)]/95 backdrop-blur-md shadow-[0_28px_60px_-10px_rgba(0,0,0,0.95),0_14px_28px_-6px_rgba(0,0,0,0.9),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)] flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-border)] pb-3">
             <span className="badge-tour badge-tour-accent">
               <Radio size={12} /> LIVE SLOT RADAR

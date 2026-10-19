@@ -190,7 +190,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Dashboard Banner Header */}
-        <div className="p-8 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)] flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+        <div className="p-8 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)]/95 backdrop-blur-md shadow-[0_28px_60px_-10px_rgba(0,0,0,0.95),0_14px_28px_-6px_rgba(0,0,0,0.9),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)] flex flex-col sm:flex-row sm:items-end justify-between gap-6">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="badge-tour badge-tour-accent">
@@ -227,7 +227,7 @@ export default function DashboardPage() {
             <Link
               key={label}
               href={href}
-              className="p-5 bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-ivory)] transition-all flex flex-col items-center text-center gap-3 shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.15)] hover:shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-cream),0_8px_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 group"
+              className="p-5 bg-[var(--color-surface)]/95 backdrop-blur-sm border border-[var(--color-border)] hover:border-[var(--color-ivory)] transition-all flex flex-col items-center text-center gap-3 shadow-[0_20px_42px_-8px_rgba(0,0,0,0.92),0_8px_18px_-4px_rgba(0,0,0,0.85),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.15)] hover:shadow-[0_32px_65px_-8px_rgba(0,0,0,0.98),0_14px_26px_-4px_rgba(0,0,0,0.9),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-cream)] hover:-translate-y-1.5 group"
             >
               <div className="flex h-11 w-11 items-center justify-center bg-[var(--color-ink)] text-[var(--color-ochre)] border border-[var(--color-border)] group-hover:bg-[var(--color-cream)] group-hover:text-[var(--color-ink)] transition-colors">
                 <Icon size={18} />
@@ -337,7 +337,7 @@ export default function DashboardPage() {
           {/* Right Column: Stage Radar & Backstage Bulletin */}
           <div className="flex flex-col gap-6">
             {/* Live Stage Status Radar */}
-            <div className="p-6 bg-[var(--color-surface)] border border-[var(--color-border)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.15)] flex flex-col gap-4">
+            <div className="p-6 bg-[var(--color-surface)]/95 backdrop-blur-md border border-[var(--color-border)] shadow-[0_22px_48px_-8px_rgba(0,0,0,0.95),0_10px_20px_-5px_rgba(0,0,0,0.88),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.15)] flex flex-col gap-4">
               <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-3">
                 <h2 className="font-[var(--font-display)] text-xl text-[var(--color-cream)] tracking-wider flex items-center gap-2">
                   <Music2 size={16} className="text-[var(--color-ochre)]" />

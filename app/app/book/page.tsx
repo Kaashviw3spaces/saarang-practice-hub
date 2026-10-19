@@ -252,7 +252,7 @@ export default function BookingPage() {
       </div>
 
       {/* Rehearsal Booking Card */}
-      <div className="w-full max-w-2xl bg-[var(--color-surface)]/90 backdrop-blur-md border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3),0_16px_40px_rgba(0,0,0,0.7)] p-8 md:p-10 flex flex-col gap-6 relative z-10">
+      <div className="w-full max-w-2xl bg-[var(--color-surface)]/95 backdrop-blur-md border border-[var(--color-ivory)]/40 shadow-[0_32px_75px_-10px_rgba(0,0,0,0.98),0_16px_32px_-6px_rgba(0,0,0,0.92),inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.3)] p-8 md:p-10 flex flex-col gap-6 relative z-10">
         {/* Top Header Strip */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4">
           <div className="flex items-center gap-2">

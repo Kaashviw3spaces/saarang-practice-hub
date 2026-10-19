@@ -15,6 +15,7 @@ import { OpeningCurtain } from "@/components/motion/OpeningCurtain";
 import { SoundwaveVisualizer } from "@/components/motion/SoundwaveVisualizer";
 import { RockArchive } from "@/components/gallery/RockArchive";
 import { PosterBackdrop } from "@/components/motion/PosterBackdrop";
+import { ElectricGuitarGraphic } from "@/components/motion/ElectricGuitarGraphic";
 import { parseSeedSql } from "@/lib/seed/parser";
 
 /* ─── Fallback placeholder data ───────────────────────────────────────────── */
@@ -91,85 +92,105 @@ export default function HomePage() {
         </div>
 
         {/* Outer Poster Frame Box */}
-        <div className="relative z-10 w-full max-w-5xl mx-auto p-6 md:p-12 border border-[var(--color-ivory)]/60 shadow-[inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.35),0_20px_60px_rgba(0,0,0,0.85)] bg-[var(--color-surface)]/85 backdrop-blur-md">
-          {/* Top Billing Line (Aragon Ballroom / Arctic Monkeys poster inspired) */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4 mb-8 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] text-[var(--color-text-dim)]">
-            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-              <Radio size={13} className="text-[var(--color-rust)]" /> SAARANG PRACTICE HUB
-            </span>
-            <span className="text-[var(--color-ochre)] font-bold">
-               NOW OPEN
-            </span>
-            <span className="hidden sm:inline text-[var(--color-text-muted)]">
-              SONIPAT, INDIA
-            </span>
+        <div className="relative z-10 w-full max-w-5xl mx-auto p-6 md:p-12 border border-[var(--color-ivory)]/60 shadow-[0_35px_80px_-10px_rgba(0,0,0,0.98),0_18px_36px_-6px_rgba(0,0,0,0.92),inset_0_0_0_3px_var(--color-ink),inset_0_0_0_4px_rgba(238,230,213,0.35)] bg-[var(--color-surface)]/95 backdrop-blur-md paper-fold-creases overflow-hidden">
+          {/* Aesthetic Attachment Elements from Live Rock Fest poster: */}
+          {/* 1. Amplifier Grill Backing Weave */}
+          <div className="absolute inset-0 amp-grill-backing opacity-30 pointer-events-none z-0" />
+
+          {/* 2. Dense Halftone Screenprint Dots */}
+          <div className="absolute inset-0 halftone-dense opacity-20 pointer-events-none z-0" />
+
+          {/* 3. Screenprint Grunge Speckles & Ink Splatters */}
+          <div className="absolute inset-0 grunge-speckles opacity-65 pointer-events-none z-0" />
+
+          {/* 4. Rock Fissure Scratches */}
+          <div className="absolute inset-0 rock-scratches opacity-25 pointer-events-none z-0" />
+
+          {/* 5. Vertical Electric Guitar Graphic on Left (matching attachment) */}
+          <div className="absolute top-0 bottom-0 -left-6 sm:left-0 md:left-2 w-32 sm:w-44 md:w-56 lg:w-64 pointer-events-none opacity-20 sm:opacity-30 md:opacity-75 z-0 flex items-center justify-start overflow-hidden">
+            <ElectricGuitarGraphic className="h-[95%] w-auto max-w-none" accentColor="var(--color-rust)" />
           </div>
 
-          {/* Monumental Headline */}
-          <div className="flex flex-col items-center gap-2 mb-6">
-            <p className="poster-subhead text-xs md:text-sm uppercase tracking-[0.25em] text-[var(--color-rust)] font-bold">
-
-            </p>
-            <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline">
-              MAKE SOME NOISE.
-              <br />
-              <span className="text-[var(--color-ochre)] hover:text-[var(--color-magenta)] transition-colors duration-300">
-                FIND YOUR SPACE.
+          <div className="relative z-10">
+            {/* Top Billing Line (Aragon Ballroom / Arctic Monkeys poster inspired) */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4 mb-8 text-[10px] md:text-xs font-mono uppercase tracking-[0.25em] text-[var(--color-text-dim)]">
+              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+                <Radio size={13} className="text-[var(--color-rust)]" /> SAARANG PRACTICE HUB
               </span>
-            </h1>
-          </div>
+              <span className="text-[var(--color-ochre)] font-bold">
+                 NOW OPEN
+              </span>
+              <span className="hidden sm:inline text-[var(--color-text-muted)]">
+                SONIPAT, INDIA
+              </span>
+            </div>
 
-          {/* Interactive Soundwave Visualizer */}
-          <div className="my-6 max-w-2xl mx-auto">
-            <SoundwaveVisualizer barsCount={32} />
-            <p className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)] mt-1">
-              • • • LIVE ACOUSTIC FREQUENCY METER • • •
-            </p>
-          </div>
+            {/* Monumental Headline */}
+            <div className="flex flex-col items-center gap-2 mb-6">
+              <p className="poster-subhead text-xs md:text-sm uppercase tracking-[0.25em] text-[var(--color-rust)] font-bold">
 
-          {/* Subheading */}
-          <div className="max-w-xl mx-auto mb-8 flex flex-col items-center gap-2">
-            <p className="poster-subhead text-lg md:text-2xl text-[var(--color-cream)] tracking-wider">
-              Now practice better
-            </p>
-            <p className="text-sm md:text-base text-[var(--color-text-muted)] leading-relaxed">
-              No sound bleed, no scheduling clashes, just uninterrupted rehearsal.
-            </p>
-          </div>
+              </p>
+              <h1 className="font-[var(--font-display)] text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-[var(--color-cream)] leading-[0.88] tracking-tight poster-headline">
+                MAKE SOME NOISE.
+                <br />
+                <span className="text-[var(--color-ochre)] hover:text-[var(--color-magenta)] transition-colors duration-300">
+                  FIND YOUR SPACE.
+                </span>
+              </h1>
+            </div>
 
-          {/* CTAs (Inverted Rock Buttons) */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <Link
-              href="/rooms"
-              className="btn-rock-primary text-base py-3 px-8 shadow-[4px_4px_0_0_var(--color-rust)] w-full sm:w-auto"
-            >
-              Book Practice Slot <ArrowRight size={16} />
-            </Link>
-            <Link
-              href="/dashboard"
-              className="btn-rock-ghost text-base py-3 px-8 w-full sm:w-auto"
-            >
-              Access Dashboard
-            </Link>
-          </div>
+            {/* Interactive Soundwave Visualizer */}
+            <div className="my-6 max-w-2xl mx-auto">
+              <SoundwaveVisualizer barsCount={32} />
+              <p className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)] mt-1">
+                • • • LIVE ACOUSTIC FREQUENCY METER • • •
+              </p>
+            </div>
 
-          {/* Instrument Lineup Footer */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-[var(--color-text-dim)] border-t border-[var(--color-border)] mt-10 pt-5 text-xs font-mono uppercase tracking-widest">
-            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-              <Guitar size={14} className="text-[var(--color-rust)]" /> Electric & Bass
-            </span>
-            <span>·</span>
-            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-              <Drum size={14} className="text-[var(--color-ochre)]" /> Acoustic Drums
-            </span>
-            <span>·</span>
-            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-              <Piano size={14} className="text-[var(--color-olive)]" /> Keyboards & MIDI
-            </span>
-            <span>·</span>
-            <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
-              <Mic2 size={14} className="text-[var(--color-magenta)]" /> Lead Vocals
-            </span>
+            {/* Subheading */}
+            <div className="max-w-xl mx-auto mb-8 flex flex-col items-center gap-2">
+              <p className="poster-subhead text-lg md:text-2xl text-[var(--color-cream)] tracking-wider">
+                Now practice better
+              </p>
+              <p className="text-sm md:text-base text-[var(--color-text-muted)] leading-relaxed">
+                No sound bleed, no scheduling clashes, just uninterrupted rehearsal.
+              </p>
+            </div>
+
+            {/* CTAs (Inverted Rock Buttons) */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+              <Link
+                href="/rooms"
+                className="btn-rock-primary text-base py-3 px-8 shadow-[4px_4px_0_0_var(--color-rust)] w-full sm:w-auto"
+              >
+                Book Practice Slot <ArrowRight size={16} />
+              </Link>
+              <Link
+                href="/dashboard"
+                className="btn-rock-ghost text-base py-3 px-8 w-full sm:w-auto"
+              >
+                Access Dashboard
+              </Link>
+            </div>
+
+            {/* Instrument Lineup Footer */}
+            <div className="flex flex-wrap items-center justify-center gap-6 text-[var(--color-text-dim)] border-t border-[var(--color-border)] mt-10 pt-5 text-xs font-mono uppercase tracking-widest">
+              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+                <Guitar size={14} className="text-[var(--color-rust)]" /> Electric & Bass
+              </span>
+              <span>·</span>
+              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+                <Drum size={14} className="text-[var(--color-ochre)]" /> Acoustic Drums
+              </span>
+              <span>·</span>
+              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+                <Piano size={14} className="text-[var(--color-olive)]" /> Keyboards & MIDI
+              </span>
+              <span>·</span>
+              <span className="flex items-center gap-1.5 text-[var(--color-cream)]">
+                <Mic2 size={14} className="text-[var(--color-magenta)]" /> Lead Vocals
+              </span>
+            </div>
           </div>
         </div>
       </section>
@@ -180,7 +201,7 @@ export default function HomePage() {
           {STATS.map(({ value, label }) => (
             <div
               key={label}
-              className="flex flex-col items-center justify-center p-4 border border-[var(--color-border)] bg-[var(--color-ink)]"
+              className="flex flex-col items-center justify-center p-4 border border-[var(--color-border)] bg-[var(--color-ink)] shadow-[0_18px_38px_-6px_rgba(0,0,0,0.9),0_8px_16px_-4px_rgba(0,0,0,0.8)] hover:-translate-y-1 transition-all"
             >
               <span className="font-[var(--font-display)] text-4xl md:text-5xl font-bold text-[var(--color-ochre)] leading-none">
                 {value}
@@ -238,11 +259,14 @@ export default function HomePage() {
       <section className="section bg-[var(--color-ink)] relative overflow-hidden">
         <PosterBackdrop variant="dashboard" overlayOpacity={0.65} />
         <div className="container relative z-10 flex flex-col gap-12">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="badge-tour badge-tour-accent mb-3">Soundcheck Roadmap</span>
-            <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+          <div className="text-center max-w-3xl mx-auto p-6 md:p-8 bg-[var(--color-surface)]/95 backdrop-blur-md border border-[var(--color-ivory)]/40 shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25),0_16px_40px_rgba(0,0,0,0.8)]">
+            <span className="badge-tour badge-tour-accent mb-3 inline-block">Soundcheck Roadmap</span>
+            <h2 className="font-[var(--font-display)] text-3xl sm:text-5xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
               FROM RIFF TO REHEARSAL IN 60 SECONDS
             </h2>
+            <p className="poster-subhead text-xs md:text-sm text-[var(--color-text-muted)] tracking-wider uppercase mt-2">
+              Four steps to your uninterrupted practice session
+            </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -274,7 +298,7 @@ export default function HomePage() {
             ].map(({ step, tag, title, body }) => (
               <div
                 key={step}
-                className="p-6 bg-[var(--color-surface)] border border-[var(--color-border)] shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.2)] hover:border-[var(--color-ivory)] transition-all flex flex-col justify-between"
+                className="p-6 bg-[var(--color-surface)]/95 backdrop-blur-sm border border-[var(--color-border)] shadow-[0_20px_45px_-8px_rgba(0,0,0,0.92),0_10px_20px_-5px_rgba(0,0,0,0.85),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.2)] hover:border-[var(--color-ivory)] hover:shadow-[0_32px_65px_-10px_rgba(0,0,0,0.98),0_16px_30px_-6px_rgba(0,0,0,0.92)] hover:-translate-y-1.5 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-2 mb-4">
@@ -302,7 +326,7 @@ export default function HomePage() {
         <PosterBackdrop variant="booking" overlayOpacity={0.75} />
 
         <div className="container relative z-10">
-          <div className="relative p-8 md:p-14 border-2 border-[var(--color-ivory)] bg-[var(--color-surface)] shadow-[inset_0_0_0_4px_var(--color-ink),inset_0_0_0_5px_rgba(238,230,213,0.4),0_12px_40px_rgba(0,0,0,0.8)] text-center flex flex-col items-center gap-6 max-w-3xl mx-auto">
+          <div className="relative p-8 md:p-14 border-2 border-[var(--color-ivory)] bg-[var(--color-surface)]/95 backdrop-blur-md shadow-[0_32px_75px_-10px_rgba(0,0,0,0.98),0_16px_32px_-6px_rgba(0,0,0,0.92),inset_0_0_0_4px_var(--color-ink),inset_0_0_0_5px_rgba(238,230,213,0.4)] text-center flex flex-col items-center gap-6 max-w-3xl mx-auto">
             {/* Top banner tag */}
             <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-[var(--color-ochre)]">
               <Music2 size={14} /> REHEARSAL HUB // SAARANG MUSIC CLUB

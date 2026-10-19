@@ -57,7 +57,7 @@ export function SessionReminderTimer({
   };
 
   return (
-    <div className="relative flex flex-col gap-4 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)] p-6 shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)]">
+    <div className="relative flex flex-col gap-4 border border-[var(--color-ivory)]/40 bg-[var(--color-surface)]/95 backdrop-blur-md p-6 shadow-[0_24px_50px_-8px_rgba(0,0,0,0.95),0_12px_24px_-6px_rgba(0,0,0,0.88),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)]">
       {/* Header bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--color-border)] pb-3">
         <div className="flex items-center gap-2">

@@ -188,8 +188,8 @@ export function PosterBackdrop({
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)] via-transparent to-transparent" />
           </div>
 
-          {/* OVERLAPPING VINTAGE BAND FLYERS (Filling remaining gaps) */}
-          <div className="absolute top-24 left-[28vw] hidden xl:block z-0">
+          {/* OVERLAPPING VINTAGE BAND FLYERS (Flanking the margins cleanly) */}
+          <div className="absolute top-1/4 left-4 hidden 2xl:block z-0">
             <VintageGigFlyer
               band="BLACK SABBATH"
               subhead="PARANOID WORLD TOUR"
@@ -202,7 +202,7 @@ export function PosterBackdrop({
             />
           </div>
 
-          <div className="absolute top-28 right-[27vw] hidden xl:block z-0">
+          <div className="absolute top-1/4 right-4 hidden 2xl:block z-0">
             <VintageGigFlyer
               band="IRON MAIDEN"
               subhead="WORLD SLAVERY TOUR"
@@ -215,7 +215,7 @@ export function PosterBackdrop({
             />
           </div>
 
-          <div className="absolute bottom-16 left-12 hidden lg:block z-0">
+          <div className="absolute bottom-16 left-4 hidden lg:block z-0">
             <VintageGigFlyer
               band="LED ZEPPELIN"
               subhead="PHYSICAL GRAFFITI"
@@ -228,7 +228,7 @@ export function PosterBackdrop({
             />
           </div>
 
-          <div className="absolute bottom-16 right-12 hidden lg:block z-0">
+          <div className="absolute bottom-16 right-4 hidden lg:block z-0">
             <VintageGigFlyer
               band="NIRVANA"
               subhead="NEVERMIND LIVE"
@@ -322,7 +322,7 @@ export function PosterBackdrop({
           </div>
 
           {/* Overlapping Band Gig Flyers */}
-          <div className="absolute top-20 left-1/3 hidden lg:block z-0">
+          <div className="absolute top-1/3 left-4 hidden 2xl:block z-0">
             <VintageGigFlyer
               band="MOTORHEAD"
               subhead="NO SLEEP 'TIL HAMMERSMITH"
@@ -335,7 +335,7 @@ export function PosterBackdrop({
             />
           </div>
 
-          <div className="absolute bottom-20 right-1/4 hidden lg:block z-0">
+          <div className="absolute bottom-1/3 right-4 hidden 2xl:block z-0">
             <VintageGigFlyer
               band="DEEP PURPLE"
               subhead="MACHINE HEAD TOUR"
@@ -470,7 +470,7 @@ export function PosterBackdrop({
           </div>
 
           {/* Backstage VIP Badges */}
-          <div className="absolute top-24 left-[32vw] hidden xl:block z-0">
+          <div className="absolute top-1/3 left-4 hidden 2xl:block z-0">
             <VintageGigFlyer
               band="QUEEN"
               subhead="A NIGHT AT THE OPERA"
@@ -483,7 +483,7 @@ export function PosterBackdrop({
             />
           </div>
 
-          <div className="absolute bottom-24 right-[30vw] hidden xl:block z-0">
+          <div className="absolute bottom-1/3 right-4 hidden 2xl:block z-0">
             <VintageGigFlyer
               band="GUNS N' ROSES"
               subhead="APPETITE FOR DESTRUCTION"

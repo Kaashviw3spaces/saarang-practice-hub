@@ -147,9 +147,9 @@ export function RoomCard({
   return (
     <div
       className={cn(
-        "group relative flex flex-col justify-between bg-[var(--color-surface)] border border-[var(--color-border)] p-6 transition-all duration-300",
-        "shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)]",
-        "hover:shadow-[inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-cream),0_12px_28px_rgba(0,0,0,0.6)] hover:-translate-y-1",
+        "group relative flex flex-col justify-between bg-[var(--color-surface)]/95 backdrop-blur-md border border-[var(--color-border)] p-6 transition-all duration-300",
+        "shadow-[0_24px_50px_-8px_rgba(0,0,0,0.95),0_12px_24px_-6px_rgba(0,0,0,0.88),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)]",
+        "hover:shadow-[0_36px_75px_-10px_rgba(0,0,0,0.98),0_18px_32px_-6px_rgba(0,0,0,0.92),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_4px_var(--color-cream)] hover:-translate-y-2",
         STATUS_CONFIG[status].frameClass
       )}
     >
