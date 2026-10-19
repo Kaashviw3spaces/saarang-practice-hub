@@ -104,27 +104,27 @@ export default function HomePage() {
         <PosterBackdrop variant="rooms" overlayOpacity={0.72} />
 
         <div className="container relative z-10 flex flex-col gap-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[var(--color-border)] pb-6">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="badge-tour badge-tour-rust">Slot Radar</span>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
-                  Real-Time Availability
-                </span>
-              </div>
-              <h2 className="font-[var(--font-display)] text-4xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
-                ACTIVE SESSIONS
-              </h2>
-              <p className="mt-2 text-sm text-[var(--color-text-muted)] max-w-xl">
-                Check room availability, equipment status, and volume limits before heading to the room.
-              </p>
+          <div className="text-center max-w-3xl mx-auto p-6 md:p-8 bg-[var(--color-surface)]/95 backdrop-blur-md border border-[var(--color-ivory)]/40 shadow-[0_24px_50px_-10px_rgba(0,0,0,0.95),0_12px_24px_-6px_rgba(0,0,0,0.88),inset_0_0_0_2px_var(--color-ink),inset_0_0_0_3px_rgba(238,230,213,0.25)] w-full">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <span className="badge-tour badge-tour-rust">Slot Radar</span>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-text-dim)]">
+                Real-Time Availability
+              </span>
             </div>
-            <Link
-              href="/rooms"
-              className="btn-rock-ghost text-xs py-2 px-4 self-start md:self-auto"
-            >
-              Explore All Sessions <ArrowRight size={13} />
-            </Link>
+            <h2 className="font-[var(--font-display)] text-3xl sm:text-5xl md:text-6xl text-[var(--color-cream)] leading-none tracking-tight poster-headline">
+              ACTIVE SESSIONS
+            </h2>
+            <p className="poster-subhead text-xs md:text-sm text-[var(--color-text-muted)] tracking-wider uppercase mt-2 max-w-xl mx-auto">
+              Check room availability, equipment status, and volume limits before heading to the room.
+            </p>
+            <div className="mt-5 flex justify-center">
+              <Link
+                href="/rooms"
+                className="btn-rock-ghost text-xs py-2 px-5 inline-flex items-center gap-1.5 shadow-[4px_4px_0_0_var(--color-border)] hover:shadow-[4px_4px_0_0_var(--color-rust)]"
+              >
+                Explore All Sessions <ArrowRight size={13} />
+              </Link>
+            </div>
           </div>
 
           {/* Session Cards */}
