@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+/* ─── Self-Hosted Heavy Metal & Body WebFonts ────────────────────────────── */
+@font-face {
+  font-family: 'Metal Mania';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/metal-mania.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'New Rocker';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/new-rocker.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Spectral';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/spectral-400.ttf') format('truetype');
+}
+
 /* ─── Rock Poster Design Tokens (Awwwards-Grade Art Direction) ─────────────── */
 :root {
   /* Core Foundation: Deep Ink Black, Aged Ivory & Vintage Cream */
@@ -47,9 +72,9 @@
   --color-danger:      #B84C2D;
 
   /* Typography Hierarchy: Metal Mania for headers & subheaders, Spectral for body, JetBrains Mono for metrics */
-  --font-display:      var(--font-display), 'Metal Mania', 'New Rocker', cursive, sans-serif;
-  --font-body:         var(--font-body), 'Spectral', Georgia, serif;
-  --font-metal:        var(--font-display), 'Metal Mania', 'New Rocker', cursive, sans-serif;
+  --font-display:      'Metal Mania', 'New Rocker', cursive, sans-serif;
+  --font-body:         'Spectral', Georgia, serif;
+  --font-metal:        'Metal Mania', 'New Rocker', cursive, sans-serif;
   --font-mono:         'JetBrains Mono', 'Courier New', monospace;
 
   /* Editorial Easing & Timing — Buttery Smooth */
@@ -137,7 +162,7 @@ body {
 
 /* Gig-Poster Display Headings & Subheaders: Metal Mania throughout interface */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Metal Mania', 'New Rocker', var(--font-display), cursive, sans-serif !important;
+  font-family: 'Metal Mania', 'New Rocker', cursive, sans-serif !important;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   line-height: 0.95;
@@ -153,17 +178,17 @@ h1 {
 
 /* Typography Utility Classes */
 .font-display {
-  font-family: 'Metal Mania', 'New Rocker', var(--font-display), cursive, sans-serif !important;
+  font-family: 'Metal Mania', 'New Rocker', cursive, sans-serif !important;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .font-body {
-  font-family: 'Spectral', var(--font-body), Georgia, serif !important;
+  font-family: 'Spectral', Georgia, serif !important;
 }
 
 .font-metal {
-  font-family: 'Metal Mania', 'New Rocker', var(--font-display), cursive, sans-serif !important;
+  font-family: 'Metal Mania', 'New Rocker', cursive, sans-serif !important;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -515,7 +540,7 @@ a, button, input, select, textarea, [role="button"] {
 
 /* ─── Poster Headline & Screenprint Typography Utilities ─────────────────── */
 .poster-headline {
-  font-family: 'Metal Mania', 'New Rocker', var(--font-display), cursive, sans-serif !important;
+  font-family: 'Metal Mania', 'New Rocker', cursive, sans-serif !important;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   line-height: 0.9;
@@ -524,7 +549,7 @@ a, button, input, select, textarea, [role="button"] {
 }
 
 .poster-headline-stroke {
-  font-family: 'Metal Mania', 'New Rocker', var(--font-display), cursive, sans-serif !important;
+  font-family: 'Metal Mania', 'New Rocker', cursive, sans-serif !important;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   line-height: 0.9;
@@ -540,7 +565,7 @@ a, button, input, select, textarea, [role="button"] {
 
 .poster-subhead,
 .poster-subheader {
-  font-family: 'Metal Mania', 'New Rocker', var(--font-display), cursive, sans-serif !important;
+  font-family: 'Metal Mania', 'New Rocker', cursive, sans-serif !important;
   font-size: 0.95rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
